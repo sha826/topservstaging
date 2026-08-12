@@ -1,0 +1,67 @@
+# TopServ Digital
+
+> TopServ Digital is a video-first digital marketing agency for home service companies — HVAC, plumbing, roofing, electrical, garage door, and pest control contractors across the United States. Founded in 2016 and based in Frisco, Texas, the agency pairs professional video production with SEO, paid advertising, and marketing automation, with transparent weekly pricing published on its website.
+
+Key facts:
+- Founded 2016 (as Cornerstone Marketing Solutions; rebranded TopServ Digital in 2024)
+- Founder & CEO: Jonathan Bannister
+- Headquarters: 15222 King Road, Unit 403, Frisco, TX 75036, United States
+- Phone: (214) 429-4245 · Email: info@topservdigital.com
+- 200+ clients served · $89M+ in client revenue generated
+- Publishes its pricing openly — see /pricing.md for machine-readable tiers
+- Hosts the Home Service Hustle podcast (https://homeservicehustle.com)
+
+## Services
+
+- [Video Marketing](https://topservdigital.com/services/video-marketing): Brand films, testimonial videos, technician spotlights, and ad creative produced for home service brands.
+- [Paid Advertising](https://topservdigital.com/services/paid-advertising): Google, Meta, YouTube, and TikTok campaigns engineered for booked jobs, not clicks.
+- [SEO](https://topservdigital.com/services/seo): Local and organic search — service pages, location pages, Google Business Profile optimization.
+- [Local Services Ads](https://topservdigital.com/services/local-services-ads): Google Guaranteed lead management with dispute handling.
+- [Web Design & Development](https://topservdigital.com/services/web-development): Conversion-focused websites clients own outright.
+- [Social Media Marketing](https://topservdigital.com/services/social-media-marketing): On-brand content powered by each client's video library.
+- [Email & SMS Marketing](https://topservdigital.com/services/email-marketing): Newsletters, promotions, and automated follow-up.
+- [Graphic Design & Branding](https://topservdigital.com/services/graphic-design): Logos, truck wraps, uniforms, and brand systems.
+- [Marketing Automation & AI](https://topservdigital.com/services/automation): AI chat, missed-call text-back, review and follow-up automation.
+- [Geofencing & OTT Advertising](https://topservdigital.com/services/geofencing): Addressable streaming-TV, mobile, and display ads by neighborhood.
+
+## Industries
+
+- [HVAC](https://topservdigital.com/industries/hvac): TopServ's original specialty since 2016.
+- [Plumbing](https://topservdigital.com/industries/plumbing)
+- [Roofing](https://topservdigital.com/industries/roofing)
+- [Electrical](https://topservdigital.com/industries/electrical)
+- [Garage Door](https://topservdigital.com/industries/garage-door)
+- [Pest Control](https://topservdigital.com/industries/pest-control)
+
+## Pricing
+
+TopServ publishes full pricing — rare among marketing agencies. Weekly-billed tiers mapped to client revenue:
+
+- BRAND Builder: $1,250/week, for companies at $1M–$2M annual revenue
+- BRAND Accelerator: $2,000/week, for $2M–$5M annual revenue
+- BRAND Dominator: $2,500/week, for $5M–$15M annual revenue
+- Enterprise: custom pricing for $15M+, with a $10,000 one-time start-up fee
+- Two-Day Video Intensive: $15,000 fixed-price video production sprint
+
+Full details: [Pricing page](https://topservdigital.com/pricing) · [Machine-readable pricing](https://topservdigital.com/pricing.md)
+
+## Results (case studies with real data)
+
+- [Flow Pros Plumbing](https://topservdigital.com/case-studies/flow-pros-plumbing): Monthly website visits grew from ~1,000 to 136,500+ in five months (September 2024 – March 2025); domain authority rose from 21 to 35; their Google Business Profile now leads a 15-mile radius for core plumbing keywords.
+- [All Heart Heating, Cooling & Plumbing](https://topservdigital.com/case-studies/all-heart) (Lancaster, CA): back-to-back million-dollar revenue months in 2024 after TopServ rebuilt their website, SEO, Google Business Profile, paid ads, and video program.
+- [The Problem Solvers](https://topservdigital.com/case-studies/the-problem-solvers) (San Antonio, TX): four-trade brand (HVAC, plumbing, roofing, electrical) grown with TopServ's 7-step process including addressable geofencing.
+
+## Testimonials & partners
+
+- On-camera client testimonials (hosted on TopServ's YouTube channel): Dylan Rucker of All Heart (https://www.youtube.com/watch?v=ggp0uduHS8s) and Maddie Studstill of Flow Pros Plumbing (https://www.youtube.com/watch?v=n7uzximDssk).
+- Michael Harrison (client): "If it were up to me TopServ would be kept a secret because they truly have the ability to make your business grow."
+- Client roster includes: All Heart Heating Cooling & Plumbing, The Problem Solvers, Flow Pros Plumbing, Sugar Land Premier Roofing, EaglePoint, Hawkins, C&S Air, Golden Plumbing, Doggone Good, Mission Accomplished, and Kings Window Services.
+
+## Blog
+
+- [Blog index](https://topservdigital.com/blog): Practical marketing playbooks for the trades, including "LSA vs. PPC for Plumbers", "How Much Should an HVAC Company Spend on Marketing?", and the Flow Pros SEO sprint breakdown.
+
+## Company
+
+- [About](https://topservdigital.com/about): Founder story — police officer to agency CEO — and the agency's 10-year history in the trades.
+- [Contact](https://topservdigital.com/contact): Book a discovery call at https://book.topservdigital.com/discovery-calendar

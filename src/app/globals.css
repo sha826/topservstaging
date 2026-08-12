@@ -1,26 +1,301 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * TopServ Digital design system — dark cinematic, single committed theme.
+ * Brand colors sampled from the official logo: blue #0E7DC1 ("TopServ"),
+ * green #9ED844 ("DIGITAL"). Green = accent/keyword/CTA role, blue = the
+ * companion tone. shadcn token names kept so ui/ components work unmodified.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0c0e12;
+  --foreground: #f4f5f2;
+
+  --card: #12151b;
+  --card-foreground: #f4f5f2;
+  --popover: #12151b;
+  --popover-foreground: #f4f5f2;
+
+  --primary: #9ed844;
+  --primary-foreground: #0d1503;
+  --secondary: #1b2028;
+  --secondary-foreground: #f4f5f2;
+  --muted: #181d24;
+  --muted-foreground: #a6adb8;
+  --accent: #1b2028;
+  --accent-foreground: #f4f5f2;
+  --destructive: #e5484d;
+  --destructive-foreground: #f4f5f2;
+
+  --border: #242a33;
+  --input: #242a33;
+  --ring: #9ed844;
+
+  --radius: 0.375rem;
+
+  /* Brand extensions */
+  --brand: #9ed844;
+  --brand-hot: #b7e76a;
+  --brand-deep: #7cb92f;
+  --brand-blue: #0e7dc1;
+  --brand-blue-hot: #3d9bd9;
+  --surface-raised: #171c23;
+  --ink-faint: #8a919c; /* ≥5:1 on bg/card — #6b7280 failed WCAG AA at 4.0:1 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand: var(--brand);
+  --color-brand-hot: var(--brand-hot);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-hot: var(--brand-blue-hot);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink-faint: var(--ink-faint);
+
+  --font-display: var(--font-bebas);
+  --font-sans: var(--font-barlow);
+  --font-mono: var(--font-dm-mono);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-barlow), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--brand);
+  color: var(--primary-foreground);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-deep);
+}
+
+/* Display type: Bebas Neue runs tight and tall — used for headline moments only */
+.display {
+  font-family: var(--font-bebas), sans-serif;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+/* Uppercase micro-labels (eyebrows, stats, nav accents) */
+.label-mono {
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Keyword light sweep (hero headline accents): a specular glint crosses the
+   word periodically. Falls back to solid brand green for reduced motion. */
+.kw-sheen {
+  background-image: linear-gradient(110deg, var(--brand) 42%, #e6ffb8 50%, var(--brand) 58%);
+  background-size: 250% 100%;
+  background-position: 125% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: kw-sheen 4.6s ease-in-out infinite;
+  /* background-clip:text only paints inside the span's line box; with the
+     h1's tight 0.97 leading, glyph tails fall outside it and vanish.
+     Vertical padding on an inline element grows the painted canvas without
+     changing line layout. */
+  padding-block: 0.18em;
+}
+@keyframes kw-sheen {
+  0%, 45% { background-position: 125% 0; }
+  80%, 100% { background-position: -35% 0; }
+}
+
+/* EXPERT stamp (team-roles title cards): slams in like a movie-trailer
+   certification stamp ~0.3s after its card racks into focus. */
+.expert-stamp {
+  opacity: 0;
+  transform: rotate(-6deg);
+}
+[data-active="true"] .expert-stamp {
+  animation: expert-stamp-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+@keyframes expert-stamp-in {
+  0% { opacity: 0; transform: scale(2.6) rotate(-18deg); filter: blur(8px); }
+  60% { opacity: 1; transform: scale(0.94) rotate(-5deg); filter: blur(0); }
+  75% { transform: scale(1.05) rotate(-6.5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+
+/* Blueprint grid, barely visible, drifting diagonally one tile per loop
+   (seamless). Decorative section backdrop. */
+.grid-drift {
+  background-image:
+    linear-gradient(rgba(14, 125, 193, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 125, 193, 0.07) 1px, transparent 1px),
+    linear-gradient(rgba(14, 125, 193, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 125, 193, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px, 44px 44px, 132px 132px, 132px 132px;
+  animation: grid-drift 12s linear infinite;
+  -webkit-mask-image: radial-gradient(85% 90% at 50% 45%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(85% 90% at 50% 45%, #000 30%, transparent 85%);
+}
+/* Both layers travel exactly one of their own tiles per loop (seamless);
+   opposite directions create a slow parallax shimmer. */
+@keyframes grid-drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: 44px 44px, 44px 44px, -132px 132px, -132px 132px; }
+}
+
+/* Storyboard deal (7-step diagram): cards dealt onto the table, landing
+   with a flick and settling slightly askew; once dealt, they straighten on
+   hover. Trigger: .go on the container. */
+.deal-card {
+  opacity: 0;
+  transform: translate(-160px, -180px) rotate(-18deg);
+}
+.go .deal-card {
+  animation: deal-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
+}
+@keyframes deal-in {
+  70% { opacity: 1; transform: translate(4px, 3px) rotate(calc(var(--rot) + 2.5deg)); }
+  100% { opacity: 1; transform: translate(0, 0) rotate(var(--rot)); }
+}
+.deal-done {
+  transform: rotate(var(--rot));
+  transition: transform 0.25s ease;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
+}
+.deal-done:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+/* Typewriter caret (timeline scene titles) */
+.tw-caret {
+  display: inline-block;
+  width: 0.42em;
+  height: 0.8em;
+  margin-left: 0.08em;
+  background: currentColor;
+  animation: tw-blink 0.7s step-end infinite;
+}
+@keyframes tw-blink {
+  50% { opacity: 0; }
+}
+
+/* Partner-logo marquee: track holds two copies, so -50% loops seamlessly */
+@keyframes partner-mq {
+  to { transform: translateX(-50%); }
+}
+
+/* Chat widget: message entrance + typing-indicator dots (both neutralized
+   by the global reduced-motion catch-all below) */
+@keyframes chat-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+.chat-in { animation: chat-in 0.22s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes chat-dot {
+  0%, 60%, 100% { transform: none; opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+.chat-dot {
+  animation: chat-dot 1.2s ease-in-out infinite;
+}
+
+/* Feathered video edges: dissolves a media card into the section */
+.vfeather {
+  -webkit-mask-image: radial-gradient(115% 115% at 50% 50%, #000 70%, transparent 99%);
+  mask-image: radial-gradient(115% 115% at 50% 50%, #000 70%, transparent 99%);
+}
+
+/* Process-step highlights: rest dimmed, ignite in reading order once the
+   paragraph scrolls into view (delays set inline per phrase). */
+.process-hl {
+  font-weight: 700;
+  transition: color 0.55s ease, text-shadow 0.55s ease;
+}
+.process-hl-g { color: rgba(158, 216, 68, 0.32); }
+.process-hl-b { color: rgba(61, 155, 217, 0.35); }
+.lit .process-hl-g { color: var(--brand); text-shadow: 0 0 16px rgba(158, 216, 68, 0.3); }
+.lit .process-hl-b { color: var(--brand-blue-hot); text-shadow: 0 0 16px rgba(14, 125, 193, 0.35); }
+
+/* MDX article tables scroll inside their own container on small screens */
+.prose :where(table) {
+  display: block;
+  overflow-x: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .kw-sheen {
+    animation: none;
+    background-image: none;
+    color: var(--brand);
+  }
+  [data-active="true"] .expert-stamp {
+    animation: none;
+    opacity: 1;
+  }
+  .process-hl { transition: none; }
+  .process-hl-g { color: var(--brand); }
+  .process-hl-b { color: var(--brand-blue-hot); }
+  .deal-card {
+    animation: none;
+    opacity: 1;
+    transform: rotate(var(--rot));
+  }
+  .tw-caret {
+    display: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
