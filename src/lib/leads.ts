@@ -14,6 +14,14 @@ export interface Lead {
   market?: string;
   /** What marketing they currently run. */
   currentMarketing?: string;
+  /** What got them looking, verbatim — the sales team's close anchor. */
+  attribution?: string;
+  /** What they dislike about current results, verbatim. */
+  painPoints?: string;
+  /** Monthly marketing spend, all-in. */
+  marketingSpend?: string;
+  /** Whether they own the marketing decision. */
+  decisionRole?: string;
   /** Their main growth goal in their own words. */
   goal?: string;
   /** How soon they want to start. */
@@ -59,7 +67,11 @@ async function emailLead(lead: Lead): Promise<boolean> {
       lead.trade ? `Trade: ${lead.trade}` : null,
       lead.revenueBand ? `Annual revenue: ${lead.revenueBand}` : null,
       lead.market ? `Market: ${lead.market}` : null,
+      lead.attribution ? `What got them looking (their words): ${lead.attribution}` : null,
       lead.currentMarketing ? `Current marketing: ${lead.currentMarketing}` : null,
+      lead.painPoints ? `Pain (their words): ${lead.painPoints}` : null,
+      lead.marketingSpend ? `Marketing spend: ${lead.marketingSpend}` : null,
+      lead.decisionRole ? `Decision role: ${lead.decisionRole}` : null,
       lead.goal ? `Goal: ${lead.goal}` : null,
       lead.timeline ? `Timeline: ${lead.timeline}` : null,
       "",

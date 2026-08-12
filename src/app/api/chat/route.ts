@@ -76,7 +76,27 @@ const captureLead = tool({
       .string()
       .max(500)
       .optional()
-      .describe("What marketing they currently run and how it's going"),
+      .describe("What marketing they currently run and where their jobs come from"),
+    attribution: z
+      .string()
+      .max(300)
+      .optional()
+      .describe("What got them looking / what caught their attention, in their EXACT words"),
+    painPoints: z
+      .string()
+      .max(500)
+      .optional()
+      .describe("What they dislike about their current marketing results, in their EXACT words"),
+    marketingSpend: z
+      .string()
+      .max(100)
+      .optional()
+      .describe('Monthly marketing spend all-in, e.g. "about $4k/mo"'),
+    decisionRole: z
+      .string()
+      .max(150)
+      .optional()
+      .describe('Whether they own the marketing decision, e.g. "owner, decides alone" or "needs partner"'),
     goal: z.string().max(500).optional().describe("Their main growth goal, in their words"),
     timeline: z.string().max(200).optional().describe("How soon they want to start"),
     need: z.string().max(2000).describe("What they want help with, in one or two sentences"),
@@ -94,6 +114,10 @@ const captureLead = tool({
       revenueBand: input.revenueBand,
       market: input.market,
       currentMarketing: input.currentMarketing,
+      attribution: input.attribution,
+      painPoints: input.painPoints,
+      marketingSpend: input.marketingSpend,
+      decisionRole: input.decisionRole,
       goal: input.goal,
       timeline: input.timeline,
       message: input.need,

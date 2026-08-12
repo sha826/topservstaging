@@ -15,7 +15,7 @@ export async function storeLead(lead: Lead): Promise<{ stored: boolean }> {
     return { stored: false };
   }
 
-  const { error } = await supabase.from("leads").insert({
+  const baseRow = {
     source: lead.source,
     name: lead.name,
     company: lead.company ?? null,
@@ -28,7 +28,24 @@ export async function storeLead(lead: Lead): Promise<{ stored: boolean }> {
     current_marketing: lead.currentMarketing ?? null,
     timeline: lead.timeline ?? null,
     notes: lead.message,
-  });
+  };
+  const extendedRow = {
+    ...baseRow,
+    attribution: lead.attribution ?? null,
+    pain_points: lead.painPoints ?? null,
+    marketing_spend: lead.marketingSpend ?? null,
+    decision_role: lead.decisionRole ?? null,
+  };
+
+  let { error } = await supabase.from("leads").insert(extendedRow);
+
+  // If the sales-discovery columns haven't been added to the table yet
+  // (ALTER TABLE pending), fall back to the base row rather than lose the
+  // lead — the extra fields still reach the team via the email body.
+  if (error && (error.code === "PGRST204" || /column/i.test(error.message ?? ""))) {
+    console.warn("leads table missing discovery columns — run the ALTER TABLE; storing base fields only.");
+    ({ error } = await supabase.from("leads").insert(baseRow));
+  }
 
   if (error) {
     // Full lead in the log so a failed insert still leaves a recoverable trace.

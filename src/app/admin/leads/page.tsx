@@ -14,6 +14,10 @@ interface LeadRow {
   market: string | null;
   email: string | null;
   phone: string | null;
+  attribution?: string | null;
+  pain_points?: string | null;
+  marketing_spend?: string | null;
+  decision_role?: string | null;
   goal: string | null;
   current_marketing: string | null;
   timeline: string | null;
@@ -30,6 +34,10 @@ const COLUMNS: { key: keyof LeadRow; label: string }[] = [
   { key: "market", label: "Market" },
   { key: "email", label: "Email" },
   { key: "phone", label: "Phone" },
+  { key: "attribution", label: "Why now (their words)" },
+  { key: "pain_points", label: "Pain (their words)" },
+  { key: "marketing_spend", label: "Spend/mo" },
+  { key: "decision_role", label: "Decides?" },
   { key: "goal", label: "Goal" },
   { key: "timeline", label: "Timeline" },
   { key: "notes", label: "Notes" },
@@ -64,7 +72,7 @@ export default async function AdminLeadsPage() {
         </p>
       ) : (
         <div className="mt-8 overflow-x-auto rounded-lg border border-border">
-          <table className="w-full min-w-[1100px] border-collapse text-sm">
+          <table className="w-full min-w-[1500px] border-collapse text-sm">
             <thead>
               <tr>
                 {COLUMNS.map((col) => (
