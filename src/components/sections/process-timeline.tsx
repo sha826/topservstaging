@@ -104,7 +104,16 @@ function CompareSlider({
 
   return (
     <BrowserFrame>
-      <div className="relative aspect-[16/10] bg-black">
+      {/* Touch: the full-surface range input would hijack carousel swipes,
+          so coarse pointers get tap-to-flip instead (range hidden below). */}
+      <div
+        className="relative aspect-[16/10] bg-black"
+        onClick={() => {
+          if (window.matchMedia("(pointer: coarse)").matches) {
+            setPos((p) => (p < 50 ? 88 : 12));
+          }
+        }}
+      >
         <Image
           src={after}
           alt={labelAfter}
@@ -142,7 +151,7 @@ function CompareSlider({
           value={pos}
           onChange={(e) => setPos(Number(e.currentTarget.value))}
           aria-label={`Compare ${labelBefore} and ${labelAfter}`}
-          className="absolute inset-0 z-[4] size-full cursor-ew-resize opacity-0"
+          className="pointer-coarse:hidden absolute inset-0 z-[4] size-full cursor-ew-resize opacity-0"
         />
       </div>
     </BrowserFrame>
@@ -152,9 +161,11 @@ function CompareSlider({
 function SceneMedia({
   media,
   onLightbox,
+  stacked,
 }: {
   media: StepMedia;
   onLightbox: (lb: LightboxState) => void;
+  stacked?: boolean;
 }) {
   if (media.kind === "compare") {
     return <CompareSlider {...media} />;
@@ -214,17 +225,28 @@ function SceneMedia({
     );
   }
   return (
-    <div className="flex gap-3">
+    // Stacked (mobile): full-width column so screenshots stay legible
+    // instead of becoming side-by-side slivers.
+    <div className={cn("flex gap-3", stacked && "flex-col")}>
       {media.shots.map((src: string) => (
         <div key={src} className="flex-1">
           <BrowserFrame light={media.fitWhole} onZoom={() => onLightbox({ type: "img", src })}>
-            <div className={cn("relative", media.fitWhole ? "h-[280px]" : "h-[260px]")}>
+            <div
+              className={cn(
+                "relative",
+                media.fitWhole ? "h-[280px]" : stacked ? "h-[220px]" : "h-[260px]"
+              )}
+            >
               <Image
                 src={src}
                 alt={`Process evidence: ${humanizeSrc(src)}`}
                 fill
                 sizes="(min-width: 1024px) 24vw, 86vw"
-                className={media.fitWhole ? "object-contain" : "object-cover object-top"}
+                className={
+                  media.fitWhole || stacked
+                    ? "object-contain"
+                    : "object-cover object-top"
+                }
               />
             </div>
           </BrowserFrame>
@@ -334,7 +356,7 @@ function SceneBody({
                   href={cta.href}
                   target="_blank"
                   rel="noopener"
-                  className="rounded border border-border px-3.5 py-2.5 font-mono text-[9.5px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-brand hover:text-brand"
+                  className="rounded border border-border px-3.5 py-3 font-mono text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-brand hover:text-brand"
                 >
                   {cta.label} ↗
                 </a>
@@ -343,7 +365,7 @@ function SceneBody({
                   key={cta.label}
                   type="button"
                   onClick={() => cta.img && onLightbox({ type: "img", src: cta.img })}
-                  className="rounded border border-border px-3.5 py-2.5 font-mono text-[9.5px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-brand hover:text-brand"
+                  className="rounded border border-border px-3.5 py-3 font-mono text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-brand hover:text-brand"
                 >
                   {cta.label}
                 </button>
@@ -352,7 +374,7 @@ function SceneBody({
           </div>
         )}
       </div>
-      <SceneMedia media={step.media} onLightbox={onLightbox} />
+      <SceneMedia media={step.media} onLightbox={onLightbox} stacked={stacked} />
     </div>
   );
 }
@@ -485,6 +507,29 @@ export function ProcessTimeline() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Mobile carousel position (drives the dots below it).
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [mobIndex, setMobIndex] = useState(0);
+  const mobRafRef = useRef(0);
+  const onCarouselScroll = () => {
+    cancelAnimationFrame(mobRafRef.current);
+    mobRafRef.current = requestAnimationFrame(() => {
+      const el = carouselRef.current;
+      if (!el) return;
+      const kids = Array.from(el.children) as HTMLElement[];
+      let best = 0;
+      let bestDist = Infinity;
+      kids.forEach((kid, i) => {
+        const d = Math.abs(kid.offsetLeft - el.scrollLeft);
+        if (d < bestDist) {
+          bestDist = d;
+          best = i;
+        }
+      });
+      setMobIndex(best);
+    });
+  };
 
   const [lbLoaded, setLbLoaded] = useState(false);
   const lbRef = useRef<HTMLDivElement>(null);
@@ -744,12 +789,16 @@ export function ProcessTimeline() {
         </div>
       </div>
 
-      {/* Mobile: native swipe carousel */}
+      {/* Mobile: native swipe carousel with position dots */}
       <div className="lg:hidden">
         <div className="px-5 pt-14">
           <p className="label-mono text-brand">The process, in detail</p>
         </div>
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-8">
+        <div
+          ref={carouselRef}
+          onScroll={onCarouselScroll}
+          className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-8"
+        >
           {PROCESS_DETAIL.map((step, i) => (
             <div
               key={step.title}
@@ -757,6 +806,31 @@ export function ProcessTimeline() {
             >
               <SceneBody step={step} index={i} onLightbox={setLightbox} stacked />
             </div>
+          ))}
+        </div>
+        <div className="flex justify-center gap-1 pb-8" aria-label="Process steps">
+          {PROCESS_DETAIL.map((step, i) => (
+            <button
+              key={step.title}
+              type="button"
+              aria-label={`Go to step ${i + 1}`}
+              aria-current={i === mobIndex ? "true" : undefined}
+              onClick={() => {
+                const el = carouselRef.current;
+                const kid = el?.children[i] as HTMLElement | undefined;
+                if (el && kid) {
+                  el.scrollTo({ left: kid.offsetLeft - 20, behavior: "smooth" });
+                }
+              }}
+              className="grid size-11 place-items-center"
+            >
+              <span
+                className={cn(
+                  "size-2 rounded-full transition-colors",
+                  i === mobIndex ? "bg-brand" : "bg-border"
+                )}
+              />
+            </button>
           ))}
         </div>
       </div>
@@ -775,7 +849,7 @@ export function ProcessTimeline() {
             type="button"
             aria-label="Close viewer"
             onClick={() => setLightbox(null)}
-            className="absolute right-5 top-5 flex size-10 items-center justify-center rounded-full border border-white/20 text-lg text-white transition-colors hover:border-brand hover:text-brand"
+            className="absolute right-5 top-5 flex size-11 items-center justify-center rounded-full border border-white/20 text-lg text-white transition-colors hover:border-brand hover:text-brand"
           >
             ✕
           </button>

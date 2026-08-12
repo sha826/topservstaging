@@ -38,7 +38,7 @@ export function CaseStudyBand() {
               href={`/case-studies/${featured.slug}`}
               className="label-mono mt-6 inline-flex items-center gap-2 text-brand transition-colors hover:text-brand-hot"
             >
-              Read the full case study
+              <span className="-my-3 py-3">Read the full case study</span>
               <ArrowRight className="size-3.5" aria-hidden />
             </Link>
           </article>

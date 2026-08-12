@@ -37,7 +37,7 @@ export default async function AdminLayout({
             <Link
               key={item.href}
               href={item.href}
-              className="label-mono text-muted-foreground transition-colors hover:text-brand"
+              className="label-mono -my-2 py-3 text-muted-foreground transition-colors hover:text-brand"
             >
               {item.label}
             </Link>

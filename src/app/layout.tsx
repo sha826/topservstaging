@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Barlow, Bebas_Neue, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
@@ -28,6 +28,14 @@ const dmMono = DM_Mono({
   variable: "--font-dm-mono",
   display: "swap",
 });
+
+// resizes-content: Android shrinks the layout viewport for the keyboard, so
+// fixed UI (chat panel) stays fully visible while typing.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  interactiveWidget: "resizes-content",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),

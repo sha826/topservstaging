@@ -35,7 +35,7 @@ export function Footer() {
                 <a
                   href={href}
                   aria-label={`TopServ Digital on ${name}`}
-                  className="flex size-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-brand hover:text-brand"
+                  className="flex size-11 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-brand hover:text-brand"
                 >
                   <Icon className="size-4" aria-hidden />
                 </a>

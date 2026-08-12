@@ -38,12 +38,12 @@ compression, domain cutover, and the off-site entity campaign.
 ## 2b. Pre-deploy hygiene (from the Aug 2026 site audit)
 
 - [ ] Delete staging artifacts from `public/`: `design-lab.html` (196KB, noindexed but shippable) and `images/lab-o/` (2.0MB) — both are internal design-lab material.
-- [ ] Compress `public/videos/portfolio/` teasers (~6.5MB total) and consider `preload` strategy for the cinema stage (currently `preload="auto"` on both slots).
-- [ ] Compress partner logos in `public/images/partners/` (560KB of full-size PNGs displayed at 64px — resize to ~128px-tall WebP, est. ~60KB total).
+- [ ] Compress `public/videos/portfolio/` teasers (~6.5MB total). ~~preload strategy~~ DONE: cinema stage now uses `preload="metadata"` + in-view playback (913KB no longer downloads below the fold); ambient Vimeo replaced with the self-hosted MP4.
+- [x] ~~Compress partner logos~~ DONE: 128px WebP variants (~123KB total, was 543KB).
 - [ ] Compress `public/images/process/` PNGs used as timeline clip thumbnails (~1MB as CSS backgrounds).
 - [ ] Decide on a Content-Security-Policy header (`next.config.ts` has XFO/nosniff/HSTS/Referrer/Permissions but no CSP). Needs allowances for YouTube/Vimeo iframes + i.ytimg.com images; test embeds after adding.
 - [ ] Contact form bot protection: currently honeypot only, no rate limit (chat API has a best-effort in-memory throttle). Consider Vercel BotID or a shared rate limiter if spam appears.
-- [ ] Mobile UX decisions deferred from the audit: TeamRoles pinned section has no mobile fallback (3.5 screens of scrolling for 7 titles on phones) — consider a stacked list under `lg`.
+- [x] ~~TeamRoles mobile fallback~~ DONE: phones get a stacked list; the cinematic pin is desktop-only (Aug 2026 mobile audit — full fix batch applied: touch targets ≥44px, chat keyboard handling, compare-slider tap mode, carousel dots, deferred chat bundle).
 
 ## 3. Domain cutover
 

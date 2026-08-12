@@ -67,13 +67,20 @@ export function HowWeCanHelp() {
         ) : (
           <>
             {ambient ? (
-              <iframe
-                src={`https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&autopause=0`}
-                allow="autoplay"
+              // Self-hosted ambient loop: replaces the Vimeo background embed
+              // (~360KB player + unbounded stream) with a single 963KB MP4.
+              // The full-quality sound version still plays via Vimeo on click.
+              <video
+                src="/videos/portfolio/Welcome-Video-v2-Selects.mp4"
+                poster={POSTER}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="none"
                 tabIndex={-1}
                 aria-hidden
-                title=""
-                className="absolute left-0 top-1/2 h-[150%] w-full -translate-y-1/2 scale-105 border-0"
+                className="absolute inset-0 size-full scale-105 object-cover"
               />
             ) : (
               <Image
@@ -110,14 +117,14 @@ export function HowWeCanHelp() {
           aria-hidden
           className={cn(
             "pointer-events-none absolute inset-x-0 top-0 z-[5] bg-gradient-to-b from-background to-transparent transition-all duration-500",
-            playing ? "h-14 opacity-60" : "h-32"
+            playing ? "h-14 opacity-60" : "h-14 md:h-32"
           )}
         />
         <div
           aria-hidden
           className={cn(
             "pointer-events-none absolute inset-x-0 bottom-0 z-[5] bg-gradient-to-t from-background to-transparent transition-all duration-500",
-            playing ? "h-14 opacity-60" : "h-36"
+            playing ? "h-14 opacity-60" : "h-20 md:h-36"
           )}
         />
 
@@ -133,7 +140,7 @@ export function HowWeCanHelp() {
             <h2 id="help-heading" className="display mt-2 text-4xl md:text-5xl">
               How we can help
             </h2>
-            <p className="mt-3 hidden max-w-xl text-sm leading-relaxed text-muted-foreground sm:block md:text-base">
+            <p className="mt-3 line-clamp-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:line-clamp-none md:text-base">
               We bring your brand to life with a comprehensive digital strategy
               designed to drive leads, boost conversions, and maximize growth.
               From high-impact websites and targeted SEO to paid advertising,

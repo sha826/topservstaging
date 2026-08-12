@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useMotionValueEvent, useScroll } from "motion/react";
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { cn } from "@/lib/utils";
 
 // The seven roles from the original site, same order, same blue/green
@@ -40,7 +40,41 @@ export function TeamRoles() {
       <h2 id="team-roles-heading" className="sr-only">
         Our team of experts
       </h2>
-      <div ref={wrapRef} className="relative h-[350vh]">
+
+      {/* Mobile: stacked list — the 350vh pin costs phones 4+ swipes for
+          seven words, so the cinematic version is desktop-only. */}
+      <div className="mx-auto max-w-6xl px-5 py-16 lg:hidden">
+        <p className="label-mono text-brand">Our team of experts</p>
+        <ul className="mt-8 grid gap-5">
+          {ROLES.map((role, i) => (
+            <motion.li
+              key={role.name}
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: (i % 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5"
+            >
+              <span
+                aria-hidden
+                className="rounded-[3px] border-2 border-current px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-foreground"
+              >
+                Expert
+              </span>
+              <span
+                className={cn(
+                  "display -skew-x-6 text-4xl leading-none",
+                  role.tone === "blue" ? "text-brand-blue" : "text-brand"
+                )}
+              >
+                {role.name}
+              </span>
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+
+      <div ref={wrapRef} className="relative hidden h-[350vh] lg:block">
         <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
           {/* Ambient glow behind the cards */}
           <div

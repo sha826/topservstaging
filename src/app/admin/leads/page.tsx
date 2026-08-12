@@ -83,8 +83,7 @@ export default async function AdminLeadsPage() {
                   {COLUMNS.map((col) => (
                     <td
                       key={col.key}
-                      className="max-w-[220px] truncate border-b border-border/50 px-3.5 py-2.5 align-top text-muted-foreground"
-                      title={String(row[col.key] ?? "")}
+                      className="min-w-[110px] max-w-[280px] border-b border-border/50 px-3.5 py-2.5 align-top text-muted-foreground [overflow-wrap:anywhere]"
                     >
                       {col.key === "created_at"
                         ? row.created_at.slice(0, 16).replace("T", " ")

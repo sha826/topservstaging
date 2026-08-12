@@ -125,7 +125,7 @@ export function PostForm({
             placeholder={title ? `AI prompt (default: post title)` : "Describe the image…"}
             value={imgPrompt}
             onChange={(e) => setImgPrompt(e.currentTarget.value)}
-            className={`${inputClass} max-w-md flex-1 py-2 text-sm`}
+            className={`${inputClass} max-w-md flex-1 py-2 text-base md:text-sm`}
           />
           <Button type="button" onClick={generateImage} disabled={genBusy} variant="outline">
             {genBusy ? "Generating…" : "Generate with AI"}
@@ -154,7 +154,7 @@ export function PostForm({
           required
           defaultValue={post?.content ?? ""}
           spellCheck={false}
-          className={`${inputClass} resize-y font-mono text-[13px] leading-relaxed`}
+          className={`${inputClass} resize-y font-mono text-base leading-relaxed md:text-[13px]`}
         />
       </div>
 

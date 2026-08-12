@@ -52,15 +52,27 @@ function TypingBubble() {
   );
 }
 
-export function ChatWidget() {
-  const [open, setOpen] = useState(false);
+export function ChatWidget({ initialOpen = false }: { initialOpen?: boolean }) {
+  const [open, setOpen] = useState(initialOpen);
   const [input, setInput] = useState("");
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   // True only when the user clicked the toggle this page-load — restored-open
-  // panels must not steal focus on every navigation.
-  const manualOpenRef = useRef(false);
+  // panels must not steal focus on every navigation. A tap on the deferred
+  // placeholder button counts as manual.
+  const manualOpenRef = useRef(initialOpen);
+  // Track the visual viewport so the panel shrinks above the mobile
+  // keyboard instead of having its header pushed off-screen.
+  const [vvh, setVvh] = useState<number | null>(null);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const onResize = () => setVvh(vv.height);
+    vv.addEventListener("resize", onResize);
+    onResize();
+    return () => vv.removeEventListener("resize", onResize);
+  }, []);
   // Stable per-session conversation id: the server keys saved transcripts on
   // it so the team can review and grade conversations. This component is
   // client-only (ssr:false), so reading sessionStorage in the initializer is
@@ -153,6 +165,7 @@ export function ChatWidget() {
       {open && (
         <div
           className="flex h-[min(78dvh,640px)] w-[min(94vw,440px)] flex-col overflow-hidden rounded-xl border border-border bg-background shadow-2xl"
+          style={vvh ? { maxHeight: `${Math.max(280, Math.min(vvh - 96, 640))}px` } : undefined}
           role="dialog"
           aria-label="Chat with TopServ Digital"
         >
@@ -193,7 +206,7 @@ export function ChatWidget() {
               <div className="space-y-3.5">
                 <div className="flex items-end gap-2.5">
                   <AgentAvatar />
-                  <p className="chat-in max-w-[85%] rounded-2xl rounded-bl-md border border-border bg-card px-4 py-3 text-[15px] leading-relaxed">
+                  <p className="chat-in max-w-[85%] break-words rounded-2xl rounded-bl-md border border-border bg-card px-4 py-3 text-[15px] leading-relaxed [overflow-wrap:anywhere]">
                     Hey! Thanks for stopping by. I&apos;m the TopServ assistant.
                     Happy to talk pricing, results, or whether we&apos;d be a
                     good fit for your company. What&apos;s on your mind?
@@ -205,7 +218,7 @@ export function ChatWidget() {
                       key={reply}
                       type="button"
                       onClick={() => submit(reply)}
-                      className="rounded-full border border-border px-4 py-2.5 text-[13px] font-medium text-muted-foreground transition-colors hover:border-brand hover:text-brand active:scale-[0.98]"
+                      className="min-h-11 rounded-full border border-border px-4 py-2.5 text-[13px] font-medium text-muted-foreground transition-colors hover:border-brand hover:text-brand active:scale-[0.98]"
                     >
                       {reply}
                     </button>
@@ -225,7 +238,7 @@ export function ChatWidget() {
                 {message.role !== "user" && <AgentAvatar />}
                 <div
                   className={cn(
-                    "max-w-[85%] rounded-2xl px-4 py-3 text-[15px] leading-relaxed",
+                    "max-w-[85%] break-words rounded-2xl px-4 py-3 text-[15px] leading-relaxed [overflow-wrap:anywhere]",
                     message.role === "user"
                       ? "rounded-br-md bg-brand text-primary-foreground"
                       : "rounded-bl-md border border-border bg-card"

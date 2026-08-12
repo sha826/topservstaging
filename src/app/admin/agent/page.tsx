@@ -72,7 +72,7 @@ export default async function AdminAgentPage({
           rows={22}
           defaultValue={head}
           spellCheck={false}
-          className="w-full rounded-md border border-input bg-card px-4 py-3 font-mono text-[13px] leading-relaxed outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40"
+          className="w-full rounded-md border border-input bg-card px-4 py-3 font-mono text-base leading-relaxed outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40 md:text-[13px]"
         />
         <div className="flex flex-wrap gap-3">
           <Button type="submit" size="lg" className="text-base">

@@ -46,15 +46,17 @@ export interface Partner {
 }
 
 // The original homepage's "Meet Our Valued Partners" logo set (10 clients).
+// -sm.webp variants are 128px-tall (display is 64px @2x); originals kept
+// alongside for future large uses.
 export const partners: Partner[] = [
-  { file: "eagle-point.png", name: "EaglePoint" },
-  { file: "hawkins.png", name: "Hawkins" },
-  { file: "cs-air.png", name: "C&S Air" },
-  { file: "all-heart.png", name: "All Heart Heating, Cooling & Plumbing" },
-  { file: "problem-solvers.png", name: "The Problem Solvers" },
-  { file: "golden-plumbing.png", name: "Golden Plumbing" },
-  { file: "doggone-good.webp", name: "Doggone Good" },
-  { file: "mission-accomplished.avif", name: "Mission Accomplished" },
-  { file: "kings-window.webp", name: "Kings Window Services" },
-  { file: "sugar-land-premier.png", name: "Sugar Land Premier Roofing" },
+  { file: "eagle-point-sm.webp", name: "EaglePoint" },
+  { file: "hawkins-sm.webp", name: "Hawkins" },
+  { file: "cs-air-sm.webp", name: "C&S Air" },
+  { file: "all-heart-sm.webp", name: "All Heart Heating, Cooling & Plumbing" },
+  { file: "problem-solvers-sm.webp", name: "The Problem Solvers" },
+  { file: "golden-plumbing-sm.webp", name: "Golden Plumbing" },
+  { file: "doggone-good-sm.webp", name: "Doggone Good" },
+  { file: "mission-accomplished-sm.webp", name: "Mission Accomplished" },
+  { file: "kings-window-sm.webp", name: "Kings Window Services" },
+  { file: "sugar-land-premier-sm.webp", name: "Sugar Land Premier Roofing" },
 ];

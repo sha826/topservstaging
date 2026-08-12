@@ -74,7 +74,7 @@ export default function PricingPage() {
                       {tier.summary}
                     </p>
                     <div className="mt-auto pt-6">
-                      <Button asChild className="w-full">
+                      <Button asChild size="lg" className="w-full">
                         <a href={siteConfig.booking.discoveryCall}>
                           Book a discovery call
                           <ArrowRight className="size-4" aria-hidden />

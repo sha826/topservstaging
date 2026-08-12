@@ -75,7 +75,8 @@ export function CinemaStage() {
     setFront(k);
   };
 
-  // Viewport-gated playback of the front slot.
+  // Viewport-gated playback of the front slot. With preload="metadata" the
+  // first real fetch happens here, when the stage is actually on screen.
   useEffect(() => {
     const el = slotRef(front).current;
     if (!el) return;
@@ -83,6 +84,18 @@ export function CinemaStage() {
     else el.pause();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, reduceMotion, front]);
+
+  // Kick the back slot into buffering after a swap: metadata preload alone
+  // won't fire canplay, so nudge it with play() (muted autoplay is allowed);
+  // onSlotReady then flips the crossfade exactly as before.
+  useEffect(() => {
+    const pending = pendingSlotRef.current;
+    if (pending === null) return;
+    const el = slotRef(pending as 0 | 1).current;
+    el?.load();
+    el?.play().catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slotFilms]);
 
   // While the lightbox is open: scroll-lock the page AND pause the stage
   // teaser so nothing moves behind the player; resume on close.
@@ -205,7 +218,7 @@ export function CinemaStage() {
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="metadata"
                   onCanPlay={() => onSlotReady(k)}
                   className={cn(
                     "absolute inset-0 size-full object-cover transition-opacity duration-500",
@@ -218,14 +231,14 @@ export function CinemaStage() {
               aria-hidden
               className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/80 to-transparent"
             />
-            <div className="absolute bottom-4 left-5 z-[2] md:bottom-6 md:left-7">
+            <div className="absolute bottom-4 left-5 z-[2] max-w-[55%] sm:max-w-[70%] md:bottom-6 md:left-7">
               <p className="label-mono text-brand">{film.client}</p>
-              <p className="display mt-1 text-3xl text-white md:text-4xl">{film.name}</p>
+              <p className="display mt-1 text-2xl leading-tight text-white sm:text-3xl md:text-4xl">{film.name}</p>
             </div>
             <button
               type="button"
               onClick={openFilm}
-              className="absolute bottom-5 right-5 z-[3] flex items-center gap-2 rounded-md bg-brand px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.12em] text-primary-foreground transition-transform hover:scale-105 md:bottom-7 md:right-7"
+              className="absolute bottom-4 right-4 z-[3] flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-primary-foreground transition-transform hover:scale-105 md:bottom-7 md:right-7"
             >
               <Play className="size-3.5 fill-current" aria-hidden />
               Watch full film
@@ -291,7 +304,7 @@ export function CinemaStage() {
             type="button"
             aria-label="Close video"
             onClick={() => setLightbox(null)}
-            className="absolute right-5 top-5 flex size-10 items-center justify-center rounded-full border border-white/20 text-lg text-white transition-colors hover:border-brand hover:text-brand"
+            className="absolute right-5 top-5 flex size-11 items-center justify-center rounded-full border border-white/20 text-lg text-white transition-colors hover:border-brand hover:text-brand"
           >
             ✕
           </button>

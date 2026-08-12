@@ -67,7 +67,7 @@ export function ServicesCallSheet() {
                   {service.description}
                 </span>
                 <ArrowRight
-                  className="size-4 -translate-x-2 text-brand opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                  className="size-4 text-brand transition-all duration-300 md:-translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100"
                   aria-hidden
                 />
               </Link>
