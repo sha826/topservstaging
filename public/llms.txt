@@ -35,13 +35,13 @@ Key facts:
 
 ## Pricing
 
-TopServ publishes full pricing — rare among marketing agencies. Weekly-billed tiers mapped to client revenue:
+TopServ publishes full pricing — rare among marketing agencies. Three programs billed weekly, matched to a company's brand equity stage (diagnosed on the discovery call from heat-map, SEMrush, and branded-search data — clients don't self-select):
 
-- BRAND Builder: $1,250/week, for companies at $1M–$2M annual revenue
-- BRAND Accelerator: $2,000/week, for $2M–$5M annual revenue
-- BRAND Dominator: $2,500/week, for $5M–$15M annual revenue
-- Enterprise: custom pricing for $15M+, with a $10,000 one-time start-up fee
-- Two-Day Video Intensive: $15,000 fixed-price video production sprint
+- Establish: $1,000/week — for companies the market doesn't know yet (Stage 1: Unknown). Get on the map, get found, start building a name worth knowing.
+- Amplify: $1,625/week — for companies with name recognition that aren't yet the first call (Stage 2). Turn recognition into preference and take share.
+- Dominate: $2,375/week — for companies ready to own the market (Stage 3: Household Name). Be the default choice before anyone opens Google.
+- Activation & Onboarding: $10,000 one time, in month one, on every program — covers the two-day on-site video shoot and evergreen content library, travel, pre-shoot strategy build, editing, and the first-month build. The weekly retainer takes over in month two.
+- Every program includes the full Brandformance system, the two-day video shoot, SEO, paid media, automation, and lead capture.
 
 Full details: [Pricing page](https://topservdigital.com/pricing) · [Machine-readable pricing](https://topservdigital.com/pricing.md)
 

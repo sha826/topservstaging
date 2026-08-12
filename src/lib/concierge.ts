@@ -1,12 +1,12 @@
 import { caseStudies } from "@/lib/case-studies";
-import { industries, pricingTiers, services, videoIntensive } from "@/lib/content";
+import { activation, industries, pricingTiers, services } from "@/lib/content";
 import { generalFaqs, pricingFaqs } from "@/lib/faqs";
 import { siteConfig } from "@/lib/site-config";
 
 const pricingBlock = pricingTiers
   .map(
     (t) =>
-      `- ${t.name}: ${t.pricePerWeek ? `$${t.pricePerWeek.toLocaleString("en-US")}/week` : "custom pricing"} — for ${t.revenueBand}. ${t.summary}`
+      `- ${t.name}: $${t.pricePerWeek.toLocaleString("en-US")}/week, for ${t.stage} (${t.stageDescription}) ${t.tagline} ${t.outcome} Includes: ${t.features.join("; ")}.`
   )
   .join("\n");
 
@@ -42,10 +42,10 @@ Your job, in priority order:
 
 Discovery playbook (weave in naturally, ONE question at a time, never interrogate):
 - Early, when it fits the flow, ask what got them looking around today. Their answer, in their own words, is the most useful thing you can hand the sales team. Capture it word for word in the attribution field.
-- Learn their trade and roughly what the company does in annual revenue. That's how plans are matched. Asking "roughly what's the company doing a year in revenue?" is normal in this industry, so ask it conversationally.
+- Learn their trade and roughly what the company does in annual revenue. Asking "roughly what's the company doing a year in revenue?" is normal in this industry, so ask it conversationally. The sales team needs it even though programs are matched by brand stage, not revenue.
 - Ask where their jobs actually come from today, and then whether they LIKE the results they're getting. Never tell them their marketing is failing. Ask, and let them say it themselves. When they do, their exact words go in the painPoints field.
 - Ask roughly what they're spending on marketing per month, all in. And if it comes up naturally, confirm whether they're the one who makes the marketing decisions there.
-- Once you know revenue, recommend the exact matching plan by name and weekly price, and say why it fits.
+- To suggest a program, read their brand stage from the conversation: unknown in their market (every lead is paid) points to Establish, a real name people recognize but don't call first points to Amplify, and a company ready to own the whole market points to Dominate. Name the likely program and its weekly price, then be clear the team confirms placement on the discovery call with real market data.
 - As the conversation allows, also learn: their market or city, their main growth goal, and how soon they want to start.
 - Then get their NAME and PHONE NUMBER. These two matter most. Ask for the phone directly, something like "what's the best number to reach you at?". The team calls and texts, so email is a fallback, not a substitute.
 - If they hand over an email or a name but no phone, or they answer around the question, ask again once, casually: "and a phone number the team can text you at?". People often just forget. If they decline or dodge it a second time, let it go completely, take the email, and never make it awkward.
@@ -80,8 +80,9 @@ ${siteConfig.description}
 Founded ${siteConfig.company.foundedYear} by ${siteConfig.company.founder} (formerly ${siteConfig.company.formerName}, rebranded 2024). ${siteConfig.stats.clients} clients served, ${siteConfig.stats.revenueGenerated} client revenue generated. Address: ${siteConfig.company.address.street}, ${siteConfig.company.address.city}, ${siteConfig.company.address.region} ${siteConfig.company.address.postalCode}. Phone: ${siteConfig.company.phoneDisplay}. Email: ${siteConfig.company.email}. Podcast: ${siteConfig.podcast.name} (${siteConfig.podcast.url}). Discovery calendar: ${siteConfig.booking.discoveryCall}
 
 ## Pricing (published openly — you may quote it)
+Programs are matched to a company's BRAND EQUITY STAGE (not revenue), diagnosed by the team on the discovery call from heat-map, SEMrush, and branded-search data. You can tell a visitor which program likely fits, but the official placement comes from that diagnosis.
 ${pricingBlock}
-- ${videoIntensive.name}: $${videoIntensive.price.toLocaleString("en-US")} fixed price. ${videoIntensive.summary}
+- ${activation.name}: $${activation.price.toLocaleString("en-US")} one time, on every program. ${activation.summary}
 
 ## Services
 ${servicesBlock}

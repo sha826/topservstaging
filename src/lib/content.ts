@@ -130,44 +130,72 @@ export const industries: Industry[] = [
   },
 ];
 
+// Pricing model confirmed by the TopServ team (July 2026 program lineup).
+// Programs are matched to a company's BRAND EQUITY STAGE, diagnosed from
+// heat-map, SEMrush, and branded-search data on the discovery call — the
+// client doesn't self-select. Billed weekly; every program starts with the
+// one-time $10,000 activation & onboarding in month one.
 export const pricingTiers = [
   {
-    slug: "brand-builder",
-    name: "BRAND Builder",
-    pricePerWeek: 1250,
-    revenueBand: "$1M–$2M annual revenue",
-    summary:
-      "The foundation system: video production, up to 10 website pages in month one plus 4 per month, monthly blog content, reputation management, GBP optimization with weekly posts, PPC & LSA management, retargeting, AI chat and follow-up, and a dedicated account manager.",
+    slug: "establish",
+    name: "Establish",
+    pricePerWeek: 1000,
+    stage: "Stage 1 · Unknown",
+    stageDescription: "The market doesn't know you yet. Every lead is a paid fight.",
+    tagline: "Get on the map, get found, and start building a name worth knowing.",
+    outcome:
+      "Stop renting every lead. Build the foundation that makes leads cheaper over time.",
+    features: [
+      "Performance-weighted media to keep the phone ringing now",
+      "SEO build where the map is weak",
+      "PPC + LSA lead capture",
+      "Brand foundation growing underneath",
+    ],
   },
   {
-    slug: "brand-accelerator",
-    name: "BRAND Accelerator",
-    pricePerWeek: 2000,
-    revenueBand: "$2M–$5M annual revenue",
-    summary:
-      "The growth system: everything in Builder plus up to 30 pages in month one and 10 per month, monthly vlogs, 4 blogs per month, twice-weekly GBP posts, 6 press releases per year, automated link building, the Brand Equity Domination (BED) Method, and paid media across Google, LSA, Meta, YouTube, and TikTok.",
+    slug: "amplify",
+    name: "Amplify",
+    pricePerWeek: 1625,
+    stage: "Stage 2 · Name Recognition",
+    stageDescription: "The market knows the name but doesn't yet call first.",
+    tagline: "You're known. Turn that recognition into preference and take share.",
+    outcome:
+      "Become the name people prefer, not just recognize. Lower cost per lead as the brand carries more.",
+    features: [
+      "Balanced brand and performance",
+      "Heavier content and video cadence",
+      "PPC + LSA + Meta",
+      "Reach and frequency across the market",
+    ],
   },
   {
-    slug: "brand-dominator",
-    name: "BRAND Dominator",
-    pricePerWeek: 2500,
-    revenueBand: "$5M–$15M annual revenue",
-    summary:
-      "The market-leader system: everything in Accelerator plus up to 60 pages in month one and 20 per month, 2 vlogs per month, 8 blogs per month, 4 weekly GBP posts, and 12 press releases per year.",
-  },
-  {
-    slug: "enterprise",
-    name: "Enterprise",
-    pricePerWeek: null,
-    revenueBand: "$15M+ annual revenue",
-    summary:
-      "Custom scope for multi-location and franchise operations. One-time $10,000 start-up fee; pricing by consultation.",
+    slug: "dominate",
+    name: "Dominate",
+    pricePerWeek: 2375,
+    stage: "Stage 3 · Household Name",
+    stageDescription: "When something breaks, you're the first call. Leads cost next to nothing.",
+    tagline: "Own the market. Be the default choice before anyone opens Google.",
+    outcome:
+      "Five Mile Famous: the brand does the heavy lifting and paid lead capture drops toward nothing.",
+    features: [
+      "Brand-weighted, full multichannel",
+      "Maximum content and video volume",
+      "PPC + LSA + Meta + YouTube + TikTok",
+      "Market domination, default-choice status",
+    ],
   },
 ] as const;
 
-export const videoIntensive = {
-  name: "Two-Day Video Intensive",
-  price: 15000,
+/** One-time month-one activation, identical on every program. */
+export const activation = {
+  name: "Activation & Onboarding",
+  price: 10000,
   summary:
-    "A fixed-price production sprint: pre-production planning call, two full on-site shoot days, and a multi-format edit package delivered in about 30 days — a lifetime asset library of brand, testimonial, and recruiting video.",
+    "One-time, in month one, on every program: the two-day on-site video shoot and evergreen content library, travel, pre-shoot strategy build, editing, and the first-month build. Your weekly retainer takes over in month two.",
 } as const;
+
+export const everyProgramIncludes = [
+  "The full Brandformance system",
+  "The two-day video shoot and an evergreen content library",
+  "SEO, paid media, automation, and lead capture",
+] as const;

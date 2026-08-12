@@ -23,7 +23,7 @@ export const serviceCopy: Record<string, ServiceCopy> = {
       {
         question: "How much does video production cost with TopServ Digital?",
         answer:
-          "Video production is included in every TopServ weekly plan starting at $1,250/week, and the standalone Two-Day Video Intensive is $15,000 fixed price: two on-site shoot days producing a full library of brand, testimonial, ad, and recruiting video delivered in about 30 days.",
+          "Video production is included in every TopServ program (billed weekly, from $1,000/week), and every program begins with a one-time $10,000 activation that covers the two-day on-site shoot: a full library of brand, testimonial, ad, and recruiting video that feeds every channel from day one.",
       },
       {
         question: "Why should a home service company invest in video?",
@@ -81,7 +81,7 @@ export const serviceCopy: Record<string, ServiceCopy> = {
       {
         question: "What's included in TopServ's SEO service?",
         answer:
-          "Every TopServ plan includes SEO: new service and location pages monthly (from 4/month on Builder to 20/month on Dominator), Google Business Profile optimization with weekly posts, blog content, technical fixes, link building on higher tiers, and reporting tied to calls and booked jobs.",
+          "Every TopServ program includes SEO: new service and location pages added monthly, Google Business Profile optimization with weekly posts, blog content, technical fixes, link building on higher tiers, and reporting tied to calls and booked jobs.",
       },
     ],
   },
@@ -128,7 +128,7 @@ export const serviceCopy: Record<string, ServiceCopy> = {
       {
         question: "How many pages does TopServ build?",
         answer:
-          "It scales with your plan: BRAND Builder starts with up to 10 pages in month one then 4 new pages monthly; Accelerator starts with up to 30 then 10 monthly; Dominator starts with up to 60 then 20 monthly. New pages target new services and locations, which is how sites keep gaining ground.",
+          "It scales with your program: month one builds out the pages your market gap demands, then new service and location pages are added every month. New pages target new services and locations, which is how sites keep gaining ground.",
       },
     ],
   },
@@ -158,7 +158,7 @@ export const serviceCopy: Record<string, ServiceCopy> = {
       "Seasonal campaigns timed to your trade's demand curve",
       "Automated follow-up: post-job thank-you, review requests, maintenance reminders",
       "List hygiene and segmentation so the right message hits the right customer",
-      "Sales-letter campaigns on Accelerator and Dominator plans",
+      "Sales-letter campaigns on Amplify and Dominate programs",
     ],
     faqs: [
       {

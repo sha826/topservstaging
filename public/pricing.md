@@ -1,57 +1,61 @@
 # TopServ Digital — Pricing
 
-TopServ Digital publishes its pricing openly. Plans are billed weekly and matched
-to the client's annual revenue so the scope fits the size of the business.
+TopServ Digital publishes its pricing openly. Three programs, billed weekly,
+matched to the client's brand equity stage — not revenue. The stage is
+diagnosed on the discovery call from heat-map, SEMrush, and branded-search
+data; clients don't self-select a package. As the brand grows, they climb.
 Current as of August 2026; confirm on a discovery call: https://book.topservdigital.com/discovery-calendar
 
-## BRAND Builder — $1,250/week
+## Establish — $1,000/week
 
-For home service companies at $1M–$2M annual revenue.
+Stage 1: Unknown. The market doesn't know you yet; every lead is a paid fight.
+Get on the map, get found, and start building a name worth knowing.
 
-- Professional video production
-- Website: up to 10 pages in month one, then 4 new pages/month
-- 1 blog post/month; 1 vlog every other month
-- Reputation management (BirdEye) and listings management
-- Google Business Profile optimization + 1 weekly GBP post
-- 3 press releases/year
-- Paid media: Google PPC + Local Services Ads; retargeting (required)
-- AI chatbot and automated follow-ups
-- Reporting and a dedicated account manager
+Outcome: stop renting every lead. Build the foundation that makes leads
+cheaper over time.
 
-## BRAND Accelerator — $2,000/week
+- Performance-weighted media to keep the phone ringing now
+- SEO build where the map is weak
+- PPC + LSA lead capture
+- Brand foundation growing underneath
 
-For home service companies at $2M–$5M annual revenue. Everything in Builder, plus:
+## Amplify — $1,625/week
 
-- Website: up to 30 pages in month one, then 10 new pages/month
-- 4 blog posts/month; 1 vlog/month
-- 2 weekly Google Business Profile posts
-- 6 press releases/year; automated link building
-- Brand Equity Domination (BED) Method (required)
-- Paid media expanded: Google, LSA, Meta, YouTube, TikTok
-- Newsletter and sales-letter programs
+Stage 2: Name Recognition. The market knows the name but doesn't yet call
+first. Turn that recognition into preference and take share.
 
-## BRAND Dominator — $2,500/week
+Outcome: become the name people prefer, not just recognize. Lower cost per
+lead as the brand carries more.
 
-For home service companies at $5M–$15M annual revenue. Everything in Accelerator, plus:
+- Balanced brand and performance
+- Heavier content and video cadence
+- PPC + LSA + Meta
+- Reach and frequency across the market
 
-- Website: up to 60 pages in month one, then 20 new pages/month
-- 8 blog posts/month; 2 vlogs/month
-- 4 weekly Google Business Profile posts
-- 12 press releases/year
+## Dominate — $2,375/week
 
-## Enterprise — custom
+Stage 3: Household Name. When something breaks, you're the first call.
+Own the market and be the default choice before anyone opens Google.
 
-For companies above $15M annual revenue and multi-location/franchise operations.
-One-time start-up fee: $10,000. Pricing by consultation.
+Outcome: Five Mile Famous. The brand does the heavy lifting and paid lead
+capture drops toward nothing.
 
-## Two-Day Video Intensive — $15,000 (fixed price)
+- Brand-weighted, full multichannel
+- Maximum content and video volume
+- PPC + LSA + Meta + YouTube + TikTok
+- Market domination, default-choice status
 
-A production sprint that builds a lifetime video asset library:
+## Activation & Onboarding — $10,000 (one time, every program)
 
-- Pre-production planning call
-- Two full on-site shoot days
-- Multi-format edit package (brand film, testimonials, ads, recruiting)
-- Delivery in about 30 days
+Month one on every program. Covers the two-day on-site video shoot and the
+evergreen content library it produces, travel, the pre-shoot strategy build,
+editing, and the first-month build. The weekly retainer takes over in month two.
+
+## Every program includes
+
+- The full Brandformance system
+- The two-day video shoot and an evergreen content library
+- SEO, paid media, automation, and lead capture
 
 ---
 
