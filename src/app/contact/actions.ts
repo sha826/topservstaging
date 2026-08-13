@@ -1,8 +1,24 @@
 "use server";
 
+import { headers } from "next/headers";
 import { z } from "zod";
 import { deliverLead } from "@/lib/leads";
 import { siteConfig } from "@/lib/site-config";
+
+// Best-effort per-IP throttle (same caveats as the chat route: in-memory,
+// per instance — a backstop against scripts, not a security boundary).
+const WINDOW_MS = 10 * 60_000;
+const MAX_PER_WINDOW = 5;
+const hits = new Map<string, number[]>();
+
+function throttled(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 5000) hits.clear();
+  return recent.length > MAX_PER_WINDOW;
+}
 
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name."),
@@ -29,6 +45,15 @@ export async function submitLead(
   _prev: LeadFormState,
   formData: FormData
 ): Promise<LeadFormState> {
+  const ip =
+    (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (throttled(ip)) {
+    return {
+      status: "error",
+      message: `That's a lot of messages in a row. Give it a few minutes, or call us at ${siteConfig.company.phoneDisplay}.`,
+    };
+  }
+
   const parsed = leadSchema.safeParse({
     name: formData.get("name"),
     company: formData.get("company"),

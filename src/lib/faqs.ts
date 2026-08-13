@@ -13,6 +13,16 @@ export const generalFaqs: Faq[] = [
       "TopServ Digital is video-first: professional video production powers the entire marketing system instead of being an add-on. The agency has worked exclusively with home service companies since 2016, publishes its full pricing on its website, and has generated over $89M in revenue for 200+ contractor clients.",
   },
   {
+    question: "What services does TopServ Digital offer?",
+    answer:
+      "TopServ Digital offers ten services for home service companies: video marketing, paid advertising, SEO, Local Services Ads management, web design and development, social media marketing, email and SMS marketing, graphic design and branding, marketing automation and AI, and geofencing with OTT advertising. Video production is the engine that feeds every other channel.",
+  },
+  {
+    question: "How does TopServ Digital generate leads for home service companies?",
+    answer:
+      "TopServ follows a strategic 7-step process: a Google Business Profile and website audit, laying the right foundation by optimizing key assets, video production (Lights, Camera, Action), building targeted funnels to get omnipresent and hyper-focused, a large roadmap with clear milestones, map and planning for data-driven campaigns, and finally Track, Learn, Dominate: continuous refinement. Paid capture keeps the phone ringing while the brand compounds underneath.",
+  },
+  {
     question: "Which industries does TopServ Digital serve?",
     answer:
       "TopServ Digital serves six home service trades: HVAC, plumbing, roofing, electrical, garage door, and pest control companies. HVAC is the agency's original specialty — it started as an HVAC-focused agency in 2016 — and every strategy is adapted to how each trade's customers actually buy.",
