@@ -47,6 +47,7 @@ export function ProcessFlythrough() {
   const scrimRef = useRef<HTMLDivElement>(null);
   const headRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const durRef = useRef(0);
   const playingRef = useRef(false);
   const [playing, setPlaying] = useState(false);
@@ -93,6 +94,8 @@ export function ProcessFlythrough() {
       const h1 = (w1 * 9) / 16;
       shell.style.width = `${(sw + (w1 - sw) * q).toFixed(1)}px`;
       shell.style.height = `${(sh + (h1 - sh) * q).toFixed(1)}px`;
+      // Drift the card up as it lands, making room for the step cards below.
+      shell.style.top = `${(50 - 7 * q).toFixed(2)}%`;
       shell.style.borderRadius = `${(14 * q).toFixed(1)}px`;
       shell.style.boxShadow =
         q > 0.05 ? `0 30px 80px rgba(0,0,0,${(0.6 * q).toFixed(2)})` : "none";
@@ -116,10 +119,48 @@ export function ProcessFlythrough() {
       }
 
       revealRef.current?.classList.toggle("fly-on", p > 0.95);
+      cardsRef.current?.classList.toggle("on", p > 0.94);
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
   }, [reduceMotion]);
+
+  const stepCards = (ariaHidden: boolean) => (
+    <div
+      ref={ariaHidden ? cardsRef : undefined}
+      aria-hidden={ariaHidden || undefined}
+      className={cn(
+        "fly-cards flex flex-wrap items-stretch justify-center gap-2.5 px-6 xl:gap-3",
+        !ariaHidden && "on"
+      )}
+    >
+      {STEPS.map((step, i) => (
+        <div
+          key={step.name}
+          style={{
+            ["--d" as string]: `${(i * 0.07).toFixed(2)}s`,
+            ["--r" as string]: `${(i % 2 === 0 ? -1 : 1) * 2.2}deg`,
+          }}
+          className={cn(
+            "w-[124px] rounded-md border bg-card/90 p-3 backdrop-blur-sm transition-colors xl:w-[150px]",
+            step.tone === "b" || i === 0 || i === STEPS.length - 1
+              ? "border-brand-blue/45"
+              : "border-brand/40"
+          )}
+        >
+          <p
+            className={cn(
+              "label-mono",
+              step.tone === "g" ? "text-brand" : "text-brand-blue-hot"
+            )}
+          >
+            0{i + 1}
+          </p>
+          <p className="mt-1.5 text-[11.5px] font-semibold leading-snug">{step.name}</p>
+        </div>
+      ))}
+    </div>
+  );
 
   const reveal = (
     <div
@@ -169,6 +210,7 @@ export function ProcessFlythrough() {
               </>
             )}
           </div>
+          <div className="mt-8">{stepCards(false)}</div>
         </div>
       </div>
     );
@@ -265,11 +307,14 @@ export function ProcessFlythrough() {
           ))}
         </div>
 
+        {/* The next section's storyboard cards, dealt in once the film lands */}
+        <div className="absolute inset-x-0 bottom-7 z-[6]">{stepCards(true)}</div>
+
         {!playing && (
           <p
             ref={hintRef}
             aria-hidden
-            className="label-mono absolute bottom-6 left-1/2 z-[7] -translate-x-1/2 whitespace-nowrap text-white/75 transition-opacity duration-500"
+            className="label-mono absolute bottom-1.5 left-1/2 z-[7] -translate-x-1/2 whitespace-nowrap text-white/75 transition-opacity duration-500"
           >
             Keep scrolling to fly in
           </p>
