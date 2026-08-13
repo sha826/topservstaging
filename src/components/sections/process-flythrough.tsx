@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
 import { useInView, useReducedMotion } from "motion/react";
+import { ProcessIntro } from "@/components/sections/process-intro";
 
 const SALES_LETTER_ID = "1060921948";
 const SCRUB_SRC = "/videos/process/flythrough-scrub.mp4";
@@ -10,13 +11,14 @@ const START_POSTER = "/videos/process/flythrough-start.jpg";
 const END_POSTER = "/videos/process/sales-letter-poster.jpg";
 
 /**
- * Desktop-only scroll-scrubbed flythrough for the TopServ Process section
- * (design-lab R1): scrolling drives the camera move frame by frame inside a
- * fixed 16:9 cinema frame, dissolves into the sales-letter video's real
- * Vimeo thumbnail, and lands a centered play button on it. Clicking plays
- * the actual Vimeo video in the same frame. Mobile keeps the standard
- * click-to-play card in the section above; reduced motion gets the settled
- * end state with no pin.
+ * Desktop-only pinned stage for the TopServ Process section (design-lab R1):
+ * the section's intro text and the 16:9 film frame pin together while scroll
+ * drives the camera flythrough frame by frame. The move dissolves into the
+ * sales-letter video's real Vimeo thumbnail, a centered play button lands on
+ * it, and once the flight completes the page releases and browsing
+ * continues. Reduced motion gets the settled composition with no pin.
+ *
+ * Must NOT sit inside an overflow-hidden ancestor — that disables sticky.
  */
 export function ProcessFlythrough() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -73,7 +75,7 @@ export function ProcessFlythrough() {
   }, [reduceMotion]);
 
   const frame = (
-    <div className="relative w-[min(92vw,1040px)]">
+    <div className="relative w-full">
       <div
         aria-hidden
         className="absolute -inset-10 z-0 bg-[radial-gradient(60%_60%_at_50%_50%,rgba(14,125,193,0.25),transparent_70%)] blur-2xl"
@@ -131,11 +133,11 @@ export function ProcessFlythrough() {
                 type="button"
                 onClick={() => setPlaying(true)}
                 aria-label="Play the TopServ Process video"
-                className="flex size-20 items-center justify-center rounded-full bg-brand text-primary-foreground shadow-[0_14px_60px_rgba(158,216,68,0.35)] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                className="flex size-16 items-center justify-center rounded-full bg-brand text-primary-foreground shadow-[0_14px_60px_rgba(158,216,68,0.35)] transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand xl:size-20"
               >
-                <Play className="ml-1 size-8 fill-current" aria-hidden />
+                <Play className="ml-1 size-7 fill-current xl:size-8" aria-hidden />
               </button>
-              <p className="label-mono absolute bottom-5 left-6 text-white/90">
+              <p className="label-mono absolute bottom-4 left-5 text-white/90">
                 The TopServ Process · 2:43
               </p>
             </div>
@@ -146,26 +148,36 @@ export function ProcessFlythrough() {
         <p
           ref={hintRef}
           aria-hidden
-          className="label-mono absolute -bottom-10 left-1/2 -translate-x-1/2 text-ink-faint transition-opacity duration-500"
+          className="label-mono absolute -bottom-9 left-1/2 -translate-x-1/2 whitespace-nowrap text-ink-faint transition-opacity duration-500"
         >
-          Scroll to fly in
+          Keep scrolling to fly in
         </p>
       )}
     </div>
   );
 
+  const stageInner = (
+    <>
+      <div aria-hidden className="grid-drift pointer-events-none absolute inset-0" />
+      <div className="relative mx-auto grid h-full max-w-6xl grid-cols-[0.9fr_1.1fr] items-center gap-12 px-5">
+        <ProcessIntro />
+        {frame}
+      </div>
+    </>
+  );
+
   if (reduceMotion) {
-    // No pin, no scrub: the settled end state as a normal block.
+    // No pin, no scrub: the settled composition as a normal block.
     return (
-      <div className="hidden justify-center pb-20 lg:flex">{frame}</div>
+      <div className="relative hidden overflow-hidden py-20 lg:block">
+        {stageInner}
+      </div>
     );
   }
 
   return (
-    <div ref={wrapRef} className="relative hidden h-[260vh] lg:block">
-      <div className="sticky top-0 flex h-svh items-center justify-center">
-        {frame}
-      </div>
+    <div ref={wrapRef} className="relative hidden h-[280vh] lg:block">
+      <div className="sticky top-0 h-svh">{stageInner}</div>
     </div>
   );
 }
