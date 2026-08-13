@@ -3368,5 +3368,193 @@
   }
 })();
 </script>
+<!-- ============================================================
+     PART S — Process flythrough restaged: steps ride the flight
+     ============================================================ -->
+<style>
+  .s-wrap { position: relative; height: 300vh; }
+  .s-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #07080a; }
+  .s-head { position: absolute; left: 28px; top: 24px; z-index: 8; }
+  .s-head h2 { font-size: 30px; }
+  .s-prog { position: absolute; left: 0; top: 0; height: 3px; width: 0%; background: var(--brand); z-index: 9; box-shadow: 0 0 8px rgba(158,216,68,.7); }
+  .s-hint { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 8;
+    font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,243,239,.75); transition: opacity .4s; }
+  .s-step { position: absolute; opacity: 0; will-change: transform, opacity; }
+  .s-step .sn { font-family: "DM Mono", monospace; font-size: 12px; letter-spacing: .22em; color: var(--faint); display: block; margin-bottom: 10px; }
+  .s-step .st2 { font-family: "Bebas Neue", sans-serif; font-size: clamp(38px, 3.6vw, 64px); line-height: .98; transform: skewX(-6deg); display: block; }
+  .s-step.tone-g .st2 { color: var(--brand); }
+  .s-step.tone-b .st2 { color: #3D9BD9; }
+  .s-reveal { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .45s; background: rgba(0,0,0,.25); }
+  .s-reveal.on { opacity: 1; pointer-events: auto; }
+  .s-cap { position: absolute; bottom: 16px; left: 20px; }
+
+  /* S1: framed */
+  .s1-grid { position: relative; z-index: 2; display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: center; height: 100%; max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+  .s1-titles { position: relative; height: 220px; }
+  .s1-frame { position: relative; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; border: 1px solid var(--line-strong); background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  .s1-frame video, .s1-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .s1-glow { position: absolute; inset: -40px; z-index: 0; background: radial-gradient(60% 60% at 60% 50%, rgba(14,125,193,.22), transparent 70%); filter: blur(30px); }
+
+  /* S2: full-bleed that lands into a frame */
+  .s2-shell { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); overflow: hidden; background: #000; z-index: 1; }
+  .s2-shell video, .s2-shell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .s2-steps { position: absolute; left: 48px; bottom: 96px; z-index: 6; }
+  .s2-steps .s-step { position: absolute; left: 0; bottom: 0; }
+  .s2-scrim { position: absolute; inset: 0; z-index: 4; background: linear-gradient(to top, rgba(7,8,10,.55), transparent 40%); pointer-events: none; }
+</style>
+
+<section class="wrap" id="part-s">
+  <div class="section-head"><span class="mono">PART S</span><h2 class="display">Process stage, restaged</h2></div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">S1</span><h3>Steps ride the flight (framed)</h3>
+      <p>No paragraph. The seven step names land one at a time as chapter titles beside the film, synced to your scroll through the flythrough. Land, dissolve to the thumbnail, play.</p></div>
+    <div class="frame-box r-frame"><div class="s-wrap" id="s1wrap">
+      <div class="s-stage">
+        <span class="s-prog" id="s1prog"></span>
+        <div class="s-head"><span class="label">The process</span><h2 class="display">TopServ Process<span style="color:var(--brand)">.</span></h2></div>
+        <div class="s1-grid">
+          <div class="s1-titles" id="s1titles"></div>
+          <div style="position:relative">
+            <div class="s1-glow"></div>
+            <div class="s1-frame" id="s1frame">
+              <video id="s1vid" src="/videos/lab/flythrough-a-scrub.mp4" poster="/videos/lab/flythrough-a-poster.jpg" muted playsinline preload="auto"></video>
+              <img id="s1poster" src="/videos/lab/sales-letter-poster.jpg" alt="" style="opacity:0">
+              <div class="s-reveal" id="s1reveal">
+                <button class="p-play" id="s1play" aria-label="Play" style="position:static; transform:none"></button>
+                <span class="label s-cap">The TopServ Process · 2:43</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="s-hint" id="s1hint">Keep scrolling to fly in</p>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">S2</span><h3>Full-bleed cockpit, lands into the frame</h3>
+      <p>The flythrough fills the whole stage, chapter titles overlay lower-left, and at the end the video physically shrinks and settles into the centered 16:9 card as it dissolves to the thumbnail. Zero dead pixels.</p></div>
+    <div class="frame-box r-frame"><div class="s-wrap" id="s2wrap">
+      <div class="s-stage">
+        <span class="s-prog" id="s2prog"></span>
+        <div class="s2-shell" id="s2shell">
+          <video id="s2vid" src="/videos/lab/flythrough-a-scrub.mp4" poster="/videos/lab/flythrough-a-poster.jpg" muted playsinline preload="auto"></video>
+          <img id="s2poster" src="/videos/lab/sales-letter-poster.jpg" alt="" style="opacity:0">
+          <div class="s-reveal" id="s2reveal">
+            <button class="p-play" id="s2play" aria-label="Play" style="position:static; transform:none"></button>
+            <span class="label s-cap">The TopServ Process · 2:43</span>
+          </div>
+        </div>
+        <div class="s2-scrim" id="s2scrim"></div>
+        <div class="s-head" id="s2head"><span class="label">The process</span><h2 class="display">TopServ Process<span style="color:var(--brand)">.</span></h2></div>
+        <div class="s2-steps" id="s2titles"></div>
+        <p class="s-hint" id="s2hint">Keep scrolling to fly in</p>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const STEPS = [
+    ["GBP & Website Audit", "g"], ["Lay the Right Foundation", "b"],
+    ["Lights, Camera, Action", "g"], ["Build Funnels to Get Omnipresent & Hyper-Focused", "b"],
+    ["Large Roadmap", "g"], ["Map and Planning", "b"], ["Track - Learn - Dominate", "g"]
+  ];
+  const T0 = 0.05, T1 = 0.80, SEG = (T1 - T0) / STEPS.length;
+
+  function buildSteps(el) {
+    el.innerHTML = STEPS.map(([name, tone], i) =>
+      `<div class="s-step tone-${tone}"><span class="sn">Step 0${i + 1} / 07</span><span class="st2">${name}</span></div>`
+    ).join("");
+    return [...el.children];
+  }
+  function paintSteps(nodes, p, fadeAll) {
+    nodes.forEach((n, i) => {
+      const t = (p - (T0 + i * SEG)) / SEG;
+      let o = 0;
+      if (t > 0 && t < 1) o = Math.min(1, t / 0.22, (1 - t) / 0.22);
+      o *= 1 - fadeAll;
+      n.style.opacity = o.toFixed(3);
+      n.style.transform = `translateY(${((1 - Math.min(1, t < 0 ? 0 : t)) * 14 - 7).toFixed(1)}px)`;
+    });
+  }
+  function engine(id, fn) {
+    const wrap = document.getElementById(id);
+    let playing = false;
+    const setPlaying = () => { playing = true; };
+    (function loop() {
+      if (!playing) {
+        const rect = wrap.getBoundingClientRect();
+        const total = rect.height - innerHeight;
+        const p = Math.min(1, Math.max(0, -rect.top / Math.max(1, total)));
+        fn(p);
+      }
+      requestAnimationFrame(loop);
+    })();
+    return setPlaying;
+  }
+  const scrub = (vid, p) => {
+    if (vid.duration && !vid.seeking) {
+      const t = p * (vid.duration - 0.05);
+      if (Math.abs(vid.currentTime - t) > 0.02) vid.currentTime = t;
+    }
+  };
+  const playSwap = (host, stop) => () => {
+    stop();
+    host.innerHTML = '<iframe src="https://player.vimeo.com/video/1060921948?autoplay=1&title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0" title="TopServ Process video"></iframe>';
+  };
+
+  // ---- S1
+  {
+    const vid = document.getElementById("s1vid"), poster = document.getElementById("s1poster"),
+      reveal = document.getElementById("s1reveal"), prog = document.getElementById("s1prog"),
+      hint = document.getElementById("s1hint"), nodes = buildSteps(document.getElementById("s1titles"));
+    vid.load();
+    const stop = engine("s1wrap", (p) => {
+      scrub(vid, p);
+      prog.style.width = (p * 100).toFixed(1) + "%";
+      hint.style.opacity = p < 0.04 ? "1" : "0";
+      const q = Math.min(1, Math.max(0, (p - 0.84) / 0.12));
+      poster.style.opacity = q.toFixed(3);
+      paintSteps(nodes, p, q);
+      reveal.classList.toggle("on", p > 0.94);
+    });
+    document.getElementById("s1play").onclick = playSwap(document.getElementById("s1frame"), stop);
+  }
+
+  // ---- S2
+  {
+    const vid = document.getElementById("s2vid"), poster = document.getElementById("s2poster"),
+      reveal = document.getElementById("s2reveal"), prog = document.getElementById("s2prog"),
+      hint = document.getElementById("s2hint"), shell = document.getElementById("s2shell"),
+      scrim = document.getElementById("s2scrim"), head = document.getElementById("s2head"),
+      stepsBox = document.getElementById("s2titles"), nodes = buildSteps(stepsBox);
+    vid.load();
+    const ease = (x) => 1 - Math.pow(1 - x, 3);
+    const stop = engine("s2wrap", (p) => {
+      scrub(vid, p);
+      prog.style.width = (p * 100).toFixed(1) + "%";
+      hint.style.opacity = p < 0.04 ? "1" : "0";
+      const q = ease(Math.min(1, Math.max(0, (p - 0.82) / 0.14)));
+      // full-bleed -> centered 16:9 card
+      const stage = shell.parentElement.getBoundingClientRect();
+      const W1 = Math.min(stage.width * 0.62, 940), H1 = W1 * 9 / 16;
+      shell.style.width = (stage.width + (W1 - stage.width) * q).toFixed(1) + "px";
+      shell.style.height = (stage.height + (H1 - stage.height) * q).toFixed(1) + "px";
+      shell.style.borderRadius = (14 * q).toFixed(1) + "px";
+      shell.style.border = q > 0.05 ? "1px solid rgba(61,70,80," + q.toFixed(2) + ")" : "none";
+      shell.style.boxShadow = q > 0.05 ? "0 30px 80px rgba(0,0,0," + (0.6 * q).toFixed(2) + ")" : "none";
+      poster.style.opacity = q.toFixed(3);
+      scrim.style.opacity = (1 - q).toFixed(3);
+      head.style.opacity = (1 - q * 0.65).toFixed(3);
+      paintSteps(nodes, p, q);
+      reveal.classList.toggle("on", p > 0.95);
+    });
+    document.getElementById("s2play").onclick = playSwap(shell, stop);
+  }
+})();
+</script>
 </body>
 </html>
