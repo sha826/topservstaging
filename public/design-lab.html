@@ -3556,5 +3556,452 @@
   }
 })();
 </script>
+<!-- ============================================================
+     PART T — Pricing page, four stagings
+     ============================================================ -->
+<style>
+  .t-price { font-family: "Bebas Neue", sans-serif; font-size: 46px; color: var(--brand); line-height: 1; }
+  .t-price small { font-family: "Barlow", sans-serif; font-size: 13px; color: var(--muted); margin-left: 6px; }
+  .t-feat { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 7px; }
+  .t-feat li { font-size: 13px; color: var(--muted); padding-left: 18px; position: relative; }
+  .t-feat li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-size: 12px; }
+
+  /* T1 ladder */
+  .t1-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; align-items: end; padding-top: 10px; }
+  .t1-col { display: flex; flex-direction: column; justify-content: flex-end; }
+  .t1-card { border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 22px;
+    opacity: 0; transform: translateY(26px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); transition-delay: var(--d); }
+  .t1-riser { margin: 0 18px; background: linear-gradient(to top, rgba(158,216,68,.16), rgba(158,216,68,.03));
+    border: 1px solid rgba(158,216,68,.25); border-top: 2px solid var(--brand); border-radius: 2px 2px 0 0;
+    height: var(--h); transform: scaleY(0); transform-origin: bottom; transition: transform .7s cubic-bezier(.22,1,.36,1); transition-delay: calc(var(--d) - .15s);
+    display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; }
+  .t1-riser .label { color: rgba(158,216,68,.75); font-size: 10px; }
+  .t1-on .t1-card { opacity: 1; transform: none; }
+  .t1-on .t1-riser { transform: scaleY(1); }
+
+  /* T2 call-sheet rows */
+  .t2-sheet { border-top: 1px solid var(--line-strong); position: relative; }
+  .t2-scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 2; opacity: 0; pointer-events: none;
+    background: linear-gradient(90deg, transparent, var(--brand), transparent); filter: drop-shadow(0 0 7px var(--brand)); }
+  .t2-on .t2-scan { animation: n1scan 1.4s .1s cubic-bezier(.4,0,.2,1) forwards; }
+  .t2-row { border-bottom: 1px solid var(--line); cursor: pointer; opacity: 0; transform: translateY(14px);
+    transition: opacity .5s, transform .5s cubic-bezier(.22,1,.36,1), background .2s; transition-delay: var(--d), var(--d), 0s; }
+  .t2-on .t2-row { opacity: 1; transform: none; }
+  .t2-row:hover { background: var(--card); }
+  .t2-row:hover .t2-name { color: var(--brand); }
+  .t2-head2 { display: grid; grid-template-columns: 110px 1.1fr auto 1.5fr 30px; gap: 22px; align-items: center; padding: 20px 14px; }
+  .t2-name { font-family: "Bebas Neue", sans-serif; font-size: 34px; line-height: 1; }
+  .t2-out { font-size: 13px; color: var(--muted); }
+  .t2-more { color: var(--brand); font-size: 18px; transition: transform .3s; }
+  .t2-row.open .t2-more { transform: rotate(45deg); }
+  .t2-body { max-height: 0; overflow: hidden; transition: max-height .45s cubic-bezier(.22,1,.36,1); }
+  .t2-row.open .t2-body { max-height: 220px; }
+  .t2-body-in { padding: 0 14px 20px 146px; }
+
+  /* T3 diagnosis */
+  .t3-q { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 26px; }
+  .t3-q button { font-family: "DM Mono", monospace; font-size: 12px; letter-spacing: .06em; color: var(--fg);
+    background: var(--card); border: 1px solid var(--line-strong); border-radius: 999px; padding: 12px 18px; cursor: pointer; transition: border-color .2s, background .2s; }
+  .t3-q button:hover { border-color: var(--brand); }
+  .t3-q button.sel { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+  .t3-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .t3-card { border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 20px; position: relative; transition: opacity .4s, border-color .4s, transform .4s; }
+  .t3-card.dim { opacity: .32; }
+  .t3-card.pick { border-color: var(--brand); transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,.45); }
+  .t3-stamp { position: absolute; top: -12px; left: 16px; background: var(--brand); color: var(--on-brand);
+    font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; padding: 3px 10px; border-radius: 2px;
+    opacity: 0; transform: rotate(-3deg) translateY(6px); transition: opacity .3s, transform .3s; }
+  .t3-card.pick .t3-stamp { opacity: 1; transform: rotate(-3deg) translateY(0); }
+  .t3-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .t3-tool { font-family: "DM Mono", monospace; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); border: 1px dashed var(--line-strong); border-radius: 3px; padding: 5px 10px; }
+
+  /* T4 polish */
+  .t4-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .t4-card { border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 22px; }
+  .t4-card .t-feat li { opacity: 0; transform: translateX(-10px); transition: opacity .4s, transform .4s cubic-bezier(.22,1,.36,1); transition-delay: var(--d); }
+  .t4-on .t4-card .t-feat li { opacity: 1; transform: none; }
+  .t4-act { margin-top: 18px; border: 1px solid rgba(158,216,68,.4); border-radius: 8px; padding: 20px 24px;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px; position: relative; overflow: hidden; }
+  .t4-act::after { content: ""; position: absolute; inset: -40%; background: radial-gradient(40% 60% at 50% 50%, rgba(158,216,68,.12), transparent 70%); animation: t4breathe 4s ease-in-out infinite; pointer-events: none; }
+  @keyframes t4breathe { 50% { opacity: .35; } }
+</style>
+
+<section class="wrap" id="part-t">
+  <div class="section-head"><span class="mono">PART T</span><h2 class="display">Pricing, four stagings</h2></div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">T1</span><h3>The ladder tells the story</h3>
+      <p>The three brand-equity rungs rendered as an actual climb: risers grow from the ground, programs land on their rung. The page IS the one-pager's ladder.</p></div>
+    <div class="frame-box"><div class="n-sec t1-wrap" id="t1wrap">
+      <p class="label">Pricing</p>
+      <h2 class="display" style="font-size:clamp(30px,3.5vw,44px); margin:8px 0 26px">Three programs. One climb<span style="color:var(--brand)">.</span></h2>
+      <div class="t1-grid" id="t1grid"></div>
+      <p style="color:var(--faint); font-size:13px; margin-top:18px">Placement is diagnosed on the discovery call from heat-map, SEMrush, and branded-search data. As your brand grows, you climb.</p>
+    </div></div>
+  </div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">T2</span><h3>Call-sheet pricing</h3>
+      <p>The programs as production line-items, same language as the services call sheet: scan-line entrance, price as the big number, click a row to unfold its manifest.</p></div>
+    <div class="frame-box"><div class="n-sec">
+      <p class="label">Pricing · Call sheet</p>
+      <h2 class="display" style="font-size:clamp(30px,3.5vw,44px); margin:8px 0 22px">Most agencies hide their numbers. We don't<span style="color:var(--brand)">.</span></h2>
+      <div class="t2-sheet" id="t2sheet"><span class="t2-scan"></span></div>
+    </div></div>
+  </div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">T3</span><h3>Diagnosis-first</h3>
+      <p>Leads with the differentiator: you don't pick, we prescribe. The instruments get chips, and a "which sounds like you?" self-check highlights the likely prescription live.</p></div>
+    <div class="frame-box"><div class="n-sec">
+      <p class="label">Pricing</p>
+      <h2 class="display" style="font-size:clamp(30px,3.5vw,44px); margin:8px 0 6px">You don't pick a package<span style="color:var(--brand)">.</span><br>We prescribe it<span style="color:var(--brand)">.</span></h2>
+      <div class="t3-tools">
+        <span class="t3-tool">49-point heat map</span><span class="t3-tool">SEMrush rankings</span><span class="t3-tool">Branded search volume</span>
+      </div>
+      <p class="label" style="margin-top:24px; color:var(--muted)">Which sounds like you?</p>
+      <div class="t3-q" id="t3q">
+        <button data-i="0">The market doesn't know us yet</button>
+        <button data-i="1">People know us, but we're not their first call</button>
+        <button data-i="2">We want to own the whole market</button>
+      </div>
+      <div class="t3-grid" id="t3grid"></div>
+      <p style="color:var(--faint); font-size:13px; margin-top:16px">That's the likely fit. The real placement comes from your market's data on the discovery call.</p>
+    </div></div>
+  </div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">T4</span><h3>Light polish</h3>
+      <p>The current layout kept, house motion added: prices count up, features ignite row by row, the activation banner breathes.</p></div>
+    <div class="frame-box"><div class="n-sec t4-wrap" id="t4wrap">
+      <p class="label">Pricing</p>
+      <h2 class="display" style="font-size:clamp(30px,3.5vw,44px); margin:8px 0 22px">Three programs, one system<span style="color:var(--brand)">.</span></h2>
+      <div class="t4-grid" id="t4grid"></div>
+      <div class="t4-act">
+        <div><h3 class="display" style="font-size:26px">Activation &amp; Onboarding</h3>
+        <p style="color:var(--muted); font-size:13px; max-width:520px; margin-top:6px">One time, in month one, on every program: the two-day shoot, travel, strategy build, editing, and the first-month build.</p></div>
+        <div class="t-price" style="font-size:40px" id="t4act">$10,000</div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const PROGRAMS2 = [
+    { stage: "Stage 1 · Unknown", name: "Establish", wk: 1000,
+      out: "Stop renting every lead. Build the foundation that makes leads cheaper over time.",
+      f: ["Performance-weighted media to keep the phone ringing now", "SEO build where the map is weak", "PPC + LSA lead capture", "Brand foundation growing underneath"] },
+    { stage: "Stage 2 · Name Recognition", name: "Amplify", wk: 1625,
+      out: "Become the name people prefer, not just recognize. Lower cost per lead as the brand carries more.",
+      f: ["Balanced brand and performance", "Heavier content and video cadence", "PPC + LSA + Meta", "Reach and frequency across the market"] },
+    { stage: "Stage 3 · Household Name", name: "Dominate", wk: 2375,
+      out: "Five Mile Famous. The brand does the heavy lifting and paid lead capture drops toward nothing.",
+      f: ["Brand-weighted, full multichannel", "Maximum content and video volume", "PPC + LSA + Meta + YouTube + TikTok", "Market domination, default-choice status"] },
+  ];
+  const money = (n) => "$" + n.toLocaleString("en-US");
+  const featHtml = (p) => `<ul class="t-feat">${p.f.map((x) => `<li>${x}</li>`).join("")}</ul>`;
+  const io = (el, cls) => new IntersectionObserver((es, o) => {
+    es.forEach((e) => { if (e.isIntersecting) { el.classList.add(cls); o.disconnect(); } });
+  }, { threshold: 0.3 }).observe(el);
+
+  // T1 ladder
+  const t1 = document.getElementById("t1grid");
+  t1.innerHTML = PROGRAMS2.map((p, i) => `
+    <div class="t1-col">
+      <div class="t1-card" style="--d:${0.25 + i * 0.2}s">
+        <p class="label" style="font-size:10px">${p.stage}</p>
+        <h3 class="display" style="font-size:30px; margin-top:6px">${p.name}</h3>
+        <p class="t-price" style="margin-top:10px">${money(p.wk)}<small>/week</small></p>
+        <p style="font-size:12.5px; color:var(--muted); margin-top:10px">${p.out}</p>
+      </div>
+      <div class="t1-riser" style="--h:${[70, 150, 230][i]}px; --d:${0.25 + i * 0.2}s"><span class="label">${["Unknown", "Name recognition", "Household name"][i]}</span></div>
+    </div>`).join("");
+  io(document.getElementById("t1wrap"), "t1-on");
+
+  // T2 call-sheet
+  const t2 = document.getElementById("t2sheet");
+  PROGRAMS2.forEach((p, i) => {
+    t2.insertAdjacentHTML("beforeend", `
+      <div class="t2-row" style="--d:${(i * 0.12).toFixed(2)}s">
+        <div class="t2-head2">
+          <span class="mono" style="font-size:11px; color:var(--faint); letter-spacing:.14em">${p.stage.split(" · ")[0].toUpperCase()}</span>
+          <span class="t2-name">${p.name}</span>
+          <span class="t-price" style="font-size:36px">${money(p.wk)}<small>/wk</small></span>
+          <span class="t2-out">${p.out}</span>
+          <span class="t2-more">+</span>
+        </div>
+        <div class="t2-body"><div class="t2-body-in">${featHtml(p)}</div></div>
+      </div>`);
+  });
+  t2.parentElement && io(t2, "t2-on");
+  t2.classList.add("t2-sheet");
+  t2.querySelectorAll(".t2-row").forEach((row) => {
+    row.addEventListener("click", () => row.classList.toggle("open"));
+  });
+  new IntersectionObserver((es, o) => { es.forEach((e) => { if (e.isIntersecting) { t2.classList.add("t2-on"); o.disconnect(); } }); }, { threshold: 0.3 }).observe(t2);
+
+  // T3 diagnosis
+  const t3 = document.getElementById("t3grid");
+  t3.innerHTML = PROGRAMS2.map((p, i) => `
+    <div class="t3-card" data-i="${i}">
+      <span class="t3-stamp">Likely prescription</span>
+      <p class="label" style="font-size:10px">${p.stage}</p>
+      <h3 class="display" style="font-size:28px; margin-top:6px">${p.name}</h3>
+      <p class="t-price" style="font-size:38px; margin-top:8px">${money(p.wk)}<small>/week</small></p>
+      ${featHtml(p)}
+    </div>`).join("");
+  document.getElementById("t3q").addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    const pick = Number(btn.dataset.i);
+    document.querySelectorAll("#t3q button").forEach((b) => b.classList.toggle("sel", b === btn));
+    t3.querySelectorAll(".t3-card").forEach((c) => {
+      const me = Number(c.dataset.i) === pick;
+      c.classList.toggle("pick", me);
+      c.classList.toggle("dim", !me);
+    });
+  });
+  // preselect the middle answer so the mechanic is visible immediately
+  document.querySelector('#t3q button[data-i="1"]').click();
+
+  // T4 polish
+  const t4 = document.getElementById("t4grid");
+  t4.innerHTML = PROGRAMS2.map((p, i) => `
+    <div class="t4-card">
+      <p class="label" style="font-size:10px">${p.stage}</p>
+      <h3 class="display" style="font-size:28px; margin-top:6px">${p.name}</h3>
+      <p class="t-price" data-wk="${p.wk}" style="margin-top:10px">$0<small>/week</small></p>
+      <ul class="t-feat">${p.f.map((x, j) => `<li style="--d:${(0.5 + i * 0.15 + j * 0.1).toFixed(2)}s">${x}</li>`).join("")}</ul>
+    </div>`).join("");
+  const t4wrap = document.getElementById("t4wrap");
+  new IntersectionObserver((es, o) => {
+    es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      o.disconnect();
+      t4wrap.classList.add("t4-on");
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        t4.querySelectorAll(".t-price").forEach((el) => { el.innerHTML = money(Number(el.dataset.wk)) + "<small>/week</small>"; });
+        return;
+      }
+      t4.querySelectorAll(".t-price").forEach((el, i) => {
+        const target = Number(el.dataset.wk);
+        const start = performance.now() + i * 150;
+        (function tick(now) {
+          const t = Math.min(1, (now - start) / 1100);
+          if (t > 0) el.innerHTML = money(Math.round(target * (1 - Math.pow(1 - t, 3)))) + "<small>/week</small>";
+          if (t < 1) requestAnimationFrame(tick);
+        })(performance.now());
+      });
+    });
+  }, { threshold: 0.3 }).observe(t4wrap);
+})();
+</script>
+<!-- ============================================================
+     PART T continued — T5 budget sheet · T6 posters · T7 journey
+     ============================================================ -->
+<style>
+  /* T5 production budget sheet */
+  .t5-doc { border: 1px solid var(--line-strong); border-radius: 6px; background: #101215; max-width: 860px; margin: 0 auto;
+    font-family: "DM Mono", monospace; position: relative; overflow: hidden; }
+  .t5-dochead { display: flex; flex-wrap: wrap; gap: 8px 28px; padding: 16px 26px; border-bottom: 1px dashed var(--line-strong);
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  .t5-body { padding: 10px 26px 24px; }
+  .t5-line { display: flex; align-items: baseline; gap: 12px; padding: 13px 0; border-bottom: 1px solid rgba(38,42,48,.6);
+    opacity: 0; transform: translateX(-8px); transition: opacity .45s, transform .45s cubic-bezier(.22,1,.36,1); transition-delay: var(--d); }
+  .t5-on .t5-line { opacity: 1; transform: none; }
+  .t5-num { color: var(--faint); font-size: 11px; width: 26px; flex-shrink: 0; }
+  .t5-item { font-family: "Bebas Neue", sans-serif; font-size: 24px; letter-spacing: .02em; }
+  .t5-note { color: var(--faint); font-size: 11px; }
+  .t5-dots { flex: 1; border-bottom: 2px dotted rgba(107,114,128,.45); transform: translateY(-5px); min-width: 30px; }
+  .t5-amt { font-family: "Bebas Neue", sans-serif; font-size: 26px; color: var(--brand); white-space: nowrap; }
+  .t5-amt small { font-family: "DM Mono", monospace; font-size: 10px; color: var(--muted); }
+  .t5-line.act .t5-item, .t5-line.act .t5-amt { color: #f0d78a; }
+  .t5-stamp { position: absolute; right: 26px; bottom: 20px; border: 3px solid var(--brand); color: var(--brand); border-radius: 4px;
+    font-family: "Bebas Neue", sans-serif; font-size: 22px; letter-spacing: .12em; padding: 4px 14px; transform: rotate(-7deg) scale(1.6); opacity: 0;
+    transition: opacity .3s, transform .3s cubic-bezier(.34,1.56,.64,1); transition-delay: 1.2s; }
+  .t5-on .t5-stamp { opacity: .92; transform: rotate(-7deg) scale(1); }
+  .t5-sub { font-size: 10.5px; color: var(--faint); padding-left: 38px; margin-top: 6px; }
+
+  /* T6 movie posters — readable edition, middle card featured */
+  .t6-grid { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: 22px; max-width: 1180px; margin: 0 auto; align-items: center; }
+  .t6-poster { position: relative; border-radius: 10px; overflow: hidden; cursor: default;
+    border: 1px solid var(--line-strong); display: flex; flex-direction: column; padding: 28px 26px 24px;
+    transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s; }
+  .t6-poster:hover { transform: translateY(-8px); box-shadow: 0 30px 70px rgba(0,0,0,.6); }
+  .t6-p1 { background: linear-gradient(170deg, #0d1b2c, #0c0e12 58%, rgba(14,125,193,.24)); }
+  .t6-p2 { background: linear-gradient(170deg, #16210b, #0c0e12 58%, rgba(158,216,68,.22)); }
+  .t6-p3 { background: linear-gradient(170deg, #101820, #0c0e12 58%, rgba(61,155,217,.18)); }
+  .t6-feat2 { border-color: rgba(158,216,68,.55); box-shadow: 0 24px 70px rgba(158,216,68,.10), 0 30px 80px rgba(0,0,0,.5); transform: scale(1.03); z-index: 2; }
+  .t6-feat2:hover { transform: scale(1.03) translateY(-8px); }
+  .t6-featbadge { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--brand); color: var(--on-brand);
+    font-family: "DM Mono", monospace; font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 0 0 6px 6px; }
+  .t6-tag { font-size: 12.5px; font-style: italic; color: var(--muted); text-align: center; letter-spacing: .03em; min-height: 34px; }
+  .t6-title { font-family: "Bebas Neue", sans-serif; font-size: clamp(40px, 3.6vw, 58px); line-height: .94; text-align: center; margin-top: 6px; }
+  .t6-p1 .t6-title { color: #7fc3ec; } .t6-p2 .t6-title { color: var(--brand); } .t6-p3 .t6-title { color: #f5f3ef; }
+  .t6-stage { text-align: center; font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); margin-top: 8px; }
+  .t6-pricebig { text-align: center; margin: 16px 0 4px; font-family: "Bebas Neue", sans-serif; font-size: 52px; line-height: 1; color: var(--fg); }
+  .t6-pricebig small { font-family: "Barlow", sans-serif; font-size: 13px; color: var(--muted); }
+  .t6-out { font-size: 13.5px; line-height: 1.55; color: var(--muted); text-align: center; margin-top: 10px; min-height: 62px; }
+  .t6-list { list-style: none; margin: 16px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(245,243,239,.12); display: grid; gap: 9px; }
+  .t6-list li { font-size: 13.5px; line-height: 1.45; color: rgba(245,243,239,.88); padding-left: 22px; position: relative; }
+  .t6-list li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-weight: 700; }
+  .t6-cta { margin-top: 20px; display: block; text-align: center; font-family: "DM Mono", monospace; font-size: 12px; letter-spacing: .14em;
+    text-transform: uppercase; border-radius: 4px; padding: 13px 10px; text-decoration: none; transition: transform .2s; }
+  .t6-cta:hover { transform: scale(1.02); }
+  .t6-cta.solid { background: var(--brand); color: var(--on-brand); }
+  .t6-cta.ghost { border: 1px solid var(--line-strong); color: var(--fg); }
+  .t6-billing { font-family: "Oswald", "Arial Narrow", sans-serif; text-transform: uppercase; text-align: center;
+    font-size: 8.5px; letter-spacing: .06em; line-height: 1.6; color: rgba(245,243,239,.4); margin-top: 16px; }
+  .t6-sheen { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.09) 50%, transparent 60%);
+    transform: translateX(-120%); transition: transform .8s ease; pointer-events: none; }
+  .t6-poster:hover .t6-sheen { transform: translateX(120%); }
+
+  /* T7 journey */
+  .t7-tabs { display: flex; gap: 8px; margin-bottom: 22px; }
+  .t7-tabs button { font-family: "DM Mono", monospace; font-size: 12px; color: var(--fg); background: var(--card);
+    border: 1px solid var(--line-strong); border-radius: 999px; padding: 10px 18px; cursor: pointer; transition: all .2s; }
+  .t7-tabs button.sel { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+  .t7-strip { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr 34px 1fr; align-items: stretch; gap: 0; }
+  .t7-beat { border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 18px;
+    opacity: 0; transform: translateY(16px); transition: opacity .5s, transform .5s cubic-bezier(.22,1,.36,1); transition-delay: var(--d); }
+  .t7-on .t7-beat { opacity: 1; transform: none; }
+  .t7-arrow { display: flex; align-items: center; justify-content: center; color: var(--brand); font-size: 18px;
+    opacity: 0; transition: opacity .4s; transition-delay: var(--d); }
+  .t7-on .t7-arrow { opacity: 1; }
+  .t7-when { font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); }
+  .t7-what { font-family: "Bebas Neue", sans-serif; font-size: 23px; margin-top: 6px; line-height: 1; }
+  .t7-amt { font-family: "Bebas Neue", sans-serif; font-size: 30px; color: var(--brand); margin-top: 8px; }
+  .t7-amt small { font-family: "Barlow", sans-serif; font-size: 11px; color: var(--muted); }
+  .t7-desc { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+</style>
+
+<section class="wrap" id="part-t2">
+  <div class="section-head"><span class="mono">PART T · MORE</span><h2 class="display">Pricing, three bolder stagings</h2></div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">T5</span><h3>The production budget</h3>
+      <p>Pricing as real production paperwork: a budget sheet with dotted leaders, line items typing in, the activation as its own above-the-line item, and an APPROVED stamp slamming on. Pure film-office language.</p></div>
+    <div class="frame-box"><div class="n-sec t5-wrap" id="t5wrap">
+      <p class="label" style="text-align:center">Pricing · The rate card</p>
+      <h2 class="display" style="font-size:clamp(30px,3.5vw,44px); margin:8px 0 26px; text-align:center">Most agencies hide their numbers. We don't<span style="color:var(--brand)">.</span></h2>
+      <div class="t5-doc">
+        <div class="t5-dochead"><span>Production: your brand</span><span>Billed: weekly</span><span>FY 2026</span></div>
+        <div class="t5-body" id="t5body"></div>
+        <span class="t5-stamp">Prescribed on call</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">T6</span><h3>The one-sheets</h3>
+      <p>Each program as a movie poster: tagline up top, the title huge, the weekly price as the ticket banner, and the features set as the poster's condensed billing block. Hover for the light sweep.</p></div>
+    <div class="frame-box"><div class="n-sec">
+      <p class="label" style="text-align:center">Now showing</p>
+      <h2 class="display" style="font-size:clamp(30px,3.5vw,44px); margin:8px 0 26px; text-align:center">Three programs. One system<span style="color:var(--brand)">.</span></h2>
+      <div class="t6-grid" id="t6grid"></div>
+    </div></div>
+  </div>
+
+  <div class="variant">
+    <div class="variant-head"><span class="tag">T7</span><h3>What actually happens</h3>
+      <p>Pricing told as the client's first year: month one is the activation and the shoot, month two the program takes over, the brand compounds, and you graduate a rung. Switch programs with the pills.</p></div>
+    <div class="frame-box"><div class="n-sec t7-wrap" id="t7wrap">
+      <p class="label">Pricing · The first year</p>
+      <h2 class="display" style="font-size:clamp(30px,3.5vw,44px); margin:8px 0 22px">Here's how it actually works<span style="color:var(--brand)">.</span></h2>
+      <div class="t7-tabs" id="t7tabs">
+        <button data-i="0">Establish</button><button data-i="1" class="sel">Amplify</button><button data-i="2">Dominate</button>
+      </div>
+      <div class="t7-strip" id="t7strip"></div>
+      <p style="color:var(--faint); font-size:13px; margin-top:18px">Built to graduate: as your brand carries more of the load, you climb to the next rung. Placement is diagnosed on the discovery call.</p>
+    </div></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const P = [
+    { name: "Establish", wk: 1000, stage: "Stage 1 · Unknown", tag: "In a market that doesn't know your name…", next: "Amplify",
+      bill: ["Performance-weighted media", "SEO build where the map is weak", "PPC · LSA lead capture", "Brand foundation underneath"] },
+    { name: "Amplify", wk: 1625, stage: "Stage 2 · Name Recognition", tag: "They know you. Time to become the first call.", next: "Dominate",
+      bill: ["Balanced brand and performance", "Heavier content and video cadence", "PPC · LSA · Meta", "Reach and frequency across the market"] },
+    { name: "Dominate", wk: 2375, stage: "Stage 3 · Household Name", tag: "Own the market before anyone opens Google.", next: "the whole metro",
+      bill: ["Brand-weighted, full multichannel", "Maximum content and video volume", "PPC · LSA · Meta · YouTube · TikTok", "Default-choice status"] },
+  ];
+  const $m = (n) => "$" + n.toLocaleString("en-US");
+  const io2 = (el, cls) => new IntersectionObserver((es, o) => {
+    es.forEach((e) => { if (e.isIntersecting) { el.classList.add(cls); o.disconnect(); } });
+  }, { threshold: 0.3 }).observe(el);
+
+  // T5 budget sheet
+  const t5 = document.getElementById("t5body");
+  t5.innerHTML = P.map((p, i) => `
+    <div class="t5-line" style="--d:${(0.15 + i * 0.22).toFixed(2)}s">
+      <span class="t5-num">0${i + 1}</span>
+      <span><span class="t5-item">${p.name}</span><br><span class="t5-note">${p.stage}</span></span>
+      <span class="t5-dots"></span>
+      <span class="t5-amt">${$m(p.wk)}<small> /WK</small></span>
+    </div>`).join("") + `
+    <div class="t5-line act" style="--d:.85s">
+      <span class="t5-num">AL</span>
+      <span><span class="t5-item">Activation &amp; Onboarding</span><br><span class="t5-note">Every program · Month one · Covers the two-day shoot, travel, strategy, edit</span></span>
+      <span class="t5-dots"></span>
+      <span class="t5-amt">${$m(10000)}<small> ONE-TIME</small></span>
+    </div>
+    <p class="t5-sub">Retainer takes over in month two · ad spend stays yours, we never touch it</p>`;
+  io2(document.getElementById("t5wrap"), "t5-on");
+
+  // T6 posters — readable, middle featured
+  const OUT = [
+    "Stop renting every lead. Build the foundation that makes leads cheaper over time.",
+    "Become the name people prefer, not just recognize. Lower cost per lead as the brand carries more.",
+    "Five Mile Famous. The brand does the heavy lifting and paid lead capture drops toward nothing.",
+  ];
+  document.getElementById("t6grid").innerHTML = P.map((p, i) => `
+    <div class="t6-poster t6-p${i + 1} ${i === 1 ? "t6-feat2" : ""}">
+      ${i === 1 ? '<span class="t6-featbadge">Most prescribed</span>' : ""}
+      <p class="t6-tag" style="${i === 1 ? "margin-top:16px" : ""}">${p.tag}</p>
+      <h3 class="t6-title">${p.name}</h3>
+      <p class="t6-stage">${p.stage}</p>
+      <p class="t6-pricebig">${$m(p.wk)}<small> /week</small></p>
+      <p class="t6-out">${OUT[i]}</p>
+      <ul class="t6-list">${p.bill.map((x) => `<li>${x}</li>`).join("")}</ul>
+      <a class="t6-cta ${i === 1 ? "solid" : "ghost"}" href="#" onclick="return false">Book a discovery call</a>
+      <p class="t6-billing">A TopServ Digital production · two-day video shoot · $10,000 activation · Brandformance throughout</p>
+      <span class="t6-sheen"></span>
+    </div>`).join("");
+
+  // T7 journey
+  const strip = document.getElementById("t7strip");
+  function paintT7(i) {
+    const p = P[i];
+    strip.innerHTML = [
+      { when: "Month one", what: "Activation & the shoot", amt: $m(10000), sub: "one time", desc: "Two days on site filming your whole library, plus foundation fixes and the first-month build." },
+      { when: "Month two onward", what: p.name + " takes over", amt: $m(p.wk), sub: "/week", desc: p.bill.slice(0, 3).join(", ") + "." },
+      { when: "As the brand builds", what: "Leads get cheaper", amt: "5/95", sub: "rule", desc: "More people search you by name. Branded leads cost a fraction of fighting for strangers." },
+      { when: "The climb", what: "Graduate to " + p.next, amt: "↑", sub: "", desc: "When your brand carries the load, you step up a rung. Every climb costs less per job." },
+    ].map((b, j) => `
+      <div class="t7-beat" style="--d:${(j * 0.14).toFixed(2)}s">
+        <p class="t7-when">${b.when}</p>
+        <p class="t7-what">${b.what}</p>
+        <p class="t7-amt">${b.amt}<small> ${b.sub}</small></p>
+        <p class="t7-desc">${b.desc}</p>
+      </div>${j < 3 ? `<div class="t7-arrow" style="--d:${(j * 0.14 + 0.1).toFixed(2)}s">→</div>` : ""}`).join("");
+    const wrap = document.getElementById("t7wrap");
+    wrap.classList.remove("t7-on");
+    requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add("t7-on")));
+  }
+  document.getElementById("t7tabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    document.querySelectorAll("#t7tabs button").forEach((x) => x.classList.toggle("sel", x === b));
+    paintT7(Number(b.dataset.i));
+  });
+  paintT7(1);
+  io2(document.getElementById("t7wrap"), "t7-on");
+})();
+</script>
 </body>
 </html>
