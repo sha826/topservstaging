@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
 import { useInView, useReducedMotion } from "motion/react";
+import { PROCESS_STEPS } from "@/components/sections/process-steps";
 import { cn } from "@/lib/utils";
 
 const SALES_LETTER_ID = "1060921948";
@@ -125,38 +126,35 @@ export function ProcessFlythrough() {
     return () => cancelAnimationFrame(raf);
   }, [reduceMotion]);
 
+  // The exact storyboard cards from the (now mobile-only) ProcessSteps
+  // section, dealt in only when the film has landed and is ready to play.
   const stepCards = (ariaHidden: boolean) => (
     <div
       ref={ariaHidden ? cardsRef : undefined}
       aria-hidden={ariaHidden || undefined}
       className={cn(
-        "fly-cards flex flex-wrap items-stretch justify-center gap-2.5 px-6 xl:gap-3",
+        "fly-cards flex flex-wrap items-stretch justify-center gap-3 px-6",
         !ariaHidden && "on"
       )}
     >
-      {STEPS.map((step, i) => (
+      {PROCESS_STEPS.map((step, i) => (
         <div
           key={step.name}
           style={{
-            ["--d" as string]: `${(i * 0.07).toFixed(2)}s`,
-            ["--r" as string]: `${(i % 2 === 0 ? -1 : 1) * 2.2}deg`,
+            ["--d" as string]: `${(i * 0.08).toFixed(2)}s`,
+            ["--r" as string]: i % 2 ? "1.6deg" : "-2.2deg",
           }}
           className={cn(
-            "w-[124px] rounded-md border bg-card/90 p-3 backdrop-blur-sm transition-colors xl:w-[150px]",
-            step.tone === "b" || i === 0 || i === STEPS.length - 1
-              ? "border-brand-blue/45"
-              : "border-brand/40"
+            "flex w-[128px] flex-col items-center justify-center gap-1.5 rounded-md p-3 text-center shadow-lg xl:w-[148px]",
+            step.tone === "blue"
+              ? "bg-brand-blue text-white"
+              : "bg-brand text-primary-foreground"
           )}
         >
-          <p
-            className={cn(
-              "label-mono",
-              step.tone === "g" ? "text-brand" : "text-brand-blue-hot"
-            )}
-          >
-            0{i + 1}
-          </p>
-          <p className="mt-1.5 text-[11.5px] font-semibold leading-snug">{step.name}</p>
+          <span className="font-mono text-[9px] uppercase tracking-[0.22em] opacity-75">
+            Step {i + 1}
+          </span>
+          <span className="text-[11.5px] font-bold leading-snug">{step.name}</span>
         </div>
       ))}
     </div>

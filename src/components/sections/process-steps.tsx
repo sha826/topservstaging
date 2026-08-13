@@ -6,7 +6,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { cn } from "@/lib/utils";
 
 // The 7-step diagram from the original site — blue bookends, green middles.
-const STEPS = [
+// Exported: the desktop flythrough deals these exact cards at its landing.
+export const PROCESS_STEPS = [
   { name: "GBP & Website Audit", tone: "blue" },
   { name: "AI-Powered GBP Optimization", tone: "green" },
   { name: "Video Marketing Strategy", tone: "green" },
@@ -24,10 +25,12 @@ const STEPS = [
 export function ProcessSteps() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.35 });
-  const [dealt, setDealt] = useState<boolean[]>(() => STEPS.map(() => false));
+  const [dealt, setDealt] = useState<boolean[]>(() => PROCESS_STEPS.map(() => false));
 
   return (
-    <section aria-labelledby="steps-heading" className="border-b border-border">
+    // Desktop gets these cards inside the flythrough's landing instead;
+    // the standalone section stays for mobile/tablet (schema renders always).
+    <section aria-labelledby="steps-heading" className="border-b border-border lg:hidden">
       <h2 id="steps-heading" className="sr-only">
         The TopServ 7-step process
       </h2>
@@ -37,7 +40,7 @@ export function ProcessSteps() {
           "@type": "ItemList",
           name: "TopServ Digital's 7-step marketing process",
           itemListOrder: "https://schema.org/ItemListOrderAscending",
-          itemListElement: STEPS.map((step, i) => ({
+          itemListElement: PROCESS_STEPS.map((step, i) => ({
             "@type": "ListItem",
             position: i + 1,
             name: step.name,
@@ -52,7 +55,7 @@ export function ProcessSteps() {
           inView && "go"
         )}
       >
-        {STEPS.map((step, i) => (
+        {PROCESS_STEPS.map((step, i) => (
           <div
             key={step.name}
             onAnimationEnd={() =>

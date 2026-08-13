@@ -240,7 +240,10 @@ body {
 }
 .fly-cards.on > * {
   opacity: 1;
-  transform: translateY(0) rotate(calc(var(--r, 0deg) * 0.35));
+  transform: translateY(0) rotate(var(--r, 0deg));
+}
+.fly-cards.on > *:hover {
+  transform: translateY(0) rotate(0deg);
 }
 
 /* Chat widget: message entrance + typing-indicator dots (both neutralized
