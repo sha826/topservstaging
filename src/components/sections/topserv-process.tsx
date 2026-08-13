@@ -5,6 +5,7 @@ import { useInView } from "motion/react";
 import { Reveal } from "@/components/motion/reveal";
 import { VideoJsonLd } from "@/components/seo/json-ld";
 import { VimeoCard } from "@/components/video/vimeo-card";
+import { ProcessFlythrough } from "@/components/sections/process-flythrough";
 import { cn } from "@/lib/utils";
 
 const SALES_LETTER_ID = "1060921948";
@@ -56,7 +57,7 @@ export function TopServProcess() {
         duration="PT2M43S"
       />
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:py-24 lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="relative mx-auto max-w-6xl px-5 py-16 md:py-24 lg:pb-6">
         <Reveal>
           <p className="label-mono text-brand">The process</p>
           <h2 id="process-heading" className="display mt-3 text-4xl md:text-5xl">
@@ -88,14 +89,20 @@ export function TopServProcess() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.15}>
-          <VimeoCard
-            vimeoId={SALES_LETTER_ID}
-            poster={SALES_LETTER_POSTER}
-            title="TopServ Digital Sales Letter Video"
-          />
+        {/* Mobile / tablet: the standard click-to-play card. */}
+        <Reveal delay={0.15} className="lg:hidden">
+          <div className="mt-10 max-w-2xl">
+            <VimeoCard
+              vimeoId={SALES_LETTER_ID}
+              poster={SALES_LETTER_POSTER}
+              title="TopServ Digital Sales Letter Video"
+            />
+          </div>
         </Reveal>
       </div>
+
+      {/* Desktop: scroll-scrubbed flythrough that lands on the film. */}
+      <ProcessFlythrough />
     </section>
   );
 }

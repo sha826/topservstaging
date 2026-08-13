@@ -3263,5 +3263,110 @@
   });
 })();
 </script>
+<!-- ============================================================
+     PART R — TopServ Process: scroll-scrubbed flythrough
+     ============================================================ -->
+<style>
+  /* sticky needs no overflow-hidden ancestors — this frame stays visible */
+  .r-frame { overflow: visible; }
+  .r-wrap { position: relative; height: 280vh; }
+  .r-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #000; }
+  .r-vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* the section's real Vimeo thumbnail — the flythrough dissolves into it */
+  .r-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 4; opacity: 0; }
+  .r-prog { position: absolute; left: 0; top: 0; height: 3px; width: 0%; background: var(--brand); z-index: 6; box-shadow: 0 0 8px rgba(158,216,68,.7); }
+  .r-eyebrow { position: absolute; left: 24px; top: 20px; z-index: 6; }
+  .r-hint {
+    position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 6;
+    font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: rgba(245,243,239,.8); transition: opacity .4s; display: flex; align-items: center; gap: 8px;
+  }
+  .r-hint::after { content: ""; width: 1px; height: 26px; background: linear-gradient(to bottom, var(--brand), transparent); animation: r-drip 1.4s ease-in-out infinite; }
+  @keyframes r-drip { 0% { transform: scaleY(.2); transform-origin: top; } 60% { transform: scaleY(1); } 100% { opacity: 0; } }
+  .r-reveal {
+    position: absolute; inset: 0; z-index: 5; display: grid; place-items: center;
+    background: radial-gradient(65% 65% at 50% 50%, rgba(6,7,8,.72), rgba(6,7,8,.35));
+    opacity: 0; pointer-events: none; transition: opacity .5s;
+  }
+  .r-reveal.on { opacity: 1; pointer-events: auto; }
+  .r-reveal-inner { text-align: center; padding: 0 20px; transform: translateY(14px); transition: transform .5s cubic-bezier(.22,1,.36,1); }
+  .r-reveal.on .r-reveal-inner { transform: none; }
+  .r-title { font-size: clamp(40px, 6vw, 76px); line-height: .96; }
+  .r-sub { color: rgba(245,243,239,.75); font-size: 15px; margin-top: 10px; }
+  @media (prefers-reduced-motion: reduce) { .r-hint::after { animation: none; } }
+</style>
+
+<section class="wrap" id="part-r">
+  <div class="section-head"><span class="mono">PART R</span><h2 class="display">Process flythrough, scroll-scrubbed</h2></div>
+  <div class="variant">
+    <div class="variant-head"><span class="tag">R1</span><h3>Fly through the lens, land on the film</h3>
+      <p>Scrolling drives the camera flythrough frame by frame (starting at 2.5s of the barrel take, skipping the visor pop-in; works both directions). As the move completes it dissolves into the section's actual Vimeo thumbnail, then the title and play button land on top. Click plays the real sales-letter video. Pace, runway, dissolve window, and reveal point are all tunable.</p></div>
+    <div class="frame-box r-frame"><div class="r-wrap" id="rwrap">
+      <div class="r-stage" id="rstage">
+        <video id="rvid" class="r-vid" src="/videos/lab/flythrough-a-scrub.mp4" poster="/videos/lab/flythrough-a-poster.jpg" muted playsinline preload="auto"></video>
+        <img id="rposter" class="r-poster" src="/videos/lab/sales-letter-poster.jpg" alt="">
+        <span class="r-prog" id="rprog"></span>
+        <span class="label r-eyebrow">TopServ Process</span>
+        <div class="r-hint" id="rhint">Scroll</div>
+        <div class="r-reveal" id="rreveal">
+          <div class="r-reveal-inner">
+            <p class="label">The TopServ Process</p>
+            <h2 class="display r-title" style="margin-top:10px">Seven steps.<br>One system<span style="color:var(--brand)">.</span></h2>
+            <p class="r-sub">Watch how the whole machine works, 2 minutes 43 seconds.</p>
+            <button class="p-play" id="rplay" aria-label="Play the TopServ Process video" style="position:static; transform:none; margin-top:22px"></button>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const wrap = document.getElementById("rwrap");
+  const stage = document.getElementById("rstage");
+  const vid = document.getElementById("rvid");
+  const prog = document.getElementById("rprog");
+  const hint = document.getElementById("rhint");
+  const reveal = document.getElementById("rreveal");
+  const poster = document.getElementById("rposter");
+  let dur = 0, playing = false;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  vid.addEventListener("loadedmetadata", () => { dur = vid.duration; });
+  vid.load();
+
+  document.getElementById("rplay").addEventListener("click", () => {
+    playing = true;
+    stage.innerHTML =
+      '<iframe src="https://player.vimeo.com/video/1060921948?autoplay=1&title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0" title="TopServ Process video"></iframe>';
+  });
+
+  if (reduce) {
+    // No scrubbing for reduced motion: show the settled end state.
+    poster.style.opacity = "1";
+    reveal.classList.add("on");
+    hint.style.opacity = "0";
+  } else {
+    (function loop() {
+      if (playing) return;
+      const rect = wrap.getBoundingClientRect();
+      const total = rect.height - innerHeight;
+      const p = Math.min(1, Math.max(0, -rect.top / Math.max(1, total)));
+      if (dur && !vid.seeking) {
+        const t = p * (dur - 0.05);
+        if (Math.abs(vid.currentTime - t) > 0.02) vid.currentTime = t;
+      }
+      prog.style.width = (p * 100).toFixed(1) + "%";
+      hint.style.opacity = p < 0.04 ? "1" : "0";
+      // Dissolve the last stretch of the flythrough into the section's real
+      // Vimeo thumbnail (p 0.84 -> 0.96), then land the title + play on top.
+      poster.style.opacity = Math.min(1, Math.max(0, (p - 0.84) / 0.12)).toFixed(3);
+      reveal.classList.toggle("on", p > 0.94);
+      requestAnimationFrame(loop);
+    })();
+  }
+})();
+</script>
 </body>
 </html>
