@@ -230,6 +230,14 @@ body {
   to { transform: translateX(-50%); }
 }
 
+/* Testimonial monitors: blinking REC dot (neutralized by reduced motion) */
+@keyframes rec-blink {
+  50% { opacity: 0.2; }
+}
+.rec-dot {
+  animation: rec-blink 1.6s steps(2, start) infinite;
+}
+
 /* Flythrough landing: the step cards deal in when the film settles */
 .fly-cards > * {
   opacity: 0;

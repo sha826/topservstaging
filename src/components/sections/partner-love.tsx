@@ -17,11 +17,13 @@ function TestimonialCard({
   on,
   tilt,
   delay,
+  cam,
 }: {
   t: VideoTestimonial;
   on: boolean;
   tilt: number;
   delay: number;
+  cam: string;
 }) {
   const [playing, setPlaying] = useState(false);
 
@@ -32,6 +34,17 @@ function TestimonialCard({
       transition={{ duration: 0.75, delay, ease: EASE_OUT }}
       className="overflow-hidden rounded-lg border border-border bg-card"
     >
+      {/* Screening-room chrome (design-lab P2): REC · who · camera */}
+      <div className="flex items-center justify-between gap-3 border-b border-border bg-background/60 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+        <span className="flex items-center gap-2 text-[#ff5a48]">
+          <span aria-hidden className="rec-dot size-2 rounded-full bg-[#ff5a48]" />
+          Rec
+        </span>
+        <span className="truncate">
+          {t.name} · {t.company}
+        </span>
+        <span className="shrink-0">Cam {cam}</span>
+      </div>
       <div className="relative aspect-video bg-black">
         {playing ? (
           <iframe
@@ -67,10 +80,6 @@ function TestimonialCard({
           </button>
         )}
       </div>
-      <figcaption className="flex items-baseline justify-between gap-3 px-5 py-3.5">
-        <span className="font-semibold">{t.name}</span>
-        <span className="label-mono text-brand">{t.company}</span>
-      </figcaption>
     </motion.figure>
   );
 }
@@ -115,6 +124,7 @@ export function PartnerLove() {
               on={on}
               tilt={i === 0 ? -1 : 1}
               delay={0.1 + i * 0.18}
+              cam={i === 0 ? "A" : "B"}
             />
           ))}
         </div>
