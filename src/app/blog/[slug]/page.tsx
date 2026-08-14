@@ -102,10 +102,26 @@ export default async function BlogPostPage({
         </header>
 
         <div className="mx-auto max-w-3xl px-5 py-12">
+          {post.coverImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={post.coverImage}
+              alt=""
+              className="mb-10 aspect-[2/1] w-full rounded-lg border border-border object-cover"
+            />
+          )}
           <div className="prose prose-invert max-w-none prose-headings:tracking-tight prose-a:text-brand-hot prose-a:underline-offset-2 prose-blockquote:border-brand prose-strong:text-foreground prose-th:text-foreground">
             <MDXRemote
               source={post.content}
-              options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+              options={{
+                mdxOptions: {
+                  remarkPlugins: [remarkGfm],
+                  // Database posts come from external systems: render as plain
+                  // markdown so JSX/expressions can never execute. Repo MDX
+                  // files keep full MDX power.
+                  format: post.source === "db" ? "md" : "mdx",
+                },
+              }}
             />
           </div>
         </div>
