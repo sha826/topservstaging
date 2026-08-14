@@ -66,11 +66,42 @@ curl -X POST https://topserv-website.vercel.app/api/ingest/posts \
 4. Published posts appear on `/blog` within ~1 minute, with schema, sitemap,
    and OG image handled.
 
+## MCP server (for AI agents and MCP clients)
+
+The same pipeline is exposed as a remote MCP server (Streamable HTTP):
+
+```
+https://topserv-website.vercel.app/api/mcp
+```
+
+Same key, sent as a Bearer header. Four tools: `create_blog_post` (upserts,
+drafts by default, optional AI cover), `list_blog_posts`, `get_blog_post`
+(returns full markdown for edit-and-resubmit), `delete_blog_post`.
+
+**Claude Code:**
+```bash
+claude mcp add topserv-blog --transport http \
+  https://topserv-website.vercel.app/api/mcp \
+  --header "Authorization: Bearer <BLOG_INGEST_KEY>"
+```
+
+**Claude Desktop / stdio-only clients** (via mcp-remote):
+```json
+{ "topserv-blog": { "command": "npx", "args": ["-y", "mcp-remote",
+  "https://topserv-website.vercel.app/api/mcp",
+  "--header", "Authorization: Bearer <BLOG_INGEST_KEY>"] } }
+```
+
+**Connector UIs that only accept a URL**: append the key as a query param —
+`https://topserv-website.vercel.app/api/mcp?key=<BLOG_INGEST_KEY>` — noting
+that URLs can end up in logs, so prefer the header form where possible.
+
 ## Notes
 
 - Content renders as plain markdown by design: external systems can never
   inject executable code into the site (verified by test).
 - Idempotency makes retries safe — a duplicate webhook fire just re-writes
   the same post.
-- The MCP-server wrapper for AI-driven authoring is a planned phase 2; it
-  will call this same endpoint.
+- Webhook and MCP share one core (`src/lib/ingest-post.ts`), so behavior is
+  identical whichever door the content comes through — and the whole module
+  is portable to client sites.
