@@ -28,9 +28,12 @@ export default function robots(): MetadataRoute.Robots {
         allow: ["/", "/api/og"],
         disallow: ["/api/", "/admin"],
       },
+      // Crawlers obey only their most-specific group, so each named bot
+      // must repeat the API/admin disallows or it inherits none of them.
       ...AI_CRAWLERS.map((bot) => ({
         userAgent: bot,
-        allow: "/" as const,
+        allow: ["/", "/api/og"],
+        disallow: ["/api/", "/admin"],
       })),
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,

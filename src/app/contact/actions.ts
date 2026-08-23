@@ -31,8 +31,10 @@ const leadSchema = z.object({
     .max(20, "Please enter a valid phone number."),
   trade: z.string().trim().optional(),
   message: z.string().trim().min(10, "Tell us a bit about what you need."),
-  // Honeypot: humans never fill this.
-  website: z.string().max(0).optional(),
+  // Honeypot: humans never fill this. Parsed permissively so a filled trap
+  // reaches the fake-success branch instead of a confusing validation error
+  // (browser autofill can fill hidden fields for real visitors too).
+  website: z.string().max(500).optional(),
 });
 
 export interface LeadFormState {
@@ -87,18 +89,22 @@ export async function submitLead(
 
   const lead = parsed.data;
 
-  try {
-    await deliverLead({
-      name: lead.name,
-      company: lead.company,
-      email: lead.email,
-      phone: lead.phone,
-      trade: lead.trade,
-      message: lead.message,
-      source: "contact-form",
-    });
-  } catch (error) {
-    console.error("Lead email failed:", error);
+  // Bot check: real visitors never fill the hidden field. Return a fake
+  // success so bots learn nothing (mirrors the brand-score form).
+  if (lead.website) {
+    return { status: "success", message: "Got it — we'll get back to you within one business day." };
+  }
+
+  const { stored, delivered } = await deliverLead({
+    name: lead.name,
+    company: lead.company,
+    email: lead.email,
+    phone: lead.phone,
+    trade: lead.trade,
+    message: lead.message,
+    source: "contact-form",
+  });
+  if (!stored && !delivered) {
     return {
       status: "error",
       message: `Something went wrong sending your message. Call us at ${siteConfig.company.phoneDisplay} and we'll pick it up from there.`,

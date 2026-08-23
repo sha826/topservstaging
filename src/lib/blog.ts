@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { cache } from "react";
 import matter from "gray-matter";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
@@ -16,6 +17,10 @@ export interface BlogPost {
   content: string;
   /** Public URL of a cover image (database posts only). */
   coverImage?: string;
+  /** Meta/tab title when it differs from the on-page H1 (database posts). */
+  seoTitle?: string;
+  /** Structured FAQ rendered as a visible section + FAQPage JSON-LD. */
+  faq?: { question: string; answer: string }[];
   /** Where the post lives: repo MDX file or the admin-managed database. */
   source?: "file" | "db";
 }
@@ -60,17 +65,20 @@ function getFilePost(slug: string): BlogPost | null {
 /**
  * Hybrid catalog: repo MDX posts plus published admin-managed database
  * posts, newest first. On a slug collision the database post wins.
+ * Summaries only — content bodies are fetched per-post by getPost.
  */
 export async function getAllPosts(): Promise<BlogPost[]> {
-  const { getDbPosts } = await import("@/lib/blog-db");
-  const db = await getDbPosts();
+  const { getDbPostSummaries } = await import("@/lib/blog-db");
+  const db = await getDbPostSummaries();
   const dbSlugs = new Set(db.map((p) => p.slug));
   return [...db, ...getFilePosts().filter((p) => !dbSlugs.has(p.slug))].sort(
     (a, b) => (a.date < b.date ? 1 : -1)
   );
 }
 
-export async function getPost(slug: string): Promise<BlogPost | null> {
+// React cache: generateMetadata and the page component both call this per
+// request; dedupe to a single DB round trip.
+export const getPost = cache(async (slug: string): Promise<BlogPost | null> => {
   const { getDbPost } = await import("@/lib/blog-db");
   return (await getDbPost(slug)) ?? getFilePost(slug);
-}
+});

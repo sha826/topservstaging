@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { MarkdownEditor } from "@/components/admin/markdown-editor";
 import type { DbPostRow } from "@/lib/blog-db";
+import type { SavePostState } from "@/app/admin/blog/actions";
 
 const inputClass =
   "w-full rounded-md border border-input bg-card px-4 py-3 text-base outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40";
@@ -15,22 +17,128 @@ function slugify(input: string): string {
     .slice(0, 80);
 }
 
+interface Draft {
+  t: number;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  cover: string;
+  published: boolean;
+}
+
 export function PostForm({
   post,
   saveAction,
   deleteAction,
 }: {
   post?: DbPostRow;
-  saveAction: (formData: FormData) => void;
+  saveAction: (prev: SavePostState, formData: FormData) => Promise<SavePostState>;
   deleteAction?: (formData: FormData) => void;
 }) {
+  const [state, formAction, isPending] = useActionState(saveAction, {});
   const [title, setTitle] = useState(post?.title ?? "");
   const [slug, setSlug] = useState(post?.slug ?? "");
   const [slugTouched, setSlugTouched] = useState(Boolean(post));
+  const [description, setDescription] = useState(post?.description ?? "");
+  const [content, setContent] = useState(post?.content ?? "");
+  const [published, setPublished] = useState(post?.published ?? false);
   const [cover, setCover] = useState(post?.cover_image ?? "");
   const [imgPrompt, setImgPrompt] = useState("");
   const [genBusy, setGenBusy] = useState(false);
   const [genError, setGenError] = useState<string | null>(null);
+  const coverFileRef = useRef<HTMLInputElement>(null);
+  const [dirty, setDirty] = useState(false);
+  const [restorable, setRestorable] = useState<Draft | null>(null);
+
+  const draftKey = `tsd-post-draft:${post?.id ?? "new"}`;
+  const draftKeyRef = useRef(draftKey);
+  draftKeyRef.current = draftKey;
+
+  // Offer to restore an autosaved draft that is newer than the loaded post.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(draftKeyRef.current);
+      if (!raw) return;
+      const draft = JSON.parse(raw) as Draft;
+      const newerThanPost = !post || draft.t > Date.parse(post.updated_at);
+      const differs =
+        draft.title !== (post?.title ?? "") ||
+        draft.content !== (post?.content ?? "") ||
+        draft.description !== (post?.description ?? "") ||
+        draft.slug !== (post?.slug ?? "") ||
+        draft.cover !== (post?.cover_image ?? "");
+      if (newerThanPost && differs) setRestorable(draft);
+      else localStorage.removeItem(draftKeyRef.current);
+    } catch {
+      // Private browsing / corrupt draft: skip silently.
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Autosave to localStorage (debounced) once anything changed.
+  useEffect(() => {
+    if (!dirty) return;
+    const timer = setTimeout(() => {
+      try {
+        const draft: Draft = { t: Date.now(), title, slug, description, content, cover, published };
+        localStorage.setItem(draftKeyRef.current, JSON.stringify(draft));
+      } catch {
+        // Storage full or unavailable: the unload guard still protects.
+      }
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [dirty, title, slug, description, content, cover, published]);
+
+  // Warn before closing/reloading the tab with unsaved changes.
+  useEffect(() => {
+    if (!dirty) return;
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [dirty]);
+
+  function restoreDraft() {
+    if (!restorable) return;
+    setTitle(restorable.title);
+    setSlug(restorable.slug);
+    setSlugTouched(true);
+    setDescription(restorable.description);
+    setContent(restorable.content);
+    setCover(restorable.cover);
+    setPublished(restorable.published);
+    setDirty(true);
+    setRestorable(null);
+  }
+
+  function discardDraft() {
+    try {
+      localStorage.removeItem(draftKeyRef.current);
+    } catch {}
+    setRestorable(null);
+  }
+
+  const slugChangedOnLive = Boolean(post?.published) && slug !== post?.slug;
+
+  async function uploadCover(file: File) {
+    setGenBusy(true);
+    setGenError(null);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/admin/upload-image", { method: "POST", body: form });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.url) {
+        throw new Error(data?.error ?? `Upload failed (${res.status})`);
+      }
+      setCover(data.url);
+      setDirty(true);
+    } catch (e) {
+      setGenError(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setGenBusy(false);
+    }
+  }
 
   async function generateImage() {
     const prompt = imgPrompt.trim() || title.trim();
@@ -48,6 +156,7 @@ export function PostForm({
         throw new Error(data?.error ?? `Generation failed (${res.status})`);
       }
       setCover(data.url);
+      setDirty(true);
     } catch (e) {
       setGenError(e instanceof Error ? e.message : "Generation failed");
     } finally {
@@ -56,9 +165,62 @@ export function PostForm({
   }
 
   return (
-    <form action={saveAction} className="grid max-w-3xl gap-5">
+    <form
+      action={formAction}
+      onSubmit={(e) => {
+        const submitter = (e.nativeEvent as SubmitEvent).submitter;
+        if (submitter instanceof HTMLElement && submitter.dataset.delete) return;
+        if (
+          slugChangedOnLive &&
+          !confirm(
+            `This post is live at /blog/${post?.slug}. Saving with the new slug moves it to /blog/${slug} and the old link will 404. Continue?`
+          )
+        ) {
+          e.preventDefault();
+          return;
+        }
+        // Keep the draft until the save is CONFIRMED (the list page clears it
+        // on saved=1) — a submit can still bounce to login or fail.
+        try {
+          sessionStorage.setItem("tsd-pending-save", draftKeyRef.current);
+        } catch {}
+      }}
+      className="grid max-w-3xl gap-5"
+    >
       {post && <input type="hidden" name="id" value={post.id} />}
       <input type="hidden" name="cover_image" value={cover} />
+
+      {restorable && (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-brand/50 bg-brand/10 px-4 py-3">
+          <p className="text-sm">
+            You have unsaved changes from{" "}
+            {new Date(restorable.t).toLocaleString(undefined, {
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+            .
+          </p>
+          <div className="flex gap-2">
+            <Button type="button" size="sm" onClick={restoreDraft}>
+              Restore
+            </Button>
+            <Button type="button" size="sm" variant="outline" onClick={discardDraft}>
+              Discard
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {state.error && (
+        <p
+          role="alert"
+          className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+        >
+          {state.error}
+        </p>
+      )}
 
       <div>
         <label htmlFor="post-title" className="mb-1.5 block text-sm font-semibold">
@@ -72,6 +234,7 @@ export function PostForm({
           onChange={(e) => {
             setTitle(e.currentTarget.value);
             if (!slugTouched) setSlug(slugify(e.currentTarget.value));
+            setDirty(true);
           }}
           className={inputClass}
         />
@@ -89,9 +252,16 @@ export function PostForm({
           onChange={(e) => {
             setSlugTouched(true);
             setSlug(e.currentTarget.value);
+            setDirty(true);
           }}
           className={`${inputClass} font-mono text-sm`}
         />
+        {slugChangedOnLive && (
+          <p className="mt-1.5 text-sm text-amber-500">
+            This post is live at /blog/{post?.slug}. Changing the slug moves it to a new URL and
+            the old link will 404.
+          </p>
+        )}
       </div>
 
       <div>
@@ -102,7 +272,11 @@ export function PostForm({
           id="post-description"
           name="description"
           rows={2}
-          defaultValue={post?.description ?? ""}
+          value={description}
+          onChange={(e) => {
+            setDescription(e.currentTarget.value);
+            setDirty(true);
+          }}
           className={`${inputClass} resize-y`}
         />
       </div>
@@ -128,13 +302,54 @@ export function PostForm({
             className={`${inputClass} max-w-md flex-1 py-2 text-base md:text-sm`}
           />
           <Button type="button" onClick={generateImage} disabled={genBusy} variant="outline">
-            {genBusy ? "Generating…" : "Generate with AI"}
+            {genBusy ? "Working…" : "Generate with AI"}
           </Button>
+          <Button
+            type="button"
+            onClick={() => coverFileRef.current?.click()}
+            disabled={genBusy}
+            variant="outline"
+          >
+            Upload
+          </Button>
+          <input
+            ref={coverFileRef}
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            hidden
+            onChange={(e) => {
+              const file = e.currentTarget.files?.[0];
+              if (file) uploadCover(file);
+              e.currentTarget.value = "";
+            }}
+          />
           {cover && (
-            <Button type="button" onClick={() => setCover("")} variant="outline">
+            <Button
+              type="button"
+              onClick={() => {
+                setCover("");
+                setDirty(true);
+              }}
+              variant="outline"
+            >
               Remove
             </Button>
           )}
+        </div>
+        <div className="mt-3">
+          <label htmlFor="post-cover-url" className="mb-1 block text-xs font-semibold text-muted-foreground">
+            Or paste an image URL
+          </label>
+          <input
+            id="post-cover-url"
+            value={cover}
+            onChange={(e) => {
+              setCover(e.currentTarget.value);
+              setDirty(true);
+            }}
+            placeholder="https://…"
+            className={`${inputClass} max-w-md py-2 font-mono text-base md:text-xs`}
+          />
         </div>
         {genError && (
           <p role="alert" className="mt-2 text-sm text-destructive">
@@ -145,16 +360,21 @@ export function PostForm({
 
       <div>
         <label htmlFor="post-content" className="mb-1.5 block text-sm font-semibold">
-          Content <span className="font-normal text-muted-foreground">(Markdown)</span>
+          Content{" "}
+          <span className="font-normal text-muted-foreground">
+            (Markdown — drag or paste images straight in)
+          </span>
         </label>
-        <textarea
+        <MarkdownEditor
           id="post-content"
           name="content"
           rows={18}
           required
-          defaultValue={post?.content ?? ""}
-          spellCheck={false}
-          className={`${inputClass} resize-y font-mono text-base leading-relaxed md:text-[13px]`}
+          value={content}
+          onChange={(next) => {
+            setContent(next);
+            setDirty(true);
+          }}
         />
       </div>
 
@@ -162,15 +382,19 @@ export function PostForm({
         <input
           type="checkbox"
           name="published"
-          defaultChecked={post?.published ?? false}
+          checked={published}
+          onChange={(e) => {
+            setPublished(e.currentTarget.checked);
+            setDirty(true);
+          }}
           className="size-4 accent-[var(--brand)]"
         />
         Published (visible on the site)
       </label>
 
       <div className="flex flex-wrap gap-3">
-        <Button type="submit" size="lg" className="text-base">
-          Save post
+        <Button type="submit" size="lg" disabled={isPending} className="text-base">
+          {isPending ? "Saving…" : "Save post"}
         </Button>
         {post && deleteAction && (
           <Button
@@ -178,9 +402,12 @@ export function PostForm({
             size="lg"
             variant="outline"
             formAction={deleteAction}
+            data-delete="true"
             className="text-base text-destructive hover:border-destructive"
             onClick={(e) => {
-              if (!confirm("Delete this post permanently?")) e.preventDefault();
+              if (!confirm(`Delete "${post?.title ?? title}" permanently? This cannot be undone.`)) {
+                e.preventDefault();
+              }
             }}
           >
             Delete

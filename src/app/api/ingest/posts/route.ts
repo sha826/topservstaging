@@ -22,12 +22,18 @@ export async function GET() {
       title: "required, 3-200 chars",
       content: "required, markdown, 50-100k chars",
       slug: "optional, kebab-case; derived from title if omitted; upserts by slug",
-      description: "optional, SEO + card text, <=500 chars",
-      coverImageUrl: "optional, absolute URL to a cover image",
+      description: "optional, SEO + card text, <=500 chars; omitted keeps current, empty string clears",
+      coverImageUrl: "optional, absolute http(s) URL to a cover image; omitted keeps current",
       generateCover: "optional boolean, AI-generate a cover when no URL given",
       coverPrompt: "optional, prompt for the generated cover (defaults to title)",
-      publish: "optional boolean, default false (arrives as draft)",
+      publish: "optional boolean; new posts default to draft, updates keep the current publish state when omitted",
+      category: "optional, eyebrow label on cards and the article header (default Insights), <=60 chars",
+      seoTitle: "optional, meta/tab title when it should differ from the on-page H1, <=200 chars",
+      faq: "optional array of { question, answer } (max 20): rendered as a visible FAQ section AND FAQPage JSON-LD",
+      overrideRepoPost: "optional boolean, required to replace a repo MDX post with the same slug",
     },
+    imageUpload: "POST /api/ingest/upload (same auth, multipart field `file`) returns { url } for covers or markdown bodies",
+    semantics: "Updates MERGE: omitted fields keep their current values; published_at is never reset.",
   });
 }
 

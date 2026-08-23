@@ -64,7 +64,10 @@ const captureLead = tool({
     name: z.string().max(200).describe("Visitor's name"),
     company: z.string().max(200).optional().describe("Their company name"),
     phone: z.string().max(50).optional().describe("Phone number"),
-    email: z.string().email().max(320).optional().describe("Email address"),
+    // Deliberately NOT .email(): a typo'd address must never fail the tool
+    // call and lose the whole lead. The team can fix a typo; they can't fix
+    // a lead that was never captured.
+    email: z.string().max(320).optional().describe("Email address"),
     trade: z.string().max(100).optional().describe("Their trade, e.g. HVAC, plumbing"),
     revenueBand: z
       .string()

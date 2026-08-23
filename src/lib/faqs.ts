@@ -4,28 +4,36 @@ export interface Faq {
 }
 
 // Answers are written as self-contained 40–70 word passages an AI system can
-// quote without surrounding context — each one stands alone.
+// quote without surrounding context, each one stands alone. These render on
+// the site AND feed the chat concierge's knowledge block, so they must match
+// the BrandFormance build spec: weekly pricing only, onboarding never called
+// a fee, Brand Score as the diagnostic, the 6 stage Method.
 
 export const generalFaqs: Faq[] = [
   {
     question: "What makes TopServ Digital different from other marketing agencies?",
     answer:
-      "TopServ Digital is video-first: professional video production powers the entire marketing system instead of being an add-on. The agency has worked exclusively with home service companies since 2016, publishes its full pricing on its website, and has generated over $89M in revenue for 200+ contractor clients.",
+      "TopServ Digital is the home of BrandFormance: brand building and performance marketing run as 1 system, instead of choosing between brand or leads. The agency has worked exclusively with home service companies since 2016, publishes its full weekly pricing on its website, and has generated over $89M in revenue for 200+ contractor clients.",
   },
   {
-    question: "What services does TopServ Digital offer?",
+    question: "What is BrandFormance?",
     answer:
-      "TopServ Digital offers ten services for home service companies: video marketing, paid advertising, SEO, Local Services Ads management, web design and development, social media marketing, email and SMS marketing, graphic design and branding, marketing automation and AI, and geofencing with OTT advertising. Video production is the engine that feeds every other channel.",
+      "BrandFormance is TopServ's methodology: brand creates demand by making a company known, trusted and remembered in its market, performance captures that demand when customers are ready to buy, and together they build market dominance. Run separately, each underperforms. The full explanation lives at topservdigital.com/brandformance.",
   },
   {
-    question: "How does TopServ Digital generate leads for home service companies?",
+    question: "How does TopServ Digital grow a home service company?",
     answer:
-      "TopServ follows a strategic 7-step process: a Google Business Profile and website audit, laying the right foundation by optimizing key assets, video production (Lights, Camera, Action), building targeted funnels to get omnipresent and hyper-focused, a large roadmap with clear milestones, map and planning for data-driven campaigns, and finally Track, Learn, Dominate: continuous refinement. Paid capture keeps the phone ringing while the brand compounds underneath.",
+      "Through the 6 stage BrandFormance Method, in order: Position (clarify what the company stands for), Build (create the video, messaging and proof assets), Create Demand (brand advertising at frequency in the home geography), Capture Demand (search, maps, Local Services, retargeting), Convert (booking and speed to lead), and Measure and Optimize, where cost per booked call is the headline number.",
+  },
+  {
+    question: "What is the Brand Score?",
+    answer:
+      "The Brand Score is a 6 component diagnostic of how strong a company's brand actually is in its market: website strength, social media, online reputation, brand visibility, digital consistency, and market positioning, scored against the local competitive set. It produces a score out of 100 and a grade, and the grade places a company in the right program. Get it at topservdigital.com/brand-score.",
   },
   {
     question: "Which industries does TopServ Digital serve?",
     answer:
-      "TopServ Digital serves six home service trades: HVAC, plumbing, roofing, electrical, garage door, and pest control companies. HVAC is the agency's original specialty — it started as an HVAC-focused agency in 2016 — and every strategy is adapted to how each trade's customers actually buy.",
+      "TopServ Digital serves six home service trades: HVAC, plumbing, roofing, electrical, garage door, and pest control companies. HVAC is the agency's original specialty, it started as an HVAC-focused agency in 2016, and every strategy is adapted to how each trade's customers actually buy.",
   },
   {
     question: "Where is TopServ Digital located, and do you work nationwide?",
@@ -35,17 +43,12 @@ export const generalFaqs: Faq[] = [
   {
     question: "How much does TopServ Digital cost?",
     answer:
-      "TopServ Digital publishes its pricing: three programs billed weekly, matched to your brand equity stage — Establish at $1,000/week for companies the market doesn't know yet, Amplify at $1,625/week for companies with name recognition, and Dominate at $2,375/week for companies ready to own their market. Every program starts with a one-time $10,000 activation and onboarding in month one that covers the two-day video shoot, travel, strategy build, and editing; the weekly retainer takes over in month two.",
+      "TopServ Digital publishes its pricing: 3 programs billed weekly, matched to your brand equity stage. Establish at $1,000 per week for companies the market doesn't know yet, Amplify at $1,625 per week for companies with name recognition, and Dominate at $2,375 per week for companies ready to own their market. Every program starts with a one time $10,000 onboarding in month 1 that covers the 2 day video shoot, travel, strategy build, and editing; the weekly program takes over in month 2.",
   },
   {
     question: "How long until we see results?",
     answer:
-      "Paid channels like Google Ads and Local Services Ads can produce booked jobs within weeks. Organic channels compound over months: Flow Pros Plumbing went from roughly 1,000 to over 136,500 monthly website visits in five months of SEO and content work. Every engagement reports both, so you always know what's working.",
-  },
-  {
-    question: "What does the $10,000 activation cover?",
-    answer:
-      "Every TopServ program begins with a one-time $10,000 activation and onboarding in month one. It covers the two-day on-site video shoot and the evergreen content library it produces — brand film, customer testimonials, ad cuts, and recruiting video — plus travel, the pre-shoot strategy build, editing, and the first-month build. The weekly retainer takes over in month two.",
+      "Paid channels like Google Ads and Local Services Ads can produce booked jobs within weeks. Brand equity compounds over months: as more people search the company by name, lead quality rises and cost per booked call falls. Flow Pros Plumbing went from roughly 1,000 to over 136,500 monthly website visits in 5 months of SEO and content work. Every engagement reports both.",
   },
 ];
 
@@ -53,21 +56,21 @@ export const pricingFaqs: Faq[] = [
   {
     question: "Why does TopServ Digital publish its pricing?",
     answer:
-      "Three reasons: clarity saves everyone time, published numbers attract the right-fit clients and filter the wrong ones, and trust drives results — it's hard to ask contractors for transparency in a partnership while hiding your own prices. Most agencies in the home services space don't publish pricing; TopServ does.",
+      "Three reasons: clarity saves everyone time, published numbers attract the right-fit clients and filter the wrong ones, and trust drives results, it's hard to ask contractors for transparency in a partnership while hiding your own prices. Most agencies in the home services space don't publish pricing; TopServ does.",
   },
   {
     question: "Why is pricing billed weekly instead of monthly?",
     answer:
-      "Weekly billing matches how the work happens — content, ads, and reporting run every week — and keeps the engagement easy to evaluate in small increments rather than a big monthly invoice.",
+      "Weekly billing matches how the work actually runs: brand advertising is bought at a weekly frequency floor, content ships weekly, and reporting runs against weekly delivery. It also keeps the number honest, a year is 52 weeks, and quoting weekly means the figure is true from the first conversation.",
   },
   {
     question: "Which program is right for my company?",
     answer:
-      "Programs map to your brand equity stage, not your revenue. Establish is for companies the market doesn't know yet, where every lead is a paid fight. Amplify is for companies with real name recognition that people don't yet call first. Dominate is for companies ready to be the default choice in their market. You don't self-select: on the discovery call the team grades your brand with heat-map, SEMrush, and branded-search data and prescribes the program that closes your gap.",
+      "Programs map to your brand equity stage, not your revenue. Establish is for companies the market doesn't know yet, Amplify is for companies with name recognition that people don't yet call first, and Dominate is for companies ready to be the default choice. You don't self-select: the Brand Score, a 6 component diagnostic run against your market, places you in the program, and the team confirms the placement with real market data on the strategy call.",
   },
   {
-    question: "Why is there a $10,000 activation fee?",
+    question: "Why is there a $10,000 onboarding?",
     answer:
-      "The activation is not a fee in a drawer: it funds the two-day on-site video shoot that rebuilds your entire content library, plus travel, the pre-shoot strategy build, editing, and the first-month build of your campaigns and profiles. It's the working foundation every program runs on, and it happens once, in month one.",
+      "The onboarding funds the 2 day on-site video shoot that rebuilds your entire content library, plus travel, the pre-shoot strategy build, editing, and the first month of campaign and profile build. It's the working foundation every program runs on, and it happens once, in month 1.",
   },
 ];

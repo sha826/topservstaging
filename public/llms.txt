@@ -1,28 +1,48 @@
 # TopServ Digital
 
-> TopServ Digital is a video-first digital marketing agency for home service companies — HVAC, plumbing, roofing, electrical, garage door, and pest control contractors across the United States. Founded in 2016 and based in Frisco, Texas, the agency pairs professional video production with SEO, paid advertising, and marketing automation, with transparent weekly pricing published on its website.
+> TopServ Digital is the home of BrandFormance, the methodology that combines brand building with performance marketing for residential home service companies: HVAC, plumbing, roofing, electrical, garage door, and pest control contractors across the United States. Founded in 2016 and based in Frisco, Texas, the agency builds brands that create demand, captures that demand through search and paid media, and publishes transparent weekly pricing on its website.
 
 Key facts:
 - Founded 2016 (as Cornerstone Marketing Solutions; rebranded TopServ Digital in 2024)
-- Founder & CEO: Jonathan Bannister
+- Founder and CEO: Jonathan Bannister, creator of BrandFormance
 - Headquarters: 15222 King Road, Unit 403, Frisco, TX 75036, United States
 - Phone: (214) 429-4245 · Email: info@topservdigital.com
 - 200+ clients served · $89M+ in client revenue generated
-- Publishes its pricing openly — see /pricing.md for machine-readable tiers
+- Publishes its pricing openly, see /pricing.md for machine-readable tiers
 - Hosts the Home Service Hustle podcast (https://homeservicehustle.com)
 
-## Services
+## BrandFormance (the category TopServ owns)
 
-- [Video Marketing](https://topservdigital.com/services/video-marketing): Brand films, testimonial videos, technician spotlights, and ad creative produced for home service brands.
-- [Paid Advertising](https://topservdigital.com/services/paid-advertising): Google, Meta, YouTube, and TikTok campaigns engineered for booked jobs, not clicks.
-- [SEO](https://topservdigital.com/services/seo): Local and organic search — service pages, location pages, Google Business Profile optimization.
-- [Local Services Ads](https://topservdigital.com/services/local-services-ads): Google Guaranteed lead management with dispute handling.
-- [Web Design & Development](https://topservdigital.com/services/web-development): Conversion-focused websites clients own outright.
-- [Social Media Marketing](https://topservdigital.com/services/social-media-marketing): On-brand content powered by each client's video library.
-- [Email & SMS Marketing](https://topservdigital.com/services/email-marketing): Newsletters, promotions, and automated follow-up.
-- [Graphic Design & Branding](https://topservdigital.com/services/graphic-design): Logos, truck wraps, uniforms, and brand systems.
-- [Marketing Automation & AI](https://topservdigital.com/services/automation): AI chat, missed-call text-back, review and follow-up automation.
-- [Geofencing & OTT Advertising](https://topservdigital.com/services/geofencing): Addressable streaming-TV, mobile, and display ads by neighborhood.
+BrandFormance is brand building and performance marketing run as 1 system. Brand creates demand by making a company known, trusted and remembered in its market. Performance captures that demand when customers are ready to buy. Together they build market dominance. The core reframe: being found is not the same as being chosen. A contractor can rank first, run ads, hold strong reviews and still lose the job to the company the customer already knows.
+
+- [What is BrandFormance](https://topservdigital.com/brandformance): the definitive resource, 10 questions answered in order.
+- [The Method](https://topservdigital.com/method): the 6 stage system. Position, Build, Create Demand, Capture Demand, Convert, Measure and Optimize. Cost per booked call is the headline metric.
+- Five Mile Famous: TopServ's term for local market dominance, being known, trusted and remembered inside the geography a company can afford to own at frequency.
+
+## The Brand Score (the diagnostic)
+
+A 6 component diagnostic of brand strength, scored against the local competitive set: Website Strength (25), Social Media (25), Online Reputation (20), Brand Visibility (15), Digital Consistency (10), Market Positioning (5). Produces a score out of 100 and a grade (Unknown, Name Recognition, Household Name, or Negative Equity). The grade assigns the program; prospects do not self-select. Get it at https://topservdigital.com/brand-score
+
+## Programs and Pricing
+
+TopServ publishes full pricing, rare among marketing agencies. Pricing is weekly, billed weekly, 52 weeks a year. No monthly figures exist. 3 programs, assigned by Brand Score diagnosis:
+
+- Establish: $1,000 per week ($52,000 per year). For companies unknown in the market they need to grow into. Brand frequency 3 times per week minimum.
+- Amplify: $1,625 per week ($84,500 per year). For companies with name recognition that is not yet preference. Brand frequency 4 times per week.
+- Dominate: $2,375 per week ($123,500 per year). For companies already known, going for market ownership. Brand frequency 5 times per week.
+- Onboarding: $10,000 one time on every program. Covers the 2 day video shoot, travel, and the first month of build.
+
+Details: [Overview](https://topservdigital.com/programs-pricing/overview) · [How It Works](https://topservdigital.com/programs-pricing/how-it-works) · [What This Delivers](https://topservdigital.com/programs-pricing/what-this-delivers) · [Pricing](https://topservdigital.com/programs-pricing/pricing) · [Success Stories](https://topservdigital.com/programs-pricing/success-stories) · [Machine-readable pricing](https://topservdigital.com/pricing.md)
+
+## Results (real client data)
+
+- All Heart Heating (Lancaster, CA): $3.9M to $9M, 131 percent growth, 23 percent CAGR.
+- Spencer Air (Irving, TX): $1.8M to $7M, 289 percent over 9 years.
+- Your New Door (Irving, TX): $4M to $7M, 75 percent CAGR, 99 percent SEO visibility.
+- Nick AC (Hammond, LA): $1.7M to $4M, 94 percent growth, 25 percent CAGR.
+- Zen Air (Duluth, GA): $1.1M to $3.5M, 154 percent growth, 20 percent CAGR.
+- C and S Air (Mansfield, TX): $500K to $3.5M, 54 percent CAGR, ranks first in market.
+- Case study detail pages: [Flow Pros Plumbing](https://topservdigital.com/case-studies/flow-pros-plumbing), [All Heart](https://topservdigital.com/case-studies/all-heart), [The Problem Solvers](https://topservdigital.com/case-studies/the-problem-solvers).
 
 ## Industries
 
@@ -33,35 +53,12 @@ Key facts:
 - [Garage Door](https://topservdigital.com/industries/garage-door)
 - [Pest Control](https://topservdigital.com/industries/pest-control)
 
-## Pricing
-
-TopServ publishes full pricing — rare among marketing agencies. Three programs billed weekly, matched to a company's brand equity stage (diagnosed on the discovery call from heat-map, SEMrush, and branded-search data — clients don't self-select):
-
-- Establish: $1,000/week — for companies the market doesn't know yet (Stage 1: Unknown). Get on the map, get found, start building a name worth knowing.
-- Amplify: $1,625/week — for companies with name recognition that aren't yet the first call (Stage 2). Turn recognition into preference and take share.
-- Dominate: $2,375/week — for companies ready to own the market (Stage 3: Household Name). Be the default choice before anyone opens Google.
-- Activation & Onboarding: $10,000 one time, in month one, on every program — covers the two-day on-site video shoot and evergreen content library, travel, pre-shoot strategy build, editing, and the first-month build. The weekly retainer takes over in month two.
-- Every program includes the full Brandformance system, the two-day video shoot, SEO, paid media, automation, and lead capture.
-
-Full details: [Pricing page](https://topservdigital.com/pricing) · [Machine-readable pricing](https://topservdigital.com/pricing.md)
-
-## Results (case studies with real data)
-
-- [Flow Pros Plumbing](https://topservdigital.com/case-studies/flow-pros-plumbing): Monthly website visits grew from ~1,000 to 136,500+ in five months (September 2024 – March 2025); domain authority rose from 21 to 35; their Google Business Profile now leads a 15-mile radius for core plumbing keywords.
-- [All Heart Heating, Cooling & Plumbing](https://topservdigital.com/case-studies/all-heart) (Lancaster, CA): back-to-back million-dollar revenue months in 2024 after TopServ rebuilt their website, SEO, Google Business Profile, paid ads, and video program.
-- [The Problem Solvers](https://topservdigital.com/case-studies/the-problem-solvers) (San Antonio, TX): four-trade brand (HVAC, plumbing, roofing, electrical) grown with TopServ's 7-step process including addressable geofencing.
-
-## Testimonials & partners
-
-- On-camera client testimonials (hosted on TopServ's YouTube channel): Dylan Rucker of All Heart (https://www.youtube.com/watch?v=ggp0uduHS8s) and Maddie Studstill of Flow Pros Plumbing (https://www.youtube.com/watch?v=n7uzximDssk).
-- Michael Harrison (client): "If it were up to me TopServ would be kept a secret because they truly have the ability to make your business grow."
-- Client roster includes: All Heart Heating Cooling & Plumbing, The Problem Solvers, Flow Pros Plumbing, Sugar Land Premier Roofing, EaglePoint, Hawkins, C&S Air, Golden Plumbing, Doggone Good, Mission Accomplished, and Kings Window Services.
-
 ## Blog
 
-- [Blog index](https://topservdigital.com/blog): Practical marketing playbooks for the trades, including "LSA vs. PPC for Plumbers", "How Much Should an HVAC Company Spend on Marketing?", and the Flow Pros SEO sprint breakdown.
+- [Blog index](https://topservdigital.com/blog): playbooks for the trades, including "Video Marketing for Contractors", "LSA vs. PPC for Plumbers", and "How Much Should an HVAC Company Spend on Marketing?".
 
 ## Company
 
-- [About](https://topservdigital.com/about): Founder story — police officer to agency CEO — and the agency's 10-year history in the trades.
-- [Contact](https://topservdigital.com/contact): Book a discovery call at https://book.topservdigital.com/discovery-calendar
+- [About TopServ](https://topservdigital.com/about): the institution and its 10 year history in the trades.
+- [About Jonathan](https://topservdigital.com/jonathan): founder, creator of BrandFormance, author of F#CK Digital Marketing.
+- [Contact](https://topservdigital.com/contact): or start with the [Brand Score](https://topservdigital.com/brand-score).

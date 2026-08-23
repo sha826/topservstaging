@@ -1,0 +1,22 @@
+Use case: ads-marketing
+Asset type: featured image for a premium SEO blog article, landscape 1200 x 630 social-share composition
+Primary request: Create a cinematic, photorealistic editorial image representing video marketing for residential home service contractors.
+Scene/backdrop: A professional 2-person video crew filming an HVAC technician beside a clean outdoor condenser unit at a well-kept American suburban home. The technician is confidently explaining something on camera, natural and credible rather than posing. Include a modern cinema camera and a small boom or lapel setup, but keep the scene uncluttered.
+Style/medium: High-end documentary brand photography, realistic skin and equipment, polished but not glossy stock photography.
+Composition/framing: Wide horizontal composition with the contractor and camera crew offset from center; enough calm negative space for responsive cropping, but no text overlay.
+Lighting/mood: Warm early-morning natural light, confident, trustworthy, capable, local-business authenticity.
+Color palette: Charcoal, warm amber, cream, restrained blue accents consistent with a premium modern trades brand.
+Constraints: Residential home services only, accurate HVAC equipment, diverse adult professionals, safety-conscious clothing, no visible logos, no text, no watermark, no distorted hands or equipment, no construction site, no commercial high-rise.
+
+---
+
+Edit pass
+
+Use case: precise-object-edit
+Asset type: branded SEO article featured image, 1200 x 630 landscape
+Primary request: Turn the supplied HVAC filming photograph into a premium TopServ Digital editorial cover base while preserving the real photographic scene.
+Style/medium: Cinematic documentary brand photography with a sophisticated editorial treatment.
+Composition/framing: Preserve the HVAC technician, camera crew, cinema camera, boom microphone, home, and condenser. Add a restrained charcoal-to-transparent gradient field across the lower-left and left edge to support later typography, plus a thin lime-green accent rule near the lower edge. Keep the technician clearly visible and naturally lit.
+Lighting/mood: Slightly deeper charcoal shadows, warm amber highlights, confident, modern, premium, trustworthy.
+Color palette: near-black charcoal, warm cream, muted amber, small lime-green accent matching TopServ's live website.
+Constraints: Change only color treatment and branded graphic framing. Preserve people, faces, hands, equipment, camera perspective, house, and HVAC unit. Do not add any words, letters, logos, watermarks, icons, borders, or extra objects. Keep a clean 1200 x 630 landscape crop.

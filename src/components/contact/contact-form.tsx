@@ -150,7 +150,7 @@ export function ContactForm() {
       {state.status === "error" && (
         <p role="alert" className="text-sm text-destructive">
           {state.fieldErrors
-            ? "Some fields need attention — check the messages above."
+            ? "Some fields need attention. Check the messages above."
             : state.message}
         </p>
       )}

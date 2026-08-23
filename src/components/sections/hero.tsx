@@ -19,28 +19,22 @@ import { cn } from "@/lib/utils";
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 /**
- * The headline from the live TopServ site, tokenized for word-by-word
- * animation — em dash replaced with a period split. Tokens keep punctuation
- * attached so nothing wraps orphaned; accent words carry the light-sweep
- * animation with sheenDelay timing the glint to travel in reading order,
- * starting after the entrance cascade lands.
+ * The one line from the build spec, tokenized for word-by-word animation.
+ * Tokens keep punctuation attached so nothing wraps orphaned; accent words
+ * carry the light-sweep animation with sheenDelay timing the glint to travel
+ * in reading order, starting after the entrance cascade lands.
  */
 type Part = { t: string; accent?: boolean; sheenDelay?: number };
 const HEADLINE: Part[][] = [
-  [{ t: "Built" }],
-  [{ t: "on" }],
-  [{ t: "video", accent: true, sheenDelay: 1.2 }, { t: "," }],
-  [{ t: "backed" }],
-  [{ t: "by" }],
-  [{ t: "digital", accent: true, sheenDelay: 1.6 }],
-  [{ t: "strategy", accent: true, sheenDelay: 1.75 }, { t: "." }],
-  [{ t: "Build" }],
-  [{ t: "brand", accent: true, sheenDelay: 2.1 }],
-  [{ t: "equity", accent: true, sheenDelay: 2.25 }],
-  [{ t: "and" }],
-  [{ t: "grow" }],
-  [{ t: "your" }],
-  [{ t: "business", accent: true, sheenDelay: 2.6 }, { t: "." }],
+  [{ t: "Stop" }],
+  [{ t: "chasing" }],
+  [{ t: "leads", accent: true, sheenDelay: 1.2 }, { t: "." }],
+  [{ t: "Start" }],
+  [{ t: "building" }],
+  [{ t: "a" }],
+  [{ t: "brand", accent: true, sheenDelay: 1.7 }],
+  [{ t: "customers" }],
+  [{ t: "choose", accent: true, sheenDelay: 2.1 }, { t: "." }],
 ];
 
 const TRADES = [
@@ -188,7 +182,7 @@ export function Hero() {
           variants={fadeUp}
           className="display flex flex-wrap items-baseline gap-x-3 text-2xl text-muted-foreground md:text-3xl"
         >
-          <span>Video-first marketing for</span>
+          <span>The home of BrandFormance for</span>
           <span className="text-brand">
             <TradeRotor />
             <span aria-hidden>.</span>
@@ -224,20 +218,20 @@ export function Hero() {
           variants={fadeUp}
           className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground"
         >
-          TopServ Digital creates high impact video content that drives revenue
-          from more engagement and higher conversions — and powers your entire
-          marketing ecosystem.
+          TopServ Digital is the home of BrandFormance, combining brand
+          building with performance marketing to help home service companies
+          become the obvious choice in their markets.
         </motion.p>
 
         <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-4">
           <Button asChild size="lg" className="text-base">
-            <a href={siteConfig.booking.discoveryCall}>
-              Book a discovery call
+            <Link href="/brandformance">
+              Discover BrandFormance
               <ArrowRight className="size-4" aria-hidden />
-            </a>
+            </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="text-base">
-            <Link href="/pricing">See our pricing</Link>
+            <Link href="/brand-score">Get Your Brand Score</Link>
           </Button>
         </motion.div>
         </div>

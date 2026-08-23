@@ -99,11 +99,11 @@ export default async function CaseStudyPage({
           <Reveal delay={0.35}>
             <dl className="mt-10 grid gap-x-8 gap-y-6 border-t border-border pt-8 sm:grid-cols-3">
               {study.stats.map((stat) => (
-                <div key={stat.label}>
+                <div key={stat.label} className="flex flex-col-reverse">
+                  <dt className="mt-1 text-sm text-muted-foreground">{stat.label}</dt>
                   <dd className="display text-4xl text-brand md:text-5xl">
                     <SmartStat value={stat.value} />
                   </dd>
-                  <dt className="mt-1 text-sm text-muted-foreground">{stat.label}</dt>
                 </div>
               ))}
             </dl>

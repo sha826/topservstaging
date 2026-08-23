@@ -65,6 +65,8 @@ const nextConfig: NextConfig = {
       { source: "/about/team", destination: "/about", permanent: true },
       { source: "/topserv-digital-testimonials", destination: "/about", permanent: true },
       { source: "/spotlight", destination: "/about", permanent: true },
+      // BrandFormance restructure: pricing lives inside the Programs hub now.
+      { source: "/pricing", destination: "/programs-pricing/pricing", permanent: true },
     ];
   },
   async headers() {

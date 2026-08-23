@@ -153,13 +153,13 @@ export function PartnerLove() {
           className="mt-9 flex flex-wrap gap-3"
         >
           <Button asChild size="lg" className="text-base">
-            <a href={siteConfig.booking.discoveryCall}>
-              Book a meeting
+            <Link href="/brand-score">
+              Get Your Brand Score
               <ArrowRight className="size-4" aria-hidden />
-            </a>
+            </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="text-base">
-            <Link href="/case-studies">See more success stories</Link>
+            <Link href="/programs-pricing/success-stories">See more success stories</Link>
           </Button>
         </motion.div>
       </div>

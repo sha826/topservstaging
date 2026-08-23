@@ -40,7 +40,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Video-First Marketing for Home Service Companies`,
+    default: `${siteConfig.name}: The Home of BrandFormance`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.metaDescription,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — Video-First Marketing for Home Service Companies`,
+    title: `${siteConfig.name}: The Home of BrandFormance`,
     description: siteConfig.metaDescription,
     images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
   },

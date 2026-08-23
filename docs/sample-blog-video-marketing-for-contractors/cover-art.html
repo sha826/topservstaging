@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video Marketing for Contractors - Cover Art</title>
+  <style>
+    @font-face { font-family: Barlow; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: Bebas Neue; src: url("assets/fonts/bebas-neue-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: DM Mono; src: url("assets/fonts/dm-mono-400.woff2") format("woff2"); font-weight: 400; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #0c0e12; }
+    .cover { position: relative; width: 100vw; height: 100vh; color: #f4f5f2; }
+    .cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5, 7, 9, .87) 0%, rgba(5, 7, 9, .55) 41%, rgba(5, 7, 9, 0) 68%); }
+    .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .brand { position: absolute; z-index: 2; top: 48px; left: 58px; width: 154px; height: auto; }
+    .copy { position: absolute; z-index: 2; left: 60px; top: 210px; width: 585px; }
+    .label { margin: 0 0 18px; color: #b7e76a; font: 400 16px/1 DM Mono, monospace; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 0; font: 400 76px/.88 Bebas Neue, Impact, sans-serif; letter-spacing: .012em; text-transform: uppercase; text-wrap: balance; }
+    .sub { margin: 22px 0 0; max-width: 500px; color: #d7dbe1; font: 600 18px/1.35 Barlow, Arial, sans-serif; }
+    .rule { position: absolute; z-index: 2; left: 60px; bottom: 42px; width: 510px; height: 3px; background: #9ed844; }
+    .site { position: absolute; z-index: 2; right: 48px; bottom: 35px; color: #f4f5f2; font: 400 13px/1 DM Mono, monospace; letter-spacing: .08em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <main class="cover">
+    <img class="photo" src="featured-image-cover-base.png" alt="">
+    <img class="brand" src="topserv-logo.webp" alt="TopServ Digital">
+    <div class="copy">
+      <p class="label">BrandFormance Insights</p>
+      <h1>Video Marketing<br>for Contractors</h1>
+      <p class="sub">7 videos that build demand before the search</p>
+    </div>
+    <div class="rule"></div>
+    <p class="site">topservdigital.com</p>
+  </main>
+</body>
+</html>

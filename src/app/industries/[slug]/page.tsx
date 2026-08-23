@@ -90,7 +90,7 @@ export default async function IndustryPage({
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-base">
-                <Link href="/pricing">See our pricing</Link>
+                <Link href="/programs-pricing/pricing">See our pricing</Link>
               </Button>
             </div>
           </Reveal>

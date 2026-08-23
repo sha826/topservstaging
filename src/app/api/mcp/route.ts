@@ -28,7 +28,7 @@ const handler = createMcpHandler((server) => {
     {
       title: "Create or update a blog post",
       description:
-        "Create a blog post on the TopServ website, or update an existing one (posts upsert by slug, keeping the same URL). Content is markdown (GFM tables/lists/links supported; HTML and JSX are neutralized). Posts arrive as DRAFTS for review in the admin panel unless publish is true. Set generateCover to true for an AI-generated 16:9 cover.",
+        "Create a blog post on the TopServ website, or update an existing one (posts upsert by slug, keeping the same URL). Content is markdown (GFM tables/lists/links supported; HTML and JSX are neutralized). Updates MERGE: omitted fields keep their current values, including publish state and the original publish date. New posts arrive as DRAFTS for review in the admin panel unless publish is true. Set generateCover to true for an AI-generated wide cover. Supports category (eyebrow label), seoTitle (meta title differing from the H1), and a structured faq array rendered as a visible section plus FAQPage JSON-LD. Slugs matching a repo MDX post are refused unless overrideRepoPost is true.",
       inputSchema: ingestPayloadSchema,
     },
     async (args) => {
@@ -72,7 +72,7 @@ const handler = createMcpHandler((server) => {
     {
       title: "Get a blog post",
       description:
-        "Fetch a database blog post by slug, including its full markdown content, so it can be reviewed or edited and re-submitted with create_blog_post.",
+        "Fetch a database blog post by slug with its full markdown content. The returned `post` object uses the same field names create_blog_post accepts (coverImageUrl, publish, ...), so you can edit fields and pass the object straight back to create_blog_post without remapping. Omitted fields keep their current values on re-submit.",
       inputSchema: z.object({
         slug: z.string().regex(/^[a-z0-9-]+$/).max(80),
       }),
@@ -80,13 +80,25 @@ const handler = createMcpHandler((server) => {
     async ({ slug }) => {
       const sb = getSupabaseAdmin();
       if (!sb) return json({ ok: false, error: "Database is not configured." });
-      const { data } = await sb
-        .from("posts")
-        .select("slug, title, description, content, cover_image, published, published_at, updated_at")
-        .eq("slug", slug)
-        .maybeSingle();
+      const { data } = await sb.from("posts").select("*").eq("slug", slug).maybeSingle();
       if (!data) return json({ ok: false, error: `No database post with slug "${slug}".` });
-      return json({ ok: true, url: `${siteConfig.url}/blog/${slug}`, post: data });
+      return json({
+        ok: true,
+        url: `${siteConfig.url}/blog/${slug}`,
+        post: {
+          slug: data.slug,
+          title: data.title,
+          description: data.description,
+          content: data.content,
+          coverImageUrl: data.cover_image,
+          publish: data.published,
+          category: data.category ?? null,
+          seoTitle: data.seo_title ?? null,
+          faq: data.faq ?? null,
+        },
+        publishedAt: data.published_at,
+        updatedAt: data.updated_at,
+      });
     }
   );
 
@@ -105,7 +117,11 @@ const handler = createMcpHandler((server) => {
       if (!sb) return json({ ok: false, error: "Database is not configured." });
       const { data } = await sb.from("posts").select("id").eq("slug", slug).maybeSingle();
       if (!data) return json({ ok: false, error: `No database post with slug "${slug}".` });
-      await sb.from("posts").delete().eq("id", data.id);
+      const { error } = await sb.from("posts").delete().eq("id", data.id);
+      if (error) {
+        console.error("MCP post delete failed:", error);
+        return json({ ok: false, error: "Delete failed; try again." });
+      }
       revalidatePath("/blog");
       revalidatePath(`/blog/${slug}`);
       revalidatePath("/sitemap.xml");

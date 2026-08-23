@@ -188,10 +188,11 @@ export const pricingTiers = [
 
 /** One-time month-one activation, identical on every program. */
 export const activation = {
-  name: "Activation & Onboarding",
+  name: "Onboarding",
   price: 10000,
+  // Spec: covers the shoot, travel and first month of build. Never a "fee".
   summary:
-    "One-time, in month one, on every program: the two-day on-site video shoot and evergreen content library, travel, pre-shoot strategy build, editing, and the first-month build. Your weekly retainer takes over in month two.",
+    "One time, in month 1, on every program: the 2 day on-site video shoot and evergreen content library, travel, pre-shoot strategy build, editing, and the first month of build. Your weekly program takes over in month 2.",
 } as const;
 
 export const everyProgramIncludes = [

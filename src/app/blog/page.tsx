@@ -13,8 +13,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
 };
 
-// ISR: admin-created posts appear without a rebuild.
-export const revalidate = 300;
+// ISR safety net only: the ingest pipeline revalidates on-demand at every
+// write, so the timer just bounds staleness for out-of-band edits.
+export const revalidate = 3600;
 
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();

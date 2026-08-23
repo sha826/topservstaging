@@ -14,16 +14,16 @@ import {
 import { siteConfig } from "@/lib/site-config";
 
 const NAV_LINKS = [
-  { href: "/case-studies", label: "Case Studies" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/brandformance", label: "BrandFormance" },
+  { href: "/method", label: "The Method" },
+  { href: "/programs-pricing/overview", label: "Programs & Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ] as const;
 
 function Wordmark() {
   return (
-    <Link href="/" className="flex items-center" aria-label="TopServ Digital — home">
+    <Link href="/" className="flex items-center" aria-label="TopServ Digital home">
       <Image
         src="/images/topserv-logo.png"
         alt="TopServ Digital"
@@ -49,7 +49,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring/60"
             >
               {link.label}
             </Link>
@@ -65,7 +65,7 @@ export function Navbar() {
             {siteConfig.company.phoneDisplay}
           </a>
           <Button asChild>
-            <a href={siteConfig.booking.discoveryCall}>Book a discovery call</a>
+            <Link href="/brand-score">Get Your Brand Score</Link>
           </Button>
         </div>
 
@@ -96,7 +96,9 @@ export function Navbar() {
                 {siteConfig.company.phoneDisplay}
               </a>
               <Button asChild size="lg" className="mt-4">
-                <a href={siteConfig.booking.discoveryCall}>Book a discovery call</a>
+                <Link href="/brand-score" onClick={() => setOpen(false)}>
+                  Get Your Brand Score
+                </Link>
               </Button>
             </nav>
           </SheetContent>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ClearSavedDraft } from "@/components/admin/clear-saved-draft";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listAllDbPosts } from "@/lib/blog-db";
 import { getFilePosts } from "@/lib/blog";
@@ -10,10 +11,7 @@ export const dynamic = "force-dynamic";
 const NOTICES: Record<string, { text: string; error?: boolean }> = {
   saved: { text: "Post saved. The blog updates immediately." },
   deleted: { text: "Post deleted." },
-  slug: { text: "That slug is already taken by another database post.", error: true },
-  missing: { text: "Title, slug, and content are required.", error: true },
-  save: { text: "Save failed — try again.", error: true },
-  nodb: { text: "Supabase is not configured — cannot save posts.", error: true },
+  delete: { text: "Delete failed — try again.", error: true },
 };
 
 export default async function AdminBlogPage({
@@ -29,6 +27,7 @@ export default async function AdminBlogPage({
 
   return (
     <div>
+      {params.saved && <ClearSavedDraft />}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="display text-4xl">Blog</h1>
         <Button asChild>
@@ -57,21 +56,36 @@ export default async function AdminBlogPage({
         )}
         {dbPosts.map((post) => (
           <li key={post.id}>
-            <Link
-              href={`/admin/blog/${post.id}`}
-              className="flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-lg border border-border bg-card p-5 transition-colors hover:border-brand"
-            >
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-lg border border-border bg-card p-5 transition-colors hover:border-brand">
               <span
                 className={`label-mono ${post.published ? "text-brand" : "text-ink-faint"}`}
               >
                 {post.published ? "Published" : "Draft"}
               </span>
-              <span className="font-semibold">{post.title}</span>
+              <Link href={`/admin/blog/${post.id}`} className="font-semibold hover:text-brand">
+                {post.title}
+              </Link>
               <span className="font-mono text-xs text-muted-foreground">/blog/{post.slug}</span>
-              <span className="ml-auto text-xs text-ink-faint">
-                updated {formatDate(post.updated_at.slice(0, 10))}
+              <span className="ml-auto flex items-baseline gap-4">
+                <Link
+                  href={`/admin/blog/${post.id}/preview`}
+                  className="label-mono text-muted-foreground hover:text-brand"
+                >
+                  Preview
+                </Link>
+                {post.published && (
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="label-mono text-muted-foreground hover:text-brand"
+                  >
+                    View
+                  </Link>
+                )}
+                <span className="text-xs text-ink-faint">
+                  {post.updated_at.slice(0, 16).replace("T", " ")}
+                </span>
               </span>
-            </Link>
+            </div>
           </li>
         ))}
       </ul>

@@ -58,6 +58,7 @@ export function ChatWidget({ initialOpen = false }: { initialOpen?: boolean }) {
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   // True only when the user clicked the toggle this page-load — restored-open
   // panels must not steal focus on every navigation. A tap on the deferred
   // placeholder button counts as manual.
@@ -105,8 +106,16 @@ export function ChatWidget({ initialOpen = false }: { initialOpen?: boolean }) {
       const raw = sessionStorage.getItem(CHAT_STORAGE_KEY);
       if (!raw) return;
       const saved = JSON.parse(raw) as { messages?: unknown; open?: boolean };
-      if (Array.isArray(saved.messages) && saved.messages.length > 0) {
-        setMessages(saved.messages as Parameters<typeof setMessages>[0]);
+      // Shape-check each entry: a stale format (mid-deploy SDK change,
+      // corrupted storage) must never crash the widget on every open.
+      const valid = Array.isArray(saved.messages)
+        ? saved.messages.filter(
+            (m): m is { parts: unknown[] } =>
+              !!m && typeof m === "object" && Array.isArray((m as { parts?: unknown }).parts)
+          )
+        : [];
+      if (valid.length > 0) {
+        setMessages(valid as unknown as Parameters<typeof setMessages>[0]);
       }
       if (saved.open) setOpen(true);
     } catch {
@@ -133,7 +142,9 @@ export function ChatWidget({ initialOpen = false }: { initialOpen?: boolean }) {
     if (!open) return;
     if (manualOpenRef.current) inputRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      // Only close when the user is actually IN the widget — Escape pressed
+      // elsewhere on the page must not yank focus to the chat toggle.
+      if (e.key === "Escape" && panelRef.current?.contains(document.activeElement)) {
         setOpen(false);
         toggleRef.current?.focus();
       }
@@ -164,6 +175,7 @@ export function ChatWidget({ initialOpen = false }: { initialOpen?: boolean }) {
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
       {open && (
         <div
+          ref={panelRef}
           className="flex h-[min(78dvh,640px)] w-[min(94vw,440px)] flex-col overflow-hidden rounded-xl border border-border bg-background shadow-2xl"
           style={vvh ? { maxHeight: `${Math.max(280, Math.min(vvh - 96, 640))}px` } : undefined}
           role="dialog"

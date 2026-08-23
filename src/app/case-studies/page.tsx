@@ -63,9 +63,9 @@ export default function CaseStudiesPage() {
                     </div>
                     <dl className="grid content-center gap-5 border-t border-border pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
                       {study.stats.map((stat) => (
-                        <div key={stat.label}>
-                          <dd className="display text-3xl text-brand">{stat.value}</dd>
+                        <div key={stat.label} className="flex flex-col-reverse">
                           <dt className="mt-0.5 text-sm text-muted-foreground">{stat.label}</dt>
+                          <dd className="display text-3xl text-brand">{stat.value}</dd>
                         </div>
                       ))}
                     </dl>

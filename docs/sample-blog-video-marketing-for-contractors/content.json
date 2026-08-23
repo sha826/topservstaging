@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "contentType": "article",
+  "status": "draft",
+  "title": "Video Marketing for Contractors: 7 Videos That Build Demand Before the Search",
+  "slug": "video-marketing-for-contractors",
+  "eyebrow": "Video Marketing",
+  "excerpt": "A practical video marketing system for home service contractors: what to film first, how to distribute it across the customer journey, and how to measure business impact.",
+  "seo": {
+    "title": "Video Marketing for Contractors: 7 Videos to Film First | TopServ Digital",
+    "description": "Learn the 7 videos home service contractors should film first, how to turn 1 shoot into a content engine, and how to measure video marketing ROI.",
+    "canonicalUrl": "https://topservdigital.com/blog/video-marketing-for-contractors",
+    "primaryKeyword": "video marketing for contractors",
+    "secondaryKeywords": [
+      "contractor video marketing",
+      "video marketing for home service contractors",
+      "how to measure ROI for contractor video marketing",
+      "drone video for contractor marketing"
+    ],
+    "robots": "index,follow,max-image-preview:large"
+  },
+  "author": {
+    "type": "Organization",
+    "name": "TopServ Digital",
+    "id": "https://topservdigital.com/#organization"
+  },
+  "dates": {
+    "published": "2026-08-17",
+    "modified": "2026-08-17"
+  },
+  "readingTimeMinutes": 8,
+  "language": "en-US",
+  "content": {
+    "format": "html",
+    "file": "article-body.html"
+  },
+  "featuredImage": {
+    "file": "featured-image.webp",
+    "publicPath": "/images/blog/video-marketing-for-contractors.webp",
+    "width": 1200,
+    "height": 630,
+    "alt": "A video crew filming an HVAC technician beside an outdoor air-conditioning unit at a residential home"
+  },
+  "schema": {
+    "expectedFile": "schema.expected.json",
+    "types": [
+      "Article",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  "internalLinks": [
+    {
+      "href": "/brandformance",
+      "anchor": "BrandFormance",
+      "status": "planned-phase-1"
+    },
+    {
+      "href": "/brand-score",
+      "anchor": "get your Brand Score",
+      "status": "planned-phase-1"
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much does video marketing for contractors cost?",
+      "answer": "The cost depends on the number of filming days, crew and travel requirements, the number and complexity of edits, locations, talent, and how widely the content will be distributed. Compare proposals by the usable content system they create, not only by the price of a single finished video."
+    },
+    {
+      "question": "Does the owner need to be on camera?",
+      "answer": "For a leadership-driven home service brand, usually yes. Customers should hear what the company stands for from the person responsible for keeping that promise. The owner does not need to become an influencer or deliver a perfect script. Clear, honest answers are more credible than a polished performance."
+    },
+    {
+      "question": "Do contractors need drone video for marketing?",
+      "answer": "No. Drone footage can add context for roofing, large properties, facilities, or an opening shot, but it cannot replace a useful answer, credible proof, or a clear point of view. Use it when aerial perspective improves understanding, not because it makes a video look expensive."
+    },
+    {
+      "question": "How often should a contractor publish video?",
+      "answer": "Choose a cadence the business can sustain and connect to distribution. A strong library can support weekly publishing when each core idea is adapted into long-form, short-form, website, email, and paid-media assets. Consistency matters more than a burst of daily posts followed by silence."
+    },
+    {
+      "question": "Should contractors hire a videographer or a marketing partner?",
+      "answer": "Hire a videographer when the strategy, questions, distribution, conversion paths, and measurement plan already exist. Hire a marketing partner when those parts still need to be designed and managed. Production quality matters, but distribution and business alignment determine whether the footage becomes an asset."
+    }
+  ],
+  "delivery": {
+    "source": "Agency Titan sample",
+    "destination": "TopServ Digital website",
+    "notes": "The website should generate final metadata and JSON-LD from this payload. schema.expected.json is a validation fixture, not markup to inject without transformation."
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://topservdigital.com/blog/video-marketing-for-contractors#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://topservdigital.com/blog/video-marketing-for-contractors"
+      },
+      "headline": "Video Marketing for Contractors: 7 Videos That Build Demand Before the Search",
+      "description": "A practical video marketing system for home service contractors: what to film first, how to distribute it across the customer journey, and how to measure business impact.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://topservdigital.com/images/blog/video-marketing-for-contractors.webp",
+        "width": 1200,
+        "height": 630,
+        "caption": "A video crew filming an HVAC technician beside an outdoor air-conditioning unit at a residential home"
+      },
+      "datePublished": "2026-08-17",
+      "dateModified": "2026-08-17",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://topservdigital.com/#organization",
+        "name": "TopServ Digital"
+      },
+      "publisher": {
+        "@id": "https://topservdigital.com/#organization"
+      },
+      "keywords": [
+        "video marketing for contractors",
+        "contractor video marketing",
+        "video marketing for home service contractors"
+      ],
+      "wordCount": 2020
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://topservdigital.com/blog/video-marketing-for-contractors#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://topservdigital.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://topservdigital.com/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Video Marketing for Contractors",
+          "item": "https://topservdigital.com/blog/video-marketing-for-contractors"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://topservdigital.com/blog/video-marketing-for-contractors#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does video marketing for contractors cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The cost depends on the number of filming days, crew and travel requirements, the number and complexity of edits, locations, talent, and how widely the content will be distributed. Compare proposals by the usable content system they create, not only by the price of a single finished video."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the owner need to be on camera?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a leadership-driven home service brand, usually yes. Customers should hear what the company stands for from the person responsible for keeping that promise. The owner does not need to become an influencer or deliver a perfect script. Clear, honest answers are more credible than a polished performance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do contractors need drone video for marketing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Drone footage can add context for roofing, large properties, facilities, or an opening shot, but it cannot replace a useful answer, credible proof, or a clear point of view. Use it when aerial perspective improves understanding, not because it makes a video look expensive."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should a contractor publish video?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Choose a cadence the business can sustain and connect to distribution. A strong library can support weekly publishing when each core idea is adapted into long-form, short-form, website, email, and paid-media assets. Consistency matters more than a burst of daily posts followed by silence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should contractors hire a videographer or a marketing partner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hire a videographer when the strategy, questions, distribution, conversion paths, and measurement plan already exist. Hire a marketing partner when those parts still need to be designed and managed. Production quality matters, but distribution and business alignment determine whether the footage becomes an asset."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -14,7 +14,10 @@ export function ExportCsv({
     if (rows.length === 0) return;
     const cols = Object.keys(rows[0]);
     const esc = (v: unknown) => {
-      const s = v === null || v === undefined ? "" : String(v);
+      let s = v === null || v === undefined ? "" : String(v);
+      // Formula-injection guard: lead fields are visitor-controlled, and
+      // Excel executes cells starting with = + - @ or a tab.
+      if (/^[=+\-@\t]/.test(s)) s = `'${s}`;
       return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
     };
     const csv = [cols.join(","), ...rows.map((r) => cols.map((c) => esc(r[c])).join(","))].join("\n");

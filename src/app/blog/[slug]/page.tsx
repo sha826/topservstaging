@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Button } from "@/components/ui/button";
-import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { ArticleJsonLd, BreadcrumbJsonLd, FAQJsonLd } from "@/components/seo/json-ld";
 import { getAllPosts, getPost } from "@/lib/blog";
 import { siteConfig } from "@/lib/site-config";
 import { formatDate } from "@/lib/utils";
@@ -13,8 +13,8 @@ interface Params {
   slug: string;
 }
 
-// ISR: database posts render on demand and refresh without a rebuild.
-export const revalidate = 300;
+// ISR safety net only: ingest revalidates on-demand at every write.
+export const revalidate = 3600;
 
 export async function generateStaticParams(): Promise<Params[]> {
   return (await getAllPosts()).map((post) => ({ slug: post.slug }));
@@ -29,7 +29,9 @@ export async function generateMetadata({
   const post = await getPost(slug);
   if (!post) return {};
   return {
-    title: post.title,
+    // seoTitle is the complete tab title (often already branded), so it
+    // bypasses the layout's "| TopServ Digital" template.
+    title: post.seoTitle ? { absolute: post.seoTitle } : post.title,
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -37,11 +39,13 @@ export async function generateMetadata({
       publishedTime: post.date,
       modifiedTime: post.updated ?? post.date,
       images: [
-        {
-          url: `/api/og?title=${encodeURIComponent(post.title)}&eyebrow=${encodeURIComponent(post.category)}`,
-          width: 1200,
-          height: 630,
-        },
+        post.coverImage
+          ? { url: post.coverImage }
+          : {
+              url: `/api/og?title=${encodeURIComponent(post.title)}&eyebrow=${encodeURIComponent(post.category)}`,
+              width: 1200,
+              height: 630,
+            },
       ],
     },
   };
@@ -56,13 +60,25 @@ export default async function BlogPostPage({
   const post = await getPost(slug);
   if (!post) notFound();
 
+  // Same-category posts first, everything else after, newest first.
+  const related = (await getAllPosts())
+    .filter((p) => p.slug !== post.slug)
+    .sort((a, b) =>
+      Number(b.category === post.category) - Number(a.category === post.category) ||
+      b.date.localeCompare(a.date)
+    )
+    .slice(0, 3);
+
   return (
     <>
       <ArticleJsonLd
         title={post.title}
         description={post.description}
         url={`${siteConfig.url}/blog/${post.slug}`}
-        image={`${siteConfig.url}/api/og?title=${encodeURIComponent(post.title)}&eyebrow=${encodeURIComponent(post.category)}`}
+        image={
+          post.coverImage ??
+          `${siteConfig.url}/api/og?title=${encodeURIComponent(post.title)}&eyebrow=${encodeURIComponent(post.category)}`
+        }
         datePublished={post.date}
         dateModified={post.updated ?? post.date}
         authorName={post.author}
@@ -74,6 +90,7 @@ export default async function BlogPostPage({
           { name: post.title, href: `/blog/${post.slug}` },
         ]}
       />
+      {post.faq && <FAQJsonLd items={post.faq} />}
 
       <article>
         <header className="border-b border-border">
@@ -123,6 +140,17 @@ export default async function BlogPostPage({
                 },
               }}
             />
+            {post.faq && (
+              <>
+                <h2>Frequently asked questions</h2>
+                {post.faq.map((f) => (
+                  <div key={f.question}>
+                    <h3>{f.question}</h3>
+                    <p>{f.answer}</p>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </article>
@@ -137,6 +165,41 @@ export default async function BlogPostPage({
           </Button>
         </div>
       </section>
+
+      {related.length > 0 && (
+        <section aria-label="More articles" className="border-t border-border">
+          <div className="mx-auto max-w-6xl px-5 py-14">
+            <h2 className="label-mono text-brand">Keep reading</h2>
+            <ul className="mt-6 grid gap-5 md:grid-cols-3">
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <Link
+                    href={`/blog/${r.slug}`}
+                    className="group flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-brand"
+                  >
+                    {r.coverImage && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={r.coverImage}
+                        alt=""
+                        loading="lazy"
+                        className="mb-4 aspect-[2/1] w-full rounded-md border border-border object-cover"
+                      />
+                    )}
+                    <p className="label-mono text-brand">{r.category}</p>
+                    <h3 className="mt-2 text-lg font-bold leading-snug group-hover:text-brand">
+                      {r.title}
+                    </h3>
+                    <p className="label-mono mt-auto pt-4 text-ink-faint">
+                      {r.readingMinutes} min read
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <nav aria-label="Back to blog" className="border-t border-border">
         <div className="mx-auto max-w-3xl px-5 py-8">

@@ -82,4 +82,4 @@ compression, domain cutover, and the off-site entity campaign.
 - [ ] Search Console coverage — watch old URLs move to "Redirect" status.
 - [ ] Test the concierge end-to-end on production (ask it pricing; confirm the lead email arrives via `captureLead`).
 - [ ] Submit a contact-form test lead; confirm delivery.
-- [ ] Lighthouse pass on `/`, `/pricing`, one service page, one blog post.
+- [ ] Lighthouse pass on `/`, `/programs-pricing/pricing`, one service page, one blog post.

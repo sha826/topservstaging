@@ -13,7 +13,7 @@ export default function TermsAndConditionsPage() {
       <div className="mx-auto max-w-3xl px-5 pb-20 pt-20 md:pt-28">
         <p className="label-mono text-brand">Legal</p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Terms &amp; Conditions</h1>
-        <p className="mt-3 text-sm text-muted-foreground">Effective Date: [Sep 24, 2025]</p>
+        <p className="mt-3 text-sm text-muted-foreground">Effective Date: September 24, 2025</p>
         <div className="prose prose-invert mt-10 max-w-none">
           <h2>Terms of Use</h2>
           <p>
