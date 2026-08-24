@@ -5,6 +5,10 @@ import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { ContentSlot } from "@/components/content/content-slot";
 import { siteConfig } from "@/lib/site-config";
 
+// Hosts registry content slots: admin saves revalidate instantly via
+// revalidatePath; this timer bounds staleness for out-of-band writes.
+export const revalidate = 300;
+
 export const metadata: Metadata = {
   title: "About",
   description:
