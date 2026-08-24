@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { BreadcrumbJsonLd, ServiceJsonLd } from "@/components/seo/json-ld";
 import { FaqSection } from "@/components/sections/faq-section";
+import { ContentSlot } from "@/components/content/content-slot";
 import { industries, services } from "@/lib/content";
 import { industryCopy } from "@/lib/industry-copy";
 import { siteConfig } from "@/lib/site-config";
@@ -13,6 +14,9 @@ import { siteConfig } from "@/lib/site-config";
 interface Params {
   slug: string;
 }
+
+// Hosts a project-updates slot; timer bounds staleness for API-side writes.
+export const revalidate = 300;
 
 export function generateStaticParams(): Params[] {
   return industries.map((industry) => ({ slug: industry.slug }));
@@ -150,6 +154,9 @@ export default async function IndustryPage({
           className="border-b-0"
         />
       )}
+
+      {/* Placement rule: project updates tagged with this trade appear here. */}
+      <ContentSlot type="project_update" tag={industry.name} heading={`${industry.trade} projects`} limit={6} />
     </>
   );
 }

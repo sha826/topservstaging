@@ -7,7 +7,15 @@
  * file is the shared catalog. Per-site enablement lives in SITE_MANIFEST.
  */
 
-export type FieldKind = "text" | "textarea" | "image" | "select" | "url";
+export type FieldKind =
+  | "text"
+  | "textarea"
+  | "image"
+  | "images"
+  | "select"
+  | "multiselect"
+  | "url"
+  | "date";
 
 export interface FieldSpec {
   key: string;
@@ -17,6 +25,8 @@ export interface FieldSpec {
   max?: number;
   help?: string;
   options?: string[];
+  /** Pull options from the site manifest's vocabulary instead of hardcoding. */
+  optionsFrom?: "services" | "serviceAreas";
   rows?: number;
 }
 
@@ -32,6 +42,10 @@ export interface ContentTypeDef {
   publishMode: "instant" | "review";
   /** Notify the SEO team on publish (the notify-not-gate model). */
   notifyOnPublish: boolean;
+  /** Fields whose values become placement tags (multiselects split on comma). */
+  tagFields?: string[];
+  /** Date field that sets the item's automatic expiry (timed content). */
+  expiresField?: string;
 }
 
 export const CONTENT_TYPES: Record<string, ContentTypeDef> = {
@@ -68,6 +82,58 @@ export const CONTENT_TYPES: Record<string, ContentTypeDef> = {
     publishMode: "instant",
     notifyOnPublish: true,
   },
+  project_update: {
+    key: "project_update",
+    label: "Project update",
+    labelPlural: "Project updates",
+    description:
+      "Job stories with photos. Tagged with services and areas, they appear automatically on the matching pages.",
+    titleKey: "title",
+    fields: [
+      { key: "title", label: "Title", kind: "text", required: true, max: 160, help: "For example: Full system replacement in Frisco" },
+      { key: "description", label: "What was done", kind: "textarea", required: true, max: 1200, rows: 5 },
+      { key: "location", label: "Location", kind: "text", required: true, max: 120, help: "City or neighborhood." },
+      { key: "services", label: "Services performed", kind: "multiselect", required: true, optionsFrom: "services" },
+      { key: "areas", label: "Service areas", kind: "multiselect", optionsFrom: "serviceAreas", help: "Optional area tags for placement." },
+      { key: "photos", label: "Photos", kind: "images", help: "Before/after or job photos." },
+    ],
+    publishMode: "instant",
+    notifyOnPublish: true,
+    tagFields: ["services", "areas"],
+  },
+  press_release: {
+    key: "press_release",
+    label: "Press release",
+    labelPlural: "Media room",
+    description: "Press releases, public announcements, and news items for the news page.",
+    titleKey: "title",
+    fields: [
+      { key: "title", label: "Title", kind: "text", required: true, max: 200 },
+      { key: "date", label: "Date", kind: "date", required: true },
+      { key: "body", label: "Body", kind: "textarea", required: true, max: 8000, rows: 10, help: "Plain text or simple paragraphs." },
+      { key: "imageUrl", label: "Image", kind: "image" },
+      { key: "documentUrl", label: "Document link", kind: "url", max: 500, help: "Optional downloadable PDF or document URL." },
+    ],
+    publishMode: "instant",
+    notifyOnPublish: true,
+  },
+  banner: {
+    key: "banner",
+    label: "Announcement banner",
+    labelPlural: "Announcement banners",
+    description:
+      "Sitewide announcement bar: promotions, holiday closures, emergency notices. Auto-removes at the expiry date.",
+    titleKey: "message",
+    fields: [
+      { key: "message", label: "Message", kind: "text", required: true, max: 200 },
+      { key: "linkUrl", label: "Link", kind: "url", max: 300, help: "Optional: where the banner clicks through to." },
+      { key: "linkLabel", label: "Link label", kind: "text", max: 40 },
+      { key: "expiresAt", label: "Expires", kind: "date", required: true, help: "The banner disappears automatically on this date." },
+    ],
+    publishMode: "instant",
+    notifyOnPublish: true,
+    expiresField: "expiresAt",
+  },
 };
 
 /**
@@ -76,10 +142,27 @@ export const CONTENT_TYPES: Record<string, ContentTypeDef> = {
  * engine reads this, never the catalog directly.
  */
 export const SITE_MANIFEST = {
-  enabledTypes: ["testimonial", "team_member"] as const,
+  enabledTypes: [
+    "testimonial",
+    "team_member",
+    "project_update",
+    "press_release",
+    "banner",
+  ] as const,
   /** Where publish notifications go (falls back to LEAD_EMAIL_TO). */
   notifyEmailEnv: "SEO_NOTIFY_EMAIL",
+  /** This site's vocabulary; client sites ship their own. */
+  vocab: {
+    services: ["HVAC", "Plumbing", "Roofing", "Electrical", "Garage Door", "Pest Control"],
+    serviceAreas: ["Frisco, TX", "Dallas, TX", "Plano, TX", "McKinney, TX"],
+  } as Record<string, string[]>,
 };
+
+export function resolveOptions(f: FieldSpec): string[] {
+  if (f.options) return f.options;
+  if (f.optionsFrom) return SITE_MANIFEST.vocab[f.optionsFrom] ?? [];
+  return [];
+}
 
 export function getEnabledTypes(): ContentTypeDef[] {
   return SITE_MANIFEST.enabledTypes.map((k) => CONTENT_TYPES[k]).filter(Boolean);
@@ -102,10 +185,43 @@ export function validatePayload(
     const v = String(raw[f.key] ?? "").trim();
     if (f.required && !v) errors.push(`${f.label} is required.`);
     if (v && f.max && v.length > f.max) errors.push(`${f.label} must be ${f.max} characters or fewer.`);
-    if (v && f.kind === "select" && f.options && !f.options.includes(v)) {
-      errors.push(`${f.label} must be one of: ${f.options.join(", ")}.`);
+    if (v && f.kind === "select") {
+      const opts = resolveOptions(f);
+      if (opts.length && !opts.includes(v)) errors.push(`${f.label} must be one of: ${opts.join(", ")}.`);
     }
-    if (v) payload[f.key] = v.slice(0, f.max ?? 2000);
+    if (v && f.kind === "multiselect") {
+      const opts = resolveOptions(f);
+      const chosen = v.split(",").map((s) => s.trim()).filter(Boolean);
+      if (opts.length && chosen.some((c) => !opts.includes(c))) {
+        errors.push(`${f.label} contains values outside: ${opts.join(", ")}.`);
+      }
+    }
+    if (v && f.kind === "date" && !/^\d{4}-\d{2}-\d{2}$/.test(v)) {
+      errors.push(`${f.label} must be a date (YYYY-MM-DD).`);
+    }
+    if (v && f.kind === "images") {
+      try {
+        const arr = JSON.parse(v);
+        if (!Array.isArray(arr) || arr.some((u) => typeof u !== "string" || !/^https?:\/\//.test(u))) {
+          errors.push(`${f.label} must be a list of image URLs.`);
+        }
+      } catch {
+        errors.push(`${f.label} must be a list of image URLs.`);
+      }
+    }
+    if (v) payload[f.key] = v.slice(0, f.max ?? (f.kind === "images" ? 8000 : 8000));
   }
   return errors.length ? { errors } : { payload };
+}
+
+/** Placement tags derived from the type's tagFields (multiselects split on comma). */
+export function deriveTags(type: ContentTypeDef, payload: Record<string, string>): string[] {
+  const tags = new Set<string>();
+  for (const key of type.tagFields ?? []) {
+    for (const t of (payload[key] ?? "").split(",")) {
+      const clean = t.trim();
+      if (clean) tags.add(clean);
+    }
+  }
+  return [...tags];
 }

@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { ChatWidgetLazy } from "@/components/chat/chat-widget-lazy";
 import { TrackPageview } from "@/components/analytics/track-pageview";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { ContentSlot } from "@/components/content/content-slot";
 
 const barlow = Barlow({
   weight: ["400", "500", "600", "700"],
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <MotionProvider>
+          <ContentSlot type="banner" />
           <Navbar />
           <main id="main" className="flex-1">
             {children}

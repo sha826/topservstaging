@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { siteConfig } from "@/lib/site-config";
-import { SITE_MANIFEST, type ContentTypeDef } from "@/lib/content-types";
+import { deriveTags, SITE_MANIFEST, type ContentTypeDef } from "@/lib/content-types";
 
 /**
  * Generic content store for registry types (content_items table), with
@@ -15,19 +15,30 @@ export interface ContentItem {
   type: string;
   status: "draft" | "published";
   payload: Record<string, string>;
+  tags: string[];
   created_at: string;
   updated_at: string;
   published_at: string | null;
+  expires_at: string | null;
 }
 
-export async function listItems(type: string, publishedOnly = false): Promise<ContentItem[]> {
+export async function listItems(
+  type: string,
+  publishedOnly = false,
+  options?: { tag?: string; limit?: number }
+): Promise<ContentItem[]> {
   const sb = getSupabaseAdmin();
   if (!sb) return [];
   let q = sb.from("content_items").select("*").eq("type", type).order("updated_at", { ascending: false });
   if (publishedOnly) q = q.eq("status", "published");
+  if (options?.tag) q = q.contains("tags", [options.tag]);
+  if (options?.limit) q = q.limit(options.limit);
   const { data, error } = await q;
   if (error) console.error("Content list failed:", type, error);
-  return (data as ContentItem[]) ?? [];
+  const items = (data as ContentItem[]) ?? [];
+  // Timed content: expired items never render publicly.
+  const now = new Date().toISOString();
+  return publishedOnly ? items.filter((i) => !i.expires_at || i.expires_at > now) : items;
 }
 
 export async function getItem(id: string): Promise<ContentItem | null> {
@@ -62,11 +73,15 @@ export async function saveItem(input: {
     });
   }
 
+  const expiresRaw = input.type.expiresField ? input.payload[input.type.expiresField] : "";
   const row = {
     type: input.type.key,
     payload: input.payload,
+    tags: deriveTags(input.type, input.payload),
     status: input.publish ? "published" : "draft",
     published_at: input.publish ? (existing?.published_at ?? now) : existing?.published_at ?? null,
+    // End of the chosen day, so "expires Aug 30" means live through Aug 30.
+    expires_at: expiresRaw ? `${expiresRaw}T23:59:59Z` : null,
     updated_at: now,
   };
 

@@ -3,7 +3,7 @@
 import { useActionState, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { saveContentItem, type ContentFormState } from "@/app/admin/content/actions";
-import type { ContentTypeDef, FieldSpec } from "@/lib/content-types";
+import { resolveOptions, type ContentTypeDef, type FieldSpec } from "@/lib/content-types";
 import type { ContentItem } from "@/lib/content-store";
 
 const inputClass =
@@ -64,10 +64,98 @@ export function TypeComposer({ type, item }: { type: ContentTypeDef; item?: Cont
           {label}
           <select id={id} name={f.key} value={v} onChange={(e) => set(f.key, e.currentTarget.value)} className={inputClass}>
             <option value="">Not set</option>
-            {(f.options ?? []).map((o) => (
+            {resolveOptions(f).map((o) => (
               <option key={o} value={o}>{o}</option>
             ))}
           </select>
+        </div>
+      );
+    }
+    if (f.kind === "multiselect") {
+      const chosen = v ? v.split(",").map((s) => s.trim()).filter(Boolean) : [];
+      const toggle = (opt: string) => {
+        const next = chosen.includes(opt) ? chosen.filter((c) => c !== opt) : [...chosen, opt];
+        set(f.key, next.join(", "));
+      };
+      return (
+        <div key={f.key}>
+          {label}
+          <input type="hidden" name={f.key} value={v} />
+          <div className="flex flex-wrap gap-2">
+            {resolveOptions(f).map((o) => {
+              const on = chosen.includes(o);
+              return (
+                <button key={o} type="button" onClick={() => toggle(o)} aria-pressed={on}
+                  className={`cursor-pointer rounded-full border px-3.5 py-1.5 text-sm transition-colors ${on ? "border-brand bg-brand/15 text-brand" : "border-border text-muted-foreground hover:border-brand/50"}`}>
+                  {o}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+    if (f.kind === "date") {
+      return (
+        <div key={f.key}>
+          {label}
+          <input id={id} name={f.key} type="date" value={v}
+            onChange={(e) => set(f.key, e.currentTarget.value)} className={`${inputClass} max-w-56`} />
+        </div>
+      );
+    }
+    if (f.kind === "images") {
+      const urls: string[] = (() => {
+        try {
+          const a = JSON.parse(v || "[]");
+          return Array.isArray(a) ? a : [];
+        } catch {
+          return [];
+        }
+      })();
+      return (
+        <div key={f.key}>
+          {label}
+          <input type="hidden" name={f.key} value={urls.length ? JSON.stringify(urls) : ""} />
+          {urls.length > 0 && (
+            <div className="mb-2 flex flex-wrap gap-2">
+              {urls.map((u, i) => (
+                <div key={u + i} className="relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={u} alt="" className="h-24 w-24 rounded-md border border-border object-cover" />
+                  <button type="button" aria-label={`Remove photo ${i + 1}`}
+                    onClick={() => set(f.key, JSON.stringify(urls.filter((_, j) => j !== i)))}
+                    className="absolute -right-2 -top-2 flex size-6 cursor-pointer items-center justify-center rounded-full border border-border bg-background text-xs hover:border-destructive hover:text-destructive">
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          <Button type="button" variant="outline" disabled={imgBusy === f.key}
+            onClick={() => fileRefs.current[f.key]?.click()}>
+            {imgBusy === f.key ? "Uploading…" : "Add photos"}
+          </Button>
+          <input ref={(el) => { fileRefs.current[f.key] = el; }} type="file" hidden multiple
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            onChange={async (e) => {
+              const files = [...(e.currentTarget.files ?? [])];
+              e.currentTarget.value = "";
+              setImgBusy(f.key);
+              try {
+                const next = [...urls];
+                for (const file of files) {
+                  const form = new FormData();
+                  form.append("file", file);
+                  const res = await fetch("/api/admin/upload-image", { method: "POST", body: form });
+                  const data = await res.json().catch(() => null);
+                  if (data?.url) next.push(data.url);
+                }
+                set(f.key, JSON.stringify(next));
+              } finally {
+                setImgBusy(null);
+              }
+            }} />
         </div>
       );
     }
