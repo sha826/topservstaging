@@ -38,7 +38,8 @@ export async function storeUploadedImage(
 /** Buffer-level core: recompress and store, shared with fetch-and-rehost. */
 export async function storeImageBuffer(
   input: Buffer,
-  mime: string
+  mime: string,
+  options?: { normalizeCover?: boolean }
 ): Promise<{ url?: string; error?: string; status: number }> {
   const sb = getSupabaseAdmin();
   if (!sb) return { error: "Storage is not configured.", status: 503 };
@@ -49,13 +50,29 @@ export async function storeImageBuffer(
   if (mime !== "image/gif") {
     try {
       const sharp = (await import("sharp")).default;
-      body = Buffer.from(
-        await sharp(body)
-          .rotate() // honor EXIF orientation from phone photos
-          .resize({ width: 1600, withoutEnlargement: true })
-          .webp({ quality: 82 })
-          .toBuffer()
-      );
+      let img = sharp(body).rotate(); // honor EXIF orientation
+
+      // Covers display in a 2:1 frame site-wide (cards, article header,
+      // social share). External systems send arbitrary ratios (Titan's
+      // generator makes squares) — smart-crop to 2:1 using sharp's
+      // attention strategy, which keeps the salient region. Images already
+      // close to 2:1 skip the crop to avoid needless quality loss.
+      if (options?.normalizeCover) {
+        const meta = await img.metadata();
+        const ratio = (meta.width ?? 0) / (meta.height ?? 1);
+        if (meta.width && meta.height && (ratio < 1.7 || ratio > 2.3)) {
+          img = img.resize(1200, 600, {
+            fit: "cover",
+            position: sharp.strategy.attention,
+          });
+        } else {
+          img = img.resize({ width: 1600, withoutEnlargement: true });
+        }
+      } else {
+        img = img.resize({ width: 1600, withoutEnlargement: true });
+      }
+
+      body = Buffer.from(await img.webp({ quality: 82 }).toBuffer());
       contentType = "image/webp";
       ext = "webp";
     } catch (e) {
@@ -113,7 +130,8 @@ export async function fetchAndStoreImage(
     if (buf.byteLength > MAX_BYTES) {
       return { error: "Images must be 10MB or smaller.", status: 413 };
     }
-    return storeImageBuffer(buf, mime);
+    // Fetched URLs are always post covers — normalize the ratio.
+    return storeImageBuffer(buf, mime, { normalizeCover: true });
   } catch {
     return { error: "Could not download the image URL.", status: 502 };
   }
