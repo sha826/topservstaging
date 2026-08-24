@@ -17,6 +17,14 @@ function slugify(input: string): string {
     .slice(0, 80);
 }
 
+interface FaqItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+let faqIdCounter = 1;
+
 interface Draft {
   t: number;
   title: string;
@@ -25,6 +33,9 @@ interface Draft {
   content: string;
   cover: string;
   published: boolean;
+  category?: string;
+  seoTitle?: string;
+  faq?: { question: string; answer: string }[];
 }
 
 export function PostForm({
@@ -43,6 +54,12 @@ export function PostForm({
   const [description, setDescription] = useState(post?.description ?? "");
   const [content, setContent] = useState(post?.content ?? "");
   const [published, setPublished] = useState(post?.published ?? false);
+  const [category, setCategory] = useState(post?.category ?? "");
+  const [seoTitle, setSeoTitle] = useState(post?.seo_title ?? "");
+  const [faq, setFaq] = useState<FaqItem[]>(
+    (post?.faq ?? []).map((f) => ({ id: faqIdCounter++, question: f.question, answer: f.answer }))
+  );
+  const [faqConfirm, setFaqConfirm] = useState<number | null>(null);
   const [cover, setCover] = useState(post?.cover_image ?? "");
   const [imgPrompt, setImgPrompt] = useState("");
   const [genBusy, setGenBusy] = useState(false);
@@ -81,14 +98,18 @@ export function PostForm({
     if (!dirty) return;
     const timer = setTimeout(() => {
       try {
-        const draft: Draft = { t: Date.now(), title, slug, description, content, cover, published };
+        const draft: Draft = {
+          t: Date.now(), title, slug, description, content, cover, published,
+          category, seoTitle,
+          faq: faq.map(({ question, answer }) => ({ question, answer })),
+        };
         localStorage.setItem(draftKeyRef.current, JSON.stringify(draft));
       } catch {
         // Storage full or unavailable: the unload guard still protects.
       }
     }, 800);
     return () => clearTimeout(timer);
-  }, [dirty, title, slug, description, content, cover, published]);
+  }, [dirty, title, slug, description, content, cover, published, category, seoTitle, faq]);
 
   // Warn before closing/reloading the tab with unsaved changes.
   useEffect(() => {
@@ -107,6 +128,9 @@ export function PostForm({
     setContent(restorable.content);
     setCover(restorable.cover);
     setPublished(restorable.published);
+    setCategory(restorable.category ?? "");
+    setSeoTitle(restorable.seoTitle ?? "");
+    setFaq((restorable.faq ?? []).map((f) => ({ id: faqIdCounter++, question: String(f?.question ?? ""), answer: String(f?.answer ?? "") })));
     setDirty(true);
     setRestorable(null);
   }
@@ -264,6 +288,45 @@ export function PostForm({
         )}
       </div>
 
+      <div className="grid gap-5 md:grid-cols-2">
+        <div>
+          <label htmlFor="post-category" className="mb-1.5 block text-sm font-semibold">
+            Category <span className="font-normal text-muted-foreground">(eyebrow, default Insights)</span>
+          </label>
+          <input
+            id="post-category"
+            name="category"
+            value={category}
+            maxLength={60}
+            placeholder="Video Marketing"
+            onChange={(e) => {
+              setCategory(e.currentTarget.value);
+              setDirty(true);
+            }}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="post-seo-title" className="mb-1.5 flex items-baseline justify-between text-sm font-semibold">
+            <span>SEO title <span className="font-normal text-muted-foreground">(tab title; empty = title)</span></span>
+            <span className={`font-mono text-xs font-normal ${seoTitle.length > 65 ? "text-brand" : "text-ink-faint"}`}>
+              {seoTitle.length}/60 ideal
+            </span>
+          </label>
+          <input
+            id="post-seo-title"
+            name="seo_title"
+            value={seoTitle}
+            maxLength={200}
+            onChange={(e) => {
+              setSeoTitle(e.currentTarget.value);
+              setDirty(true);
+            }}
+            className={inputClass}
+          />
+        </div>
+      </div>
+
       <div>
         <label htmlFor="post-description" className="mb-1.5 block text-sm font-semibold">
           Description <span className="font-normal text-muted-foreground">(SEO + card text)</span>
@@ -376,6 +439,106 @@ export function PostForm({
             setDirty(true);
           }}
         />
+      </div>
+
+      {/* FAQ builder: visible section + FAQPage schema, single source of truth */}
+      <div>
+        <p className="mb-1.5 text-sm font-semibold">
+          FAQ <span className="font-normal text-muted-foreground">(renders as a section + FAQPage schema; do not repeat in the body)</span>
+        </p>
+        <div className="grid gap-3">
+          {faq.map((f, i) => (
+            <div key={f.id} className="rounded-lg border border-border bg-card p-4">
+              <div className="flex items-start justify-between gap-3">
+                <input
+                  aria-label={`Question ${i + 1}`}
+                  value={f.question}
+                  maxLength={300}
+                  placeholder="Question"
+                  className={`${inputClass} font-semibold`}
+                  onChange={(e) => {
+                    setFaq(faq.map((x) => (x.id === f.id ? { ...x, question: e.currentTarget.value } : x)));
+                    setDirty(true);
+                  }}
+                />
+                <button
+                  type="button"
+                  aria-label={faqConfirm === f.id ? `Confirm removing question ${i + 1}` : `Remove question ${i + 1}`}
+                  onClick={() => {
+                    if (faqConfirm === f.id) {
+                      setFaq(faq.filter((x) => x.id !== f.id));
+                      setFaqConfirm(null);
+                      setDirty(true);
+                    } else {
+                      setFaqConfirm(f.id);
+                      setTimeout(() => setFaqConfirm((c) => (c === f.id ? null : c)), 2500);
+                    }
+                  }}
+                  className={`cursor-pointer whitespace-nowrap rounded-md border px-2.5 py-2 text-sm transition-colors ${faqConfirm === f.id ? "border-destructive bg-destructive/15 text-destructive" : "border-border text-muted-foreground hover:border-destructive/60 hover:text-destructive"}`}
+                >
+                  {faqConfirm === f.id ? "Sure?" : "✕"}
+                </button>
+              </div>
+              <textarea
+                aria-label={`Answer ${i + 1}`}
+                rows={2}
+                value={f.answer}
+                maxLength={2000}
+                placeholder="Answer"
+                className={`${inputClass} mt-2 resize-y`}
+                onChange={(e) => {
+                  setFaq(faq.map((x) => (x.id === f.id ? { ...x, answer: e.currentTarget.value } : x)));
+                  setDirty(true);
+                }}
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => {
+              setFaq([...faq, { id: faqIdCounter++, question: "", answer: "" }]);
+              setDirty(true);
+            }}
+            className="cursor-pointer rounded-lg border border-dashed border-border py-2.5 text-sm text-muted-foreground transition-colors hover:border-brand/60 hover:text-brand"
+          >
+            + Add a question
+          </button>
+        </div>
+      </div>
+      <input
+        type="hidden"
+        name="faq"
+        value={JSON.stringify(
+          faq
+            .map(({ question, answer }) => ({ question: question.trim(), answer: answer.trim() }))
+            .filter((f) => f.question && f.answer)
+        )}
+      />
+
+      {/* Structure checks (the Content Studio rail, fused in) */}
+      <div className="rounded-lg border border-border bg-card p-5">
+        <p className="label-mono text-ink-faint">Structure checks</p>
+        <ul className="mt-3 grid gap-1.5 text-sm sm:grid-cols-2">
+          {(() => {
+            const words = content.trim() ? content.trim().split(/\s+/).length : 0;
+            const completeFaq = faq.filter((f) => f.question.trim() && f.answer.trim()).length;
+            const partialFaq = faq.some((f) => Boolean(f.question.trim()) !== Boolean(f.answer.trim()));
+            const checks = [
+              { label: "Title (3+ characters)", ok: title.trim().length >= 3 },
+              { label: `Body (300+ words recommended), ${words} words`, ok: words >= 300 },
+              { label: "Description for SEO and cards", ok: description.trim().length > 0 },
+              { label: "Cover image", ok: Boolean(cover) },
+              { label: partialFaq ? "FAQ has an incomplete entry" : `FAQ entries, ${completeFaq} complete`, ok: completeFaq > 0 && !partialFaq },
+              { label: "No H1 in body (the site renders the title)", ok: !/^#\s/m.test(content) },
+            ];
+            return checks.map((c) => (
+              <li key={c.label} className="flex items-start gap-2">
+                <span aria-hidden className={c.ok ? "text-brand" : "text-ink-faint"}>{c.ok ? "✓" : "○"}</span>
+                <span className={c.ok ? "" : "text-muted-foreground"}>{c.label}</span>
+              </li>
+            ));
+          })()}
+        </ul>
       </div>
 
       <label className="flex items-center gap-2.5 text-sm font-semibold">

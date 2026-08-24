@@ -36,6 +36,23 @@ export async function savePost(
   const content = String(formData.get("content") ?? "").replace(/\r\n/g, "\n").slice(0, 100000);
   const coverImage = String(formData.get("cover_image") ?? "").slice(0, 1000);
   const published = formData.get("published") === "on";
+  const category = String(formData.get("category") ?? "").trim().slice(0, 60);
+  const seoTitle = String(formData.get("seo_title") ?? "").trim().slice(0, 200);
+  // FAQ arrives as JSON from the editor's builder; validate shape strictly.
+  let faq: { question: string; answer: string }[] = [];
+  try {
+    const parsed = JSON.parse(String(formData.get("faq") ?? "[]"));
+    if (Array.isArray(parsed)) {
+      faq = parsed
+        .filter(
+          (f): f is { question: string; answer: string } =>
+            !!f && typeof f.question === "string" && typeof f.answer === "string"
+        )
+        .map((f) => ({ question: f.question.trim().slice(0, 300), answer: f.answer.trim().slice(0, 2000) }))
+        .filter((f) => f.question && f.answer)
+        .slice(0, 20);
+    }
+  } catch {}
 
   if (!title || !slug || !content) {
     return { error: "Title, slug, and content are all required." };
@@ -65,7 +82,13 @@ export async function savePost(
     published_at: publishedAt,
     updated_at: new Date().toISOString(),
   };
-  const extendedRow = { ...row, word_count: content.split(/\s+/).length };
+  const extendedRow = {
+    ...row,
+    word_count: content.split(/\s+/).length,
+    category: category || null,
+    seo_title: seoTitle || null,
+    faq: faq.length ? faq : null,
+  };
 
   let { error } = existing
     ? await sb.from("posts").update(extendedRow).eq("id", id)

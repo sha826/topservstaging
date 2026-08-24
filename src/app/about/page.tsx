@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { ContentSlot } from "@/components/content/content-slot";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -81,6 +82,10 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Registry-driven placement slots: render only when content exists. */}
+      <ContentSlot type="team_member" heading="The people behind the work" />
+      <ContentSlot type="testimonial" heading="What partners say" />
     </>
   );
 }
