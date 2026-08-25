@@ -6,14 +6,16 @@ export interface Faq {
 // Answers are written as self-contained 40–70 word passages an AI system can
 // quote without surrounding context, each one stands alone. These render on
 // the site AND feed the chat concierge's knowledge block, so they must match
-// the BrandFormance build spec: weekly pricing only, onboarding never called
-// a fee, Brand Score as the diagnostic, the 6 stage Method.
+// the BrandFormance build spec v2: no price table, the $1,000/week floor and
+// $10,000 activation are the only public numbers (never monthly, never
+// annual), the activation is never called a fee, the Brand Assessment returns
+// a grade only, and the 6 stage Method is the system.
 
 export const generalFaqs: Faq[] = [
   {
     question: "What makes TopServ Digital different from other marketing agencies?",
     answer:
-      "TopServ Digital is the home of BrandFormance: brand building and performance marketing run as 1 system, instead of choosing between brand or leads. The agency has worked exclusively with home service companies since 2016, publishes its full weekly pricing on its website, and has generated over $89M in revenue for 200+ contractor clients.",
+      "TopServ Digital is the home of BrandFormance: brand building and performance marketing run as 1 system, instead of choosing between brand or leads. The agency has worked exclusively with home service companies since 2016, publishes its pricing anchor openly ($1,000 per week floor, $10,000 one time activation), and has generated over $89M in revenue for 200+ contractor clients.",
   },
   {
     question: "What is BrandFormance?",
@@ -26,9 +28,9 @@ export const generalFaqs: Faq[] = [
       "Through the 6 stage BrandFormance Method, in order: Position (clarify what the company stands for), Build (create the video, messaging and proof assets), Create Demand (brand advertising at frequency in the home geography), Capture Demand (search, maps, Local Services, retargeting), Convert (booking and speed to lead), and Measure and Optimize, where cost per booked call is the headline number.",
   },
   {
-    question: "What is the Brand Score?",
+    question: "What is the Brand Assessment?",
     answer:
-      "The Brand Score is a 6 component diagnostic of how strong a company's brand actually is in its market: website strength, social media, online reputation, brand visibility, digital consistency, and market positioning, scored against the local competitive set. It produces a score out of 100 and a grade, and the grade places a company in the right program. Get it at topservdigital.com/brand-score.",
+      "The Brand Assessment reads how strong a company's brand actually is in its market and returns 1 of 4 grades: Unknown, Name Recognition, Household Name, or Negative Equity. Each grade comes with what it means for the business and the right next step. It is the honest starting point before any program or price conversation. Get yours at topservdigital.com/brand-assessment.",
   },
   {
     question: "Which industries does TopServ Digital serve?",
@@ -43,7 +45,7 @@ export const generalFaqs: Faq[] = [
   {
     question: "How much does TopServ Digital cost?",
     answer:
-      "TopServ Digital publishes its pricing: 3 programs billed weekly, matched to your brand equity stage. Establish at $1,000 per week for companies the market doesn't know yet, Amplify at $1,625 per week for companies with name recognition, and Dominate at $2,375 per week for companies ready to own their market. Every program starts with a one time $10,000 onboarding in month 1 that covers the 2 day video shoot, travel, strategy build, and editing; the weekly program takes over in month 2.",
+      "Programs start at $1,000 per week. That is the floor rate to manage the work, not a menu price. Every program begins with a one time $10,000 activation in month 1 that covers the 2 day video shoot, travel, and the first month of build; weekly billing starts in month 2. The actual number comes from your scope: market size, competitive saturation, current brand position, service area, and video scope. The assessment produces the scope, and the scope produces the price.",
   },
   {
     question: "How long until we see results?",
@@ -64,13 +66,18 @@ export const pricingFaqs: Faq[] = [
       "Weekly billing matches how the work actually runs: brand advertising is bought at a weekly frequency floor, content ships weekly, and reporting runs against weekly delivery. It also keeps the number honest, a year is 52 weeks, and quoting weekly means the figure is true from the first conversation.",
   },
   {
-    question: "Which program is right for my company?",
+    question: "Why don't you publish a price table?",
     answer:
-      "Programs map to your brand equity stage, not your revenue. Establish is for companies the market doesn't know yet, Amplify is for companies with name recognition that people don't yet call first, and Dominate is for companies ready to be the default choice. You don't self-select: the Brand Score, a 6 component diagnostic run against your market, places you in the program, and the team confirms the placement with real market data on the strategy call.",
+      "Because a table invites you to pick a tier before anyone has diagnosed anything, and it fixes a price against a scope nobody has seen. No 2 clients in the same market price the same. We publish the honest anchor instead: the $1,000 per week floor and the one time $10,000 activation. Your scope sets your number, and the assessment sets the scope.",
   },
   {
-    question: "Why is there a $10,000 onboarding?",
+    question: "Which program is right for my company?",
     answer:
-      "The onboarding funds the 2 day on-site video shoot that rebuilds your entire content library, plus travel, the pre-shoot strategy build, editing, and the first month of campaign and profile build. It's the working foundation every program runs on, and it happens once, in month 1.",
+      "You don't self-select, and that's a feature. The Brand Assessment reads your market and returns your grade; the full assessment then produces your scope, and the program is assigned by diagnosis. What a larger program buys is more geography held at the same brand frequency, never more impressions. Frequency is fixed at the floor of 3 times weekly for everyone; territory is the variable.",
+  },
+  {
+    question: "Why is there a $10,000 activation?",
+    answer:
+      "The activation funds the 2 day on-site video shoot that rebuilds your entire content library, plus travel, the pre-shoot strategy build, editing, and the first month of campaign and profile build. It's the working foundation every program runs on, and it happens once, in month 1. Weekly billing starts in month 2.",
   },
 ];

@@ -84,7 +84,7 @@ export default function BrandformancePage() {
               <Link href="/method">The Method</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="text-base">
-              <Link href="/brand-score">Get your Brand Score</Link>
+              <Link href="/brand-assessment">Get your Brand Grade</Link>
             </Button>
           </div>
         </div>

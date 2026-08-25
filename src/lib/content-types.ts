@@ -92,14 +92,17 @@ export const CONTENT_TYPES: Record<string, ContentTypeDef> = {
     fields: [
       { key: "title", label: "Title", kind: "text", required: true, max: 160, help: "For example: Full system replacement in Frisco" },
       { key: "description", label: "What was done", kind: "textarea", required: true, max: 1200, rows: 5 },
-      { key: "location", label: "Location", kind: "text", required: true, max: 120, help: "City or neighborhood." },
+      // Spec v2 §11: location resolves to a zone from the site's service-area
+      // vocabulary, never free text — updates must map to the geography the
+      // SEO team actually targets.
+      { key: "location", label: "Zone", kind: "select", required: true, optionsFrom: "serviceAreas", help: "The service zone this job belongs to." },
       { key: "services", label: "Services performed", kind: "multiselect", required: true, optionsFrom: "services" },
-      { key: "areas", label: "Service areas", kind: "multiselect", optionsFrom: "serviceAreas", help: "Optional area tags for placement." },
+      { key: "areas", label: "Additional zones", kind: "multiselect", optionsFrom: "serviceAreas", help: "Optional extra zone tags for placement." },
       { key: "photos", label: "Photos", kind: "images", help: "Before/after or job photos." },
     ],
     publishMode: "instant",
     notifyOnPublish: true,
-    tagFields: ["services", "areas"],
+    tagFields: ["services", "areas", "location"],
   },
   press_release: {
     key: "press_release",
@@ -191,7 +194,7 @@ export function validatePayload(
     }
     if (v && f.kind === "multiselect") {
       const opts = resolveOptions(f);
-      const chosen = v.split(",").map((s) => s.trim()).filter(Boolean);
+      const chosen = splitList(v);
       if (opts.length && chosen.some((c) => !opts.includes(c))) {
         errors.push(`${f.label} contains values outside: ${opts.join(", ")}.`);
       }
@@ -214,14 +217,22 @@ export function validatePayload(
   return errors.length ? { errors } : { payload };
 }
 
-/** Placement tags derived from the type's tagFields (multiselects split on comma). */
+/**
+ * Multiselect values are stored "A | B | C". The delimiter is a pipe, not a
+ * comma, because vocabulary values themselves contain commas ("Frisco, TX").
+ */
+export const LIST_DELIMITER = " | ";
+
+/** Split a stored multiselect value into its option values. */
+export function splitList(v: string): string[] {
+  return v.split("|").map((s) => s.trim()).filter(Boolean);
+}
+
+/** Placement tags derived from the type's tagFields (whole option values). */
 export function deriveTags(type: ContentTypeDef, payload: Record<string, string>): string[] {
   const tags = new Set<string>();
   for (const key of type.tagFields ?? []) {
-    for (const t of (payload[key] ?? "").split(",")) {
-      const clean = t.trim();
-      if (clean) tags.add(clean);
-    }
+    for (const clean of splitList(payload[key] ?? "")) tags.add(clean);
   }
   return [...tags];
 }

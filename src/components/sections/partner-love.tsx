@@ -153,8 +153,8 @@ export function PartnerLove() {
           className="mt-9 flex flex-wrap gap-3"
         >
           <Button asChild size="lg" className="text-base">
-            <Link href="/brand-score">
-              Get Your Brand Score
+            <Link href="/brand-assessment">
+              Get Your Brand Grade
               <ArrowRight className="size-4" aria-hidden />
             </Link>
           </Button>

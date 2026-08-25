@@ -192,12 +192,12 @@ export default function HomePage() {
               How strong is your brand<span className="text-brand">?</span>
             </h2>
             <p className="mx-auto mt-5 max-w-md text-lg text-muted-foreground">
-              6 components, 1 score, 1 grade. Find out where you actually stand
+              4 honest grades, 1 of them yours. Find out where you actually stand
               in your market, and which program closes the gap.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button asChild size="lg" className="text-base">
-                <Link href="/brand-score">Get Your Brand Score</Link>
+                <Link href="/brand-assessment">Get Your Brand Grade</Link>
               </Button>
               <Link
                 href="/programs-pricing/overview"

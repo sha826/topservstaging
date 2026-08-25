@@ -1,8 +1,11 @@
 /**
- * BrandFormance site content, per the Build Specification v1.0 (Aug 2026).
- * The spec is canonical: six stages, three phases, six Brand Score
- * components, six named clients, weekly pricing only. Copy follows the
- * standards in section 11: bold, clear, direct, numerals, no em dashes.
+ * BrandFormance site content, per Build Specification v2 (Aug 2026).
+ * The spec is canonical: six stages, three phases, four public brand
+ * grades (grade only, never score components or weights), six named
+ * clients, the $1,000/week floor plus $10,000 activation as the only
+ * public numbers (never monthly, never annual), and brand frequency
+ * fixed at 3x weekly with geography as the variable. Copy standards:
+ * bold, clear, direct, numerals, no em dashes.
  */
 
 export const oneLine = "Stop Chasing Leads. Start Building a Brand Customers Choose.";
@@ -94,33 +97,31 @@ export const threePhases = [
   },
 ] as const;
 
-export const programs = [
-  {
-    name: "Establish",
-    for: "Companies unknown in the market they need to grow into",
-    weekly: "$1,000",
-    annual: "$52,000",
-    frequency: "3 times per week minimum",
-  },
-  {
-    name: "Amplify",
-    for: "Companies with name recognition that is not yet preference",
-    weekly: "$1,625",
-    annual: "$84,500",
-    frequency: "4 times per week",
-  },
-  {
-    name: "Dominate",
-    for: "Companies already known, going for market ownership",
-    weekly: "$2,375",
-    annual: "$123,500",
-    frequency: "5 times per week",
-  },
-] as const;
-
-export const onboarding = {
-  price: "$10,000",
-  covers: "the 2 day video shoot, travel, and the first month of build",
+/**
+ * Pricing per spec v2: NO price table, ever. The site publishes the floor
+ * and the activation only. Price is derived per client from scope by the
+ * Growth Engine. Never publish annual or monthly figures anywhere.
+ */
+export const pricingModel = {
+  floor: "$1,000",
+  floorLine: "Programs start at $1,000 per week. That is the floor rate to manage the work. It is a floor, not a menu price.",
+  activation: "$10,000",
+  activationLine:
+    "A one time $10,000 activation in month 1 covers the 2 day video shoot, travel, and the first month of build.",
+  whatSetsTheNumber: [
+    "Market size",
+    "Competitive saturation",
+    "Current brand position",
+    "Service area",
+    "Video scope",
+  ],
+  howReached:
+    "The assessment and the research modules produce the scope. The scope produces the price. The program is assigned by diagnosis, not chosen from a menu.",
+  // Spec v2 section 6: frequency is fixed at the floor of 3 times weekly at
+  // every rung. Geography is the variable. Larger programs buy more
+  // territory held at the same frequency, never more frequency.
+  frequencyDoctrine:
+    "Brand frequency is fixed: 3 times weekly, at every level. What a larger program buys is more geography held at that same frequency, never more impressions. Competitors sell more impressions. We sell more territory, owned properly.",
 } as const;
 
 export const sixClients = [
@@ -132,20 +133,29 @@ export const sixClients = [
   { client: "C and S Air", market: "Mansfield, TX", result: "$500K to $3.5M", detail: "54 percent CAGR, ranks first in market" },
 ] as const;
 
-export const brandScoreComponents = [
-  { component: "Website Strength", weight: 25, how: "API computed. Speed, structure, conversion paths, schema." },
-  { component: "Social Media", weight: 25, how: "AI assessed. Presence, cadence, whether the owner is on camera." },
-  { component: "Online Reputation", weight: 20, how: "API computed. Review volume, rating, velocity, response behavior." },
-  { component: "Brand Visibility", weight: 15, how: "API computed. Branded search volume and local pack position." },
-  { component: "Digital Consistency", weight: 10, how: "API computed. Name, address, phone and claim consistency across all properties." },
-  { component: "Market Positioning", weight: 5, how: "AI assessed. Does the messaging survive the swap test." },
-] as const;
-
-export const brandScoreGrades = [
-  { grade: "Unknown", meaning: "Outside their own circle, nobody can find them", program: "Establish" },
-  { grade: "Name Recognition", meaning: "People know the name but are not choosing it", program: "Amplify" },
-  { grade: "Household Name", meaning: "Searched by name, leads cost almost nothing", program: "Dominate" },
-  { grade: "Negative Equity", meaning: "Actively chosen against. Fix operations before marketing.", program: "Not a fit yet" },
+/**
+ * The public Brand Assessment returns a GRADE only (spec v2, section 5).
+ * The numeric score, its components, weights, and normalization method are
+ * internal to the sales console and must never appear on the site or be
+ * restated in any document. The 4 grades are published in JB's book.
+ */
+export const brandGrades = [
+  {
+    grade: "Unknown",
+    meaning: "Outside their own circle, nobody can find them. The market does not know the name.",
+  },
+  {
+    grade: "Name Recognition",
+    meaning: "People know the name but are not choosing it. Familiarity without preference.",
+  },
+  {
+    grade: "Household Name",
+    meaning: "Searched by name. Leads cost almost nothing.",
+  },
+  {
+    grade: "Negative Equity",
+    meaning: "Actively chosen against. Fix operations before spending on marketing.",
+  },
 ] as const;
 
 export const builtFor = [
@@ -206,7 +216,7 @@ export const tenQuestions = [
   },
   {
     q: "How can a contractor get started?",
-    a: "Get your Brand Score. It is a 6 component diagnostic of how strong your brand actually is in your market, and it places you in the right program. The program is assigned by diagnosis, not chosen from a menu.",
+    a: "Get your Brand Grade. The Brand Assessment reads how strong your brand actually is in your market and returns 1 of 4 grades, each with what it means for your business. The program and the price come from the full assessment afterward: diagnosis first, prescription second, never a menu.",
   },
 ] as const;
 

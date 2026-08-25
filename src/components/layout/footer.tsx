@@ -98,8 +98,8 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/brand-score" className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring/60">
-                Brand Score
+              <Link href="/brand-assessment" className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring/60">
+                Brand Assessment
               </Link>
             </li>
             <li>

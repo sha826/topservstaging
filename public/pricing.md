@@ -1,59 +1,48 @@
 # TopServ Digital — Pricing
 
-TopServ Digital publishes its pricing openly. Three programs, billed weekly,
-matched to the client's brand equity stage — not revenue. The stage is
-diagnosed on the discovery call from heat-map, SEMrush, and branded-search
-data; clients don't self-select a package. As the brand grows, they climb.
-Current as of August 2026; confirm on a discovery call: https://book.topservdigital.com/discovery-calendar
+TopServ Digital does not publish a price table, on purpose. A table invites
+you to pick a tier before anyone has diagnosed anything, and it fixes a price
+against a scope nobody has seen. Price is derived per client from scope; no
+two clients in the same market price the same. What TopServ publishes is the
+honest anchor. Current as of August 2026; confirm on a discovery call:
+https://book.topservdigital.com/discovery-calendar
 
-## Establish — $1,000/week
+## The floor — $1,000/week
 
-Stage 1: Unknown. The market doesn't know you yet; every lead is a paid fight.
-Get on the map, get found, and start building a name worth knowing.
+Programs start at $1,000 per week. That is the floor rate to manage the work,
+not a menu price. Pricing runs weekly because the work runs weekly: brand
+advertising is bought at a weekly frequency floor, content ships weekly, and
+reporting runs against weekly delivery. TopServ does not quote monthly or
+annual figures.
 
-Outcome: stop renting every lead. Build the foundation that makes leads
-cheaper over time.
+## The activation — $10,000 (one time, month 1, every program)
 
-- Performance-weighted media to keep the phone ringing now
-- SEO build where the map is weak
-- PPC + LSA lead capture
-- Brand foundation growing underneath
+Every program begins with a one time $10,000 activation that funds the
+two-day on-site video shoot and the evergreen content library it produces,
+travel, the pre-shoot strategy build, editing, and the first month of
+campaign and profile build. Weekly billing starts in month 2. The activation
+is not a fee; it is the working foundation every program runs on.
 
-## Amplify — $1,625/week
+## What sets the number
 
-Stage 2: Name Recognition. The market knows the name but doesn't yet call
-first. Turn that recognition into preference and take share.
+- Market size
+- Competitive saturation
+- Current brand position
+- Service area
+- Video scope
 
-Outcome: become the name people prefer, not just recognize. Lower cost per
-lead as the brand carries more.
+The Brand Assessment produces the scope, and the scope produces the price.
+Start at https://topservdigital.com/brand-assessment
 
-- Balanced brand and performance
-- Heavier content and video cadence
-- PPC + LSA + Meta
-- Reach and frequency across the market
+## More territory, same frequency
 
-## Dominate — $2,375/week
-
-Stage 3: Household Name. When something breaks, you're the first call.
-Own the market and be the default choice before anyone opens Google.
-
-Outcome: Five Mile Famous. The brand does the heavy lifting and paid lead
-capture drops toward nothing.
-
-- Brand-weighted, full multichannel
-- Maximum content and video volume
-- PPC + LSA + Meta + YouTube + TikTok
-- Market domination, default-choice status
-
-## Activation & Onboarding — $10,000 (one time, every program)
-
-Month one on every program. Covers the two-day on-site video shoot and the
-evergreen content library it produces, travel, the pre-shoot strategy build,
-editing, and the first-month build. The weekly retainer takes over in month two.
+Brand frequency is fixed at 3 times weekly for every program. A larger
+program buys more geography held at that same frequency, never more
+impressions. Territory is the variable; frequency is the constant.
 
 ## Every program includes
 
-- The full Brandformance system
+- The full BrandFormance system
 - The two-day video shoot and an evergreen content library
 - SEO, paid media, automation, and lead capture
 

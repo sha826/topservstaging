@@ -90,7 +90,7 @@ export async function submitLead(
   const lead = parsed.data;
 
   // Bot check: real visitors never fill the hidden field. Return a fake
-  // success so bots learn nothing (mirrors the brand-score form).
+  // success so bots learn nothing (mirrors the brand-assessment form).
   if (lead.website) {
     return { status: "success", message: "Got it — we'll get back to you within one business day." };
   }

@@ -193,3 +193,28 @@ effort per feature. It is the whole ballgame.
    site? (Proposal: per site first, portal later.)
 5. Where does client identity live long-term: per-site Supabase or a
    shared auth tenant across all client sites?
+
+## Spec v2 corrections (August 2026, §11 — client permissions)
+
+Build Specification v2 (docs/TSD_Website_Build_Specification_v2.docx)
+tightened the client-panel rules. These override anything above:
+
+- **Project updates are the priority type.** They feed the zone photo
+  pipeline: every update is proof-of-work inside a target zone, which is
+  exactly what the SEO team needs published at cadence.
+- **Location is a Zone, never free text.** The location field resolves
+  to a zone from the site manifest's service-area vocabulary
+  (implemented: `project_update.location` is a `select` over
+  `serviceAreas`, and it is a tag field). Client-typed city names do not
+  exist in this system.
+- **Phone and address are NOT client-editable.** Business identity
+  fields (phone, address, legal name) stay agency-controlled — tracking
+  numbers and NAP consistency break if clients touch them. The business
+  info type, when built, excludes them from the client-facing form.
+- **Testimonials are not reviews.** Testimonials are client-submitted
+  quotes the client owns; reviews are third-party platform artifacts and
+  are never hand-entered through this panel.
+- **Approval stays on for the client door.** Client-role publishes go
+  through review; instant publish with SEO-dept notification is the
+  agency-side behavior. Trusted-client instant publish is a per-site
+  manifest decision, off by default.

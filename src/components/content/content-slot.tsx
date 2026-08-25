@@ -1,5 +1,5 @@
 import { listItems } from "@/lib/content-store";
-import { getType } from "@/lib/content-types";
+import { getType, splitList } from "@/lib/content-types";
 
 /**
  * Placement slot (concept doc, layer 4): pages pull published content by
@@ -128,7 +128,7 @@ export async function ContentSlot({
                     <h3 className="mt-1 text-lg font-bold leading-snug">{p.payload.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.payload.description}</p>
                     <p className="mt-auto flex flex-wrap gap-1.5 pt-4">
-                      {(p.payload.services ?? "").split(",").map((s) => s.trim()).filter(Boolean).map((s) => (
+                      {splitList(p.payload.services ?? "").map((s) => (
                         <span key={s} className="rounded-full border border-brand/40 px-2.5 py-0.5 text-xs text-brand">
                           {s}
                         </span>

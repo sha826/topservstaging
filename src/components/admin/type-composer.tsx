@@ -3,7 +3,7 @@
 import { useActionState, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { saveContentItem, type ContentFormState } from "@/app/admin/content/actions";
-import { resolveOptions, type ContentTypeDef, type FieldSpec } from "@/lib/content-types";
+import { LIST_DELIMITER, resolveOptions, splitList, type ContentTypeDef, type FieldSpec } from "@/lib/content-types";
 import type { ContentItem } from "@/lib/content-store";
 
 const inputClass =
@@ -72,10 +72,10 @@ export function TypeComposer({ type, item }: { type: ContentTypeDef; item?: Cont
       );
     }
     if (f.kind === "multiselect") {
-      const chosen = v ? v.split(",").map((s) => s.trim()).filter(Boolean) : [];
+      const chosen = splitList(v);
       const toggle = (opt: string) => {
         const next = chosen.includes(opt) ? chosen.filter((c) => c !== opt) : [...chosen, opt];
-        set(f.key, next.join(", "));
+        set(f.key, next.join(LIST_DELIMITER));
       };
       return (
         <div key={f.key}>

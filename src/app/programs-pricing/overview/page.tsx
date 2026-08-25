@@ -139,7 +139,7 @@ export default function OverviewPage() {
           <p className="mt-6 max-w-2xl text-sm text-muted-foreground">
             Sweet spot: roughly $1M to $10M in annual revenue, as guidance
             rather than a gate. We have worked successfully above and below it.
-            The Brand Score does the actual qualifying.
+            The Brand Assessment does the actual qualifying.
           </p>
           <div className="mt-10">
             <VideoSlot

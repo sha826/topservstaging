@@ -20,21 +20,22 @@ function throttled(ip: string): boolean {
   return recent.length > MAX_PER_WINDOW;
 }
 
-export interface BrandScoreState {
+export interface AssessmentState {
   ok?: boolean;
   error?: string;
 }
 
 /**
- * Brand Score request: the site's primary conversion. Captures the lead and
- * routes it to the team, who run the 6 component diagnostic. The automated
- * public engine plugs in behind this same form once its data source is
- * decided (open decision 3 in the build spec).
+ * Brand Assessment request: the site's primary conversion (spec v2 §5.2).
+ * Returns a GRADE, never a number. Captures the lead plus the optional
+ * inputs that sharpen the grade and pre-populate the console. The automated
+ * grade engine (public mode of the scoring engine) plugs in behind this
+ * same form; until then the team runs it and sends the grade.
  */
-export async function requestBrandScore(
-  _prev: BrandScoreState,
+export async function requestAssessment(
+  _prev: AssessmentState,
   formData: FormData
-): Promise<BrandScoreState> {
+): Promise<AssessmentState> {
   // Honeypot: humans never fill this field.
   if (String(formData.get("fax") ?? "")) {
     return { ok: true };
@@ -52,6 +53,8 @@ export async function requestBrandScore(
   const market = String(formData.get("market") ?? "").trim().slice(0, 120);
   const trade = String(formData.get("trade") ?? "").trim().slice(0, 80);
   const website = String(formData.get("website") ?? "").trim().slice(0, 200);
+  const revenue = String(formData.get("revenue") ?? "").trim().slice(0, 40);
+  const membership = String(formData.get("membership") ?? "").trim().slice(0, 10);
   const email = String(formData.get("email") ?? "").trim().slice(0, 160);
   const phone = String(formData.get("phone") ?? "").trim().slice(0, 40);
 
@@ -59,8 +62,16 @@ export async function requestBrandScore(
     return { error: "Name, company and market are required." };
   }
   if (!email && !phone) {
-    return { error: "Leave an email or a phone number so the score can reach you." };
+    return { error: "Leave an email or a phone number so the grade can reach you." };
   }
+
+  const extras = [
+    website ? `Website: ${website}` : "",
+    revenue ? `Revenue: ${revenue}` : "",
+    membership ? `Membership program: ${membership}` : "",
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   const { stored, delivered } = await deliverLead({
     name,
@@ -69,9 +80,10 @@ export async function requestBrandScore(
     trade: trade || undefined,
     email: email || undefined,
     phone: phone || undefined,
-    currentMarketing: website ? `Website: ${website}` : undefined,
-    attribution: "Brand Score request form",
-    message: `Brand Score request${trade ? ` for the ${trade} division` : ""}${website ? ` (${website})` : ""}`,
+    revenueBand: revenue || undefined,
+    currentMarketing: extras || undefined,
+    attribution: "Brand Assessment request form",
+    message: `Brand Grade request${trade ? ` for the ${trade} division` : ""}${extras ? ` (${extras})` : ""}`,
     source: "contact-form",
   });
 
@@ -79,12 +91,12 @@ export async function requestBrandScore(
     return { error: `Something failed on our side. Call us instead: ${siteConfig.company.phoneDisplay}.` };
   }
 
-  // Brand Score completions are the site's primary conversion metric
-  // (build spec, section 12). Best-effort event; never blocks the user.
+  // Assessment completions are the site's primary conversion metric
+  // (spec v2 §14). Best-effort event; never blocks the user.
   try {
     await getSupabaseAdmin()
       ?.from("page_views")
-      .insert({ path: "/brand-score/completed", referrer: null, ua: "event" });
+      .insert({ path: "/brand-assessment/completed", referrer: null, ua: "event" });
   } catch {}
 
   return { ok: true };

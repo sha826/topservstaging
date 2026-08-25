@@ -72,7 +72,7 @@ export default function SuccessStoriesPage() {
               <a href={siteConfig.booking.discoveryCall}>Schedule a call</a>
             </Button>
             <Button asChild size="lg" variant="outline" className="text-base">
-              <Link href="/brand-score">Get your Brand Score first</Link>
+              <Link href="/brand-assessment">Get your Brand Grade first</Link>
             </Button>
           </div>
         </div>

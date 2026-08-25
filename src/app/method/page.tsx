@@ -102,7 +102,7 @@ export default function MethodPage() {
               <Link href="/programs-pricing/overview">Programs and Pricing</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="text-base">
-              <Link href="/brand-score">Get your Brand Score</Link>
+              <Link href="/brand-assessment">Get your Brand Grade</Link>
             </Button>
           </div>
         </div>

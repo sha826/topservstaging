@@ -22,7 +22,7 @@ export const industryCopy: Record<string, IndustryCopy> = {
       {
         question: "How much should an HVAC company spend on marketing?",
         answer:
-          "A common benchmark for growth-mode home service companies is 5–10% of annual revenue. A $3M HVAC company investing at that level is spending $150K–$300K a year — TopServ's Amplify program at $1,625/week (about $84K/year) sits inside that range with video production included.",
+          "A common benchmark for growth-mode home service companies is 5–10% of annual revenue. TopServ's programs start at $1,000 per week (the floor, not a menu price) plus a one-time $10,000 activation, with video production included; the actual number comes from your market's scope, and the Brand Assessment is where that starts.",
       },
       {
         question: "What marketing works best for HVAC companies?",

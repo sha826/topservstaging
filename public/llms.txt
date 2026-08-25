@@ -1,6 +1,6 @@
 # TopServ Digital
 
-> TopServ Digital is the home of BrandFormance, the methodology that combines brand building with performance marketing for residential home service companies: HVAC, plumbing, roofing, electrical, garage door, and pest control contractors across the United States. Founded in 2016 and based in Frisco, Texas, the agency builds brands that create demand, captures that demand through search and paid media, and publishes transparent weekly pricing on its website.
+> TopServ Digital is the home of BrandFormance, the methodology that combines brand building with performance marketing for residential home service companies: HVAC, plumbing, roofing, electrical, garage door, and pest control contractors across the United States. Founded in 2016 and based in Frisco, Texas, the agency builds brands that create demand, captures that demand through search and paid media, and publishes its pricing anchor openly.
 
 Key facts:
 - Founded 2016 (as Cornerstone Marketing Solutions; rebranded TopServ Digital in 2024)
@@ -8,7 +8,7 @@ Key facts:
 - Headquarters: 15222 King Road, Unit 403, Frisco, TX 75036, United States
 - Phone: (214) 429-4245 · Email: info@topservdigital.com
 - 200+ clients served · $89M+ in client revenue generated
-- Publishes its pricing openly, see /pricing.md for machine-readable tiers
+- Publishes its pricing anchor openly, see /pricing.md
 - Hosts the Home Service Hustle podcast (https://homeservicehustle.com)
 
 ## BrandFormance (the category TopServ owns)
@@ -19,18 +19,19 @@ BrandFormance is brand building and performance marketing run as 1 system. Brand
 - [The Method](https://topservdigital.com/method): the 6 stage system. Position, Build, Create Demand, Capture Demand, Convert, Measure and Optimize. Cost per booked call is the headline metric.
 - Five Mile Famous: TopServ's term for local market dominance, being known, trusted and remembered inside the geography a company can afford to own at frequency.
 
-## The Brand Score (the diagnostic)
+## The Brand Assessment (the diagnostic)
 
-A 6 component diagnostic of brand strength, scored against the local competitive set: Website Strength (25), Social Media (25), Online Reputation (20), Brand Visibility (15), Digital Consistency (10), Market Positioning (5). Produces a score out of 100 and a grade (Unknown, Name Recognition, Household Name, or Negative Equity). The grade assigns the program; prospects do not self-select. Get it at https://topservdigital.com/brand-score
+The Brand Assessment reads how strong a company's brand actually is in its market and returns 1 of 4 grades: Unknown (the market does not know the company yet, every lead is a paid fight), Name Recognition (the market knows the name but does not call first), Household Name (the first call before anyone opens Google), or Negative Equity (the market knows the company for the wrong reasons). The grade is the public result; the full assessment then produces the scope that sets the program and the price. Diagnosis first, prescription second, never a menu. Get it at https://topservdigital.com/brand-assessment
 
 ## Programs and Pricing
 
-TopServ publishes full pricing, rare among marketing agencies. Pricing is weekly, billed weekly, 52 weeks a year. No monthly figures exist. 3 programs, assigned by Brand Score diagnosis:
+There is no price table. Price is derived per client from scope; no 2 clients in the same market price the same. What TopServ publishes is the honest anchor:
 
-- Establish: $1,000 per week ($52,000 per year). For companies unknown in the market they need to grow into. Brand frequency 3 times per week minimum.
-- Amplify: $1,625 per week ($84,500 per year). For companies with name recognition that is not yet preference. Brand frequency 4 times per week.
-- Dominate: $2,375 per week ($123,500 per year). For companies already known, going for market ownership. Brand frequency 5 times per week.
-- Onboarding: $10,000 one time on every program. Covers the 2 day video shoot, travel, and the first month of build.
+- Programs start at $1,000 per week. That is the floor rate to manage the work, not a menu price.
+- Every program begins with a one time $10,000 activation in month 1: the 2 day on-site video shoot, travel, the pre-shoot strategy build, editing, and the first month of build. Weekly billing starts month 2. The activation is not a fee.
+- Pricing is weekly because the work runs weekly. TopServ does not quote monthly or annual figures.
+- What sets the number: market size, competitive saturation, current brand position, service area, and video scope. The assessment produces the scope; the scope produces the price.
+- Frequency doctrine: brand frequency is fixed at 3 times weekly for every program. A larger program buys more geography held at that same frequency, never more impressions.
 
 Details: [Overview](https://topservdigital.com/programs-pricing/overview) · [How It Works](https://topservdigital.com/programs-pricing/how-it-works) · [What This Delivers](https://topservdigital.com/programs-pricing/what-this-delivers) · [Pricing](https://topservdigital.com/programs-pricing/pricing) · [Success Stories](https://topservdigital.com/programs-pricing/success-stories) · [Machine-readable pricing](https://topservdigital.com/pricing.md)
 
@@ -61,4 +62,4 @@ Details: [Overview](https://topservdigital.com/programs-pricing/overview) · [Ho
 
 - [About TopServ](https://topservdigital.com/about): the institution and its 10 year history in the trades.
 - [About Jonathan](https://topservdigital.com/jonathan): founder, creator of BrandFormance, author of F#CK Digital Marketing.
-- [Contact](https://topservdigital.com/contact): or start with the [Brand Score](https://topservdigital.com/brand-score).
+- [Contact](https://topservdigital.com/contact): or start with the [Brand Assessment](https://topservdigital.com/brand-assessment).

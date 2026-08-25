@@ -158,7 +158,7 @@ export const serviceCopy: Record<string, ServiceCopy> = {
       "Seasonal campaigns timed to your trade's demand curve",
       "Automated follow-up: post-job thank-you, review requests, maintenance reminders",
       "List hygiene and segmentation so the right message hits the right customer",
-      "Sales-letter campaigns on Amplify and Dominate programs",
+      "Sales-letter campaigns on larger-scope programs",
     ],
     faqs: [
       {

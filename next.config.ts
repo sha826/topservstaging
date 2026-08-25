@@ -67,6 +67,8 @@ const nextConfig: NextConfig = {
       { source: "/spotlight", destination: "/about", permanent: true },
       // BrandFormance restructure: pricing lives inside the Programs hub now.
       { source: "/pricing", destination: "/programs-pricing/pricing", permanent: true },
+      // Spec v2: the public diagnostic is the Brand Assessment (grade only).
+      { source: "/brand-score", destination: "/brand-assessment", permanent: true },
     ];
   },
   async headers() {

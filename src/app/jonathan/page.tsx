@@ -134,7 +134,7 @@ export default function JonathanPage() {
             The methodology matters more than the person. Start there.
           </p>
           <Button asChild size="lg" className="text-base">
-            <Link href="/brand-score">Get your Brand Score</Link>
+            <Link href="/brand-assessment">Get your Brand Grade</Link>
           </Button>
         </div>
       </section>
