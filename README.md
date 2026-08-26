@@ -1,6 +1,6 @@
 # TopServ Digital Website
 
-The TopServ Digital marketing site, the home of BrandFormance. Built to the team build spec at `docs/TSD_Website_Build_Specification.docx` (v1.0, August 2026): a site that sells a methodology, not a list of services. Every page teaches BrandFormance, and every path leads to the Brand Score.
+The TopServ Digital marketing site, the home of BrandFormance. Built to the team build spec at `docs/TSD_Website_Build_Specification_v2.docx` (v2 supersedes v1, August 2026): a site that sells a methodology, not a list of services. Every page teaches BrandFormance, and every path leads to the Brand Assessment. This repo serves topservdigital.com only.
 
 ## Stack
 
@@ -22,7 +22,7 @@ Production build check: `npm run build`. Lint: `npm run lint`.
 ## Key directories
 
 - `src/app`: all routes.
-  - BrandFormance IA: `/` (home), `/brandformance` (the definitive resource, 10 questions), `/method` (the 6 stage system), `/programs-pricing` (a hub of 5 pages: overview, how-it-works, what-this-delivers, pricing, success-stories, with a persistent sub navigation), `/brand-score` (the diagnostic and primary conversion), `/jonathan` (the founder page).
+  - BrandFormance IA: `/` (home), `/brandformance` (the definitive resource, 10 questions), `/method` (the 6 stage system), `/programs-pricing` (a hub of 5 pages: overview, how-it-works, what-this-delivers, pricing, success-stories, with a persistent sub navigation), `/brand-assessment` (the diagnostic and primary conversion; grade-only per spec v2), `/jonathan` (the founder page).
   - Legacy routes kept for SEO and as Phase 2 raw material: `/services/[slug]` (10 services), `/industries/[slug]` (6 trades), `/case-studies`, `/blog`, `/about`, `/contact`, and the legal pages. They are the 301 targets mapped from the old Webflow site in `next.config.ts`.
   - `/admin`: password-protected panel (dashboard, leads, conversations, blog editor, agent prompt).
   - `/api`: chat, ingest (posts + upload), mcp, track, og, admin image routes.
@@ -44,7 +44,7 @@ The CLI must be logged in as alex@topservdigital.com (sessions expire; re-auth w
 
 ## Read next
 
-- `docs/ARCHITECTURE.md`: the systems map. How the IA, blog pipeline, concierge, Brand Score, admin panel, database, and analytics fit together, with file paths.
+- `docs/ARCHITECTURE.md`: the systems map. How the IA, blog pipeline, concierge, Brand Assessment, admin panel, database, and analytics fit together, with file paths.
 - `docs/HANDOFF.md`: current status against the build spec, ownership, the 4 open decisions, the launch runbook, and security notes.
 - `LAUNCH.md`: the domain cutover checklist.
 - `BLOG-INGEST.md`: the blog ingest API reference for external systems.

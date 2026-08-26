@@ -12,7 +12,7 @@ The site sells the methodology. Page content is data-driven: `src/lib/bf-content
 | `/brandformance` | The definitive resource: the 10 questions in order (`tenQuestions`), rendered visibly and as FAQPage JSON-LD, plus the What Is BrandFormance video slot | 4, BrandFormance |
 | `/method` | The 6 stage system from `sixStages`, plus the Method video slot | 4, The Method |
 | `/programs-pricing` | Navigation hub, not a page: the root redirects to `/programs-pricing/overview`. 5 pages in fixed order (overview, how-it-works, what-this-delivers, pricing, success-stories) under a shared layout (`src/app/programs-pricing/layout.tsx`). The sub navigation persists across all 5: `src/components/programs/subnav.tsx`, pill active state, unique URL per tab, stacked buttons on mobile | 4, Programs pages 1 to 5 |
-| `/brand-score` | The diagnostic: 6 weighted components and 4 grades from `bf-content.ts`, plus the capture form (section 4 below) | 5 |
+| `/brand-assessment` | The diagnostic: the 4 public brand grades from `bf-content.ts` (grade only — score components and weights are never public, spec v2), plus the capture form (section 4 below). `/brand-score` 301s here | 5 |
 | `/jonathan` | About Jonathan, thought leadership connected to TSD | 3 |
 
 JB videos are placeholder frames: `src/components/sections/video-slot.tsx` holds the exact position, ratio, and framing ("in production" label) so the video team can drop in embeds without layout work. The slot map with tiers and lengths is `videoSlots` in `bf-content.ts`. Tier 1 (JB Overview on the overview page, Investment at the top of the pricing page, What Is BrandFormance on `/brandformance`) are launch blockers per spec section 6.
@@ -44,7 +44,7 @@ Content Studio: a separate app at `../BlogApp` (Vercel project `content-studio`,
 Agency Titan integration status:
 
 - Their side exists and runs: a "New Blog Post" process (3 stages) and a published "Blog Writing" automation that chains generate_text and generate_image actions (Topic Research, Title, Meta Description, Content Writing, Featured Image, Alt Text, Slug) to fill the task's blog fields.
-- Our side is authored and ready: a creation script (session scratchpad material, not in this repo) that POSTs to Titan's automation-authoring API and creates "Publish Blog to TopServ Website" as an unpublished draft. Its design: trigger `process.instance_completed` scoped to the New Blog Post process; 1 `http_request` action, `POST https://topserv-website.vercel.app/api/ingest/posts` with bearer auth (`BLOG_INGEST_KEY`), a JSON body built from field shortcodes (`{{task.blog_title}}`, `{{task.blog_post_slug}}`, `{{task.blog_description}}`, `{{task.blog_content}}`, `{{task.blog_featured_image.url}}`), `format: "html"`, `publish: false` (drafts for review), 60 second timeout, fail on error status. Publishing that draft is a launch runbook step (`docs/HANDOFF.md`).
+- Our side is LIVE: the automation "Blog Post to New Agentic Site" is published and enabled in Agency Titan (verified end to end August 2026 with a real article). Its design: trigger `process.instance_completed` scoped to the New Blog Post process; 1 `http_request` action, `POST https://topserv-website.vercel.app/api/ingest/posts` with bearer auth (`BLOG_INGEST_KEY`), a JSON body built from field shortcodes (`{{task.blog_title}}`, `{{task.blog_post_slug}}`, `{{task.blog_description}}`, `{{task.blog_content}}`, `{{task.blog_featured_image.url}}`), `format: "html"`, `publish: false` (drafts for review), 60 second timeout, fail on error status. Because the trigger fires on EVERY New Blog Post task completion, articles written for Titan clients also land in our draft queue — review before publishing, never publish a client's article.
 - Test fixture: `docs/sample-blog-video-marketing-for-contractors/` is a portable Titan-to-website content package with expected schema output and acceptance checks.
 
 ## 3. Chat concierge
@@ -53,18 +53,18 @@ Agency Titan integration status:
 - Route: `src/app/api/chat/route.ts`. Model `claude-sonnet-5` (env `CHAT_MODEL`); a direct Anthropic key takes precedence, otherwise the AI Gateway string (explicit key or Vercel OIDC). One tool, `captureLead`: 15 fields including verbatim attribution and pain points, executed through `deliverLead` (`src/lib/leads.ts`), which writes the Supabase `leads` table and emails the team via Resend, each best-effort. Best-effort per-IP throttle of 20 requests per minute, in-memory per instance. After each turn the full transcript upserts to the `conversations` table keyed by a client-generated `conversationId`, with a `lead_captured` flag, so the team can grade the agent at `/admin/conversations`.
 - Widget: `src/components/chat/chat-widget.tsx`, mounted in the root layout through `chat-widget-lazy.tsx` (the real bundle loads on first tap, or when a saved session exists). Conversation persists in sessionStorage.
 
-## 4. Brand Score
+## 4. Brand Assessment
 
-The site's primary conversion (spec section 5: "the most important functional element on the site").
+The site's primary conversion. Spec v2 doctrine: the public artifact is the GRADE only — Unknown, Name Recognition, Household Name, or Negative Equity. The numeric score, its components, and their weights are internal to the sales console and never appear anywhere public (pages, llms.txt, the concierge).
 
-- Page: `src/app/brand-score/page.tsx` renders the 6 weighted components and the 4 grades from `bf-content.ts` (canonical definitions; the site must not invent its own).
-- Capture form: `src/app/brand-score/actions.ts` (`requestBrandScore` server action). Honeypot field (`fax`), best-effort per-IP throttle of 5 requests per 10 minutes, name + company + market required, email or phone required. Delivers through the same `deliverLead` pipeline with source `contact-form` and attribution "Brand Score request form". On success it writes a completion event row (`path: /brand-score/completed`) into `page_views`, the primary conversion metric per spec section 12.
-- The automated public engine is not built yet; it plugs in behind this same form once open decision 3 (public data vs social login) lands. The working design is a 6 component engine matching the spec weights, with DataForSEO and Google PageSpeed feeding the 4 API-computed components (website strength, reputation, visibility, consistency) and a Claude assessment for the 2 AI-assessed ones (social media, market positioning). It must stay identical to the sales console version; Alex owns it (spec section 9).
+- Page: `src/app/brand-assessment/page.tsx` renders the 4 grades from `brandGrades` in `bf-content.ts` (canonical definitions; the site must not invent its own).
+- Capture form: `src/app/brand-assessment/actions.ts`. Honeypot field (`fax`), best-effort per-IP throttle, name + company + market required, email or phone required, optional revenue band / membership / trade / website inputs. Delivers through the same `deliverLead` pipeline with attribution "Brand Grade request". On success it writes a completion event row (`path: /brand-assessment/completed`) into `page_views`, the primary conversion metric.
+- The automated scoring engine is internal (sales console, Alex's lane, spec ownership table). When it ships, it plugs in behind this same form; the public response stays grade-only regardless.
 
 ## 5. Admin panel
 
 - Auth: `src/lib/admin-auth.ts`. Password login (`ADMIN_PASSWORD`, timing-safe compare) sets an HMAC-signed cookie (`topserv_admin`, signed with `ADMIN_SESSION_SECRET`, 7 day expiry). `requireAdmin()` guards every page; the API routes `/api/admin/generate-image` and `/api/admin/upload-image` check `isAdmin()` themselves. Robots disallow `/admin` and the layout is noindexed.
-- Sections: dashboard (`/admin`: views today and 7 days, lead count, post count, a 14 day bar chart, top pages, recent leads), `/admin/leads` (full table + CSV export), `/admin/conversations` (chat transcript viewer with lead-captured badges), `/admin/blog` (section 2 above), `/admin/agent` (edit or reset the concierge behavioral head).
+- Sections: dashboard (`/admin`: views today and 7 days, lead count, post count, a 14 day bar chart, top pages, recent leads), `/admin/leads` (full table + CSV export), `/admin/conversations` (chat transcript viewer with lead-captured badges), `/admin/blog` (section 2 above), `/admin/agent` (edit or reset the concierge behavioral head), `/admin/content` (the admin content system: testimonials, team, project updates, press releases, banners — see `docs/ADMIN-CONTENT.md` for the registry/store/slot architecture and the spec v2 §11 editorial rules).
 
 ## 6. Data (Supabase)
 
@@ -73,15 +73,17 @@ Server access goes exclusively through `src/lib/supabase-admin.ts` (service-role
 | Table | Purpose |
 |---|---|
 | `leads` | Chat + form leads. Base columns plus discovery columns (`attribution`, `pain_points`, `marketing_spend`, `decision_role`); `src/lib/lead-store.ts` falls back to the base row if a database predates them |
-| `page_views` | Pageview beacon rows + the `/brand-score/completed` event |
+| `page_views` | Pageview beacon rows + the `/brand-assessment/completed` event |
 | `settings` | Key-value; currently `concierge_head` |
 | `posts` | Database blog posts. Base columns plus migration columns (`word_count`, `category`, `seo_title`, `faq`); `ingest-post.ts` and `blog-db.ts` fall back if absent |
 | `conversations` | 1 row per chat conversation, transcript JSONB replaced each turn |
+| `content_items` | Admin content system items (`type`, `status`, `payload` JSONB, `tags` text[], `expires_at`); read by `ContentSlot`, written by `src/lib/content-store.ts` |
+| `content_versions` | Snapshot of every content item save, for one-click restore |
 
 Storage: public bucket `blog`, paths `covers/` (generated covers) and `uploads/` (editor and ingest uploads), immutable cache headers, WebP recompression on the way in.
 
 ## 7. Analytics
 
 - Beacon: `src/components/analytics/track-pageview.tsx` sends `navigator.sendBeacon` (fetch keepalive fallback) to `POST /api/track`, which inserts path, referrer, and user agent into `page_views`. It always answers 204, swallows every error, and excludes `/admin` at both ends.
-- Events: the Brand Score completion event (section 4) rides the same table under a synthetic path.
-- The admin dashboard reads this table directly. Spec section 12 targets (2 minute average time on page, 3+ pages per session, video completion) are not instrumented yet; only page-level and Brand Score completion tracking exist.
+- Events: the Brand Assessment completion event (section 4) rides the same table under a synthetic path.
+- The admin dashboard reads this table directly. Spec section 12 targets (2 minute average time on page, 3+ pages per session, video completion) are not instrumented yet; only page-level and Brand Assessment completion tracking exist.
