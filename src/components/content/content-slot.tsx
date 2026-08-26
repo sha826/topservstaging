@@ -2,9 +2,9 @@ import { listItems } from "@/lib/content-store";
 import { getType, splitList } from "@/lib/content-types";
 
 /**
- * Placement slot (concept doc, layer 4): pages pull published content by
- * type; the content never knows about routing. Renderers per type live
- * here; adding a type's renderer makes it mountable anywhere.
+ * Placement slot: pages pull published content by type; the content never
+ * knows about routing. Renderers per type live here; adding a type's
+ * renderer makes it mountable anywhere.
  */
 export async function ContentSlot({
   type: typeKey,

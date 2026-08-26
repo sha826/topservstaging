@@ -4,7 +4,7 @@ Systems map for the TopServ Digital website. Every claim here is grounded in the
 
 ## 1. BrandFormance information architecture
 
-The site sells the methodology. Page content is data-driven: `src/lib/bf-content.ts` holds the spec's canonical content (the one line, the equation, the 6 stages, 3 phases, programs, 6 clients, Brand Score components and grades, the 10 questions, the video slot map) and the pages render from it, so copy edits happen in 1 place.
+The site sells the methodology. Page content is data-driven: `src/lib/bf-content.ts` holds the spec's canonical content (the one line, the equation, the 6 stages, 3 phases, the pricing model — the $1,000/week floor plus $10,000 activation, never a price table — the 4 public brand grades, 6 clients, the 10 questions, the video slot map) and the pages render from it, so copy edits happen in 1 place.
 
 | Route | Implements | Spec section |
 |---|---|---|

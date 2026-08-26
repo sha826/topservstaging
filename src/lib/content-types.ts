@@ -1,10 +1,9 @@
 /**
- * The content-type registry: the heart of the client content panel
- * (docs/CLIENT-CONTENT-PANEL.md). Each type is defined once here and the
- * whole engine follows: the admin composer generates its form, the store
- * validates its payload, ContentSlot renders it, and (later) the agent
- * derives one tool per type. Site-specific facts NEVER live here; this
- * file is the shared catalog. Per-site enablement lives in SITE_MANIFEST.
+ * The content-type registry for the TopServ admin content system
+ * (docs/ADMIN-CONTENT.md). Each type is defined once here and everything
+ * follows: the admin composer generates its form, the store validates its
+ * payload, ContentSlot renders it. Type definitions stay generic; the
+ * site's own facts (enabled types, vocabularies) live in SITE_MANIFEST.
  */
 
 export type FieldKind =
@@ -140,9 +139,8 @@ export const CONTENT_TYPES: Record<string, ContentTypeDef> = {
 };
 
 /**
- * The site manifest: which types THIS site enables. Client sites ship
- * their own manifest with more types enabled. Everything else in the
- * engine reads this, never the catalog directly.
+ * The site config: which types the TopServ site enables and its
+ * vocabularies. Everything else reads this, never the catalog directly.
  */
 export const SITE_MANIFEST = {
   enabledTypes: [
@@ -154,7 +152,7 @@ export const SITE_MANIFEST = {
   ] as const,
   /** Where publish notifications go (falls back to LEAD_EMAIL_TO). */
   notifyEmailEnv: "SEO_NOTIFY_EMAIL",
-  /** This site's vocabulary; client sites ship their own. */
+  /** The site's vocabulary: option values for select/multiselect fields. */
   vocab: {
     services: ["HVAC", "Plumbing", "Roofing", "Electrical", "Garage Door", "Pest Control"],
     serviceAreas: ["Frisco, TX", "Dallas, TX", "Plano, TX", "McKinney, TX"],

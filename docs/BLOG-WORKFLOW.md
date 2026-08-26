@@ -62,13 +62,6 @@ transfer yet).
   switched to publish immediately on task completion, removing steps 5
   and 6. One-word change, team decision.
 
-## Scaling to client sites
-
-The identical loop works for any client site running our blog module:
-same task type, same stages, same completion trigger. Per client site the
-setup is a copy of the automation pointed at that site's ingest URL and
-key. About 30 seconds of setup per site.
-
 ## Alternate doors into the same queue
 
 - Content Studio (content-studio-plum-five.vercel.app): hand-written

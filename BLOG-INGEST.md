@@ -3,8 +3,7 @@
 Push structured blog posts into the site from any external system (SEO
 tooling, Agency Titan, Zapier, n8n, custom scripts). Pushed posts become
 real pages with Article schema, sitemap entries, OG images, and admin-panel
-management automatically. This is the pilot for scaling the same pipeline
-to client sites.
+management automatically.
 
 ## Endpoint
 
@@ -157,5 +156,4 @@ which sends exactly the JSON above.
 - Idempotency makes retries safe — a duplicate webhook fire just re-writes
   the same post.
 - Webhook and MCP share one core (`src/lib/ingest-post.ts`), so behavior is
-  identical whichever door the content comes through — and the whole module
-  is portable to client sites.
+  identical whichever door the content comes through.
