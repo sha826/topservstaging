@@ -46,6 +46,12 @@ The CLI must be logged in as alex@topservdigital.com (sessions expire; re-auth w
 
 - `docs/ARCHITECTURE.md`: the systems map. How the IA, blog pipeline, concierge, Brand Assessment, admin panel, database, and analytics fit together, with file paths.
 - `docs/HANDOFF.md`: current status against the build spec, ownership, the 4 open decisions, the launch runbook, and security notes.
+- `docs/BUILD-SPEC-V2.md`: the canonical build spec, converted from the Word original. Scope, page specifications, pricing and assessment doctrine. Highest authority.
+- `docs/ARGUMENT-SPINE.md`: what each of the 8 core pages argues, beat by beat, in order.
+- `docs/COPY-FRAMEWORK.md`: JB's messaging and copy framework. Voice, signature language, banned phrases.
+- `docs/KEYWORD-RESEARCH.md`: the master keyword map. One primary keyword per page, the cannibalization control, the branded terms to own, and the terms the site deliberately does not chase.
+- `docs/SEO-GUIDELINES.md`: standing rules for building and writing any page. URLs, keyword placement, metadata, headings, internal links, JSON-LD, AI search, and the pre-publish QA checklist. The keyword map says what to target, this says how.
+- `docs/CONVERSION-NOTES.md`: how the converted documents were produced, what they cannot represent, and the open grade-label conflict between the spec and the code.
 - `LAUNCH.md`: the domain cutover checklist.
 - `BLOG-INGEST.md`: the blog ingest API reference for external systems.
 - `CONCIERGE-PROMPT.md`: generated snapshot of the chat agent's system prompt.
