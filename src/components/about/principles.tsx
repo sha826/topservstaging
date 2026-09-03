@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
@@ -12,13 +11,14 @@ import {
 } from "motion/react";
 import { Shell } from "@/components/about/page-grid";
 import { RULES } from "@/components/about/rules-data";
+import { RulesFigure } from "@/components/about/rules-figure";
 
 /**
  * The 6 rules.
  *
  * THE COMPOSITION. A 2 column composition that pins for the length of the
- * section: on the left an eyebrow, the heading and one fixed photograph; on
- * the right the 6 rules, which arrive in sequence as the page scrolls. The
+ * section: on the left an eyebrow, the heading and one diagram; on the
+ * right the 6 rules, which arrive in sequence as the page scrolls. The
  * ground is the site's near black with a brand green light that grows out of
  * the bottom left as you progress, so the environment develops with the
  * list. Ordinary vertical scroll drives all of it: no scroll jacking, no
@@ -34,6 +34,7 @@ import { RULES } from "@/components/about/rules-data";
  *              arrives and stays drawn. The border is the only progress
  *              indicator in the section.
  *   light      the green glow behind everything grows with the same value.
+ *   draw       the diagram in the left column fills in on the same pass.
  *
  * A row never drops below 0.35 opacity, so every rule is legible at every
  * scroll position and none of this hides content.
@@ -43,7 +44,7 @@ import { RULES } from "@/components/about/rules-data";
  * not, every row is fed a constant 1, which is the fully arrived state.
  * That single fact covers 4 cases at once:
  *
- *   below lg          no pin. Heading, photograph, then the 6 rules stacked,
+ *   below lg          no pin. Heading, diagram, then the 6 rules stacked,
  *                     all in their arrived state.
  *   reduced motion    the same, at any width. Nothing moves.
  *   no JS             the server renders exactly that state, so every rule
@@ -158,7 +159,7 @@ function Row({
 
 /* ------------------------------------------------------------------ */
 
-function Intro() {
+function Intro({ draw }: { draw: MotionValue<number> }) {
   return (
     <div>
       <p className="label-mono flex items-center gap-2.5 text-[rgba(244,245,242,0.85)]">
@@ -169,22 +170,12 @@ function Intro() {
         6 rules we do not <span className="text-brand">bend.</span>
       </h2>
 
-      {/* One photograph, fixed. It carries all 6 rules at once rather than
-          illustrating any single one: a run of identical cards laid out on a
-          grid is the fixed frequency, the folded territory map is the
-          geography that scales, the proof prints sit beside their cards, the
-          pile pushed aside is what we say no to, and the stack of printed
-          editions is attention that was owned rather than rented. The studio
-          the work is made in, never the client's world: no homes, no trucks,
-          no crews. */}
-      <div className="relative mt-8 aspect-[4/3] w-full overflow-hidden rounded-[18px] lg:mt-9">
-        <Image
-          src="/images/about/strategy-table.webp"
-          alt="A studio table with a run of identical cards laid out in a grid, a folded territory map, proof prints, a set aside pile and a stack of printed editions."
-          fill
-          sizes="(min-width: 1024px) 46vw, 100vw"
-          className="object-cover"
-        />
+      {/* One diagram, drawing with the list. A photograph sat here and was
+          asked to carry all 6 rules by association. This carries the 2 that
+          are concrete, 02 and 03, and lets the divergence imply 06. See
+          rules-figure.tsx. */}
+      <div className="mt-8 w-full lg:mt-9">
+        <RulesFigure draw={draw} />
       </div>
     </div>
   );
@@ -201,6 +192,9 @@ export function Principles() {
   const settled = useMotionValue(1);
   const step = useTransform(scrollYProgress, [0, 1], [-0.2, 5.5]);
   const glow = useTransform(scrollYProgress, [0, 0.3, 1], [0.14, 0.55, 1]);
+  // The diagram fills in across the same pin the rules arrive on. Off the
+  // pin it is fed the settled 1, which is the finished state.
+  const draw = useTransform(scrollYProgress, [0, 0.72], [0, 1]);
 
   // Every row's arrival, computed unconditionally so hook order never varies.
   const arrivals = [
@@ -241,7 +235,7 @@ export function Principles() {
 
           <Shell className="relative z-10 w-full">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,46fr)_minmax(0,54fr)] lg:gap-12 xl:gap-16">
-              <Intro />
+              <Intro draw={live ? draw : settled} />
               <ol className="flex flex-col gap-1.5 lg:gap-2">
                 {RULES.map((r, i) => (
                   <Row

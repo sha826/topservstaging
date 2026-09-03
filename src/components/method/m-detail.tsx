@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Eyebrow, Shell } from "@/components/method/m-grid";
+import { MPlanSystem } from "@/components/method/m-plan-system";
 
 /**
  * The canonical definition of Five-Mile-Famous.
@@ -54,26 +54,20 @@ export function MFiveMile() {
  * and was removed: stages 03 and 04 are those 2 jobs, so it was the same
  * content told twice.
  *
- * THE PHOTOGRAPH. A production studio: an ordered wall grid, a run of
- * identical sheets laid out in sequence, a finished stack. It carries the
- * argument the section makes, which is repeatability, and it is the studio
- * the work is made in rather than anything from the client's world. No
- * people, no legible text, no logos. Local file, no runtime dependency on
- * any generator.
+ * THE DIAGRAM. A studio photograph sat in this column and carried the
+ * argument by association only. MPlanSystem draws it instead: a plan as 4
+ * budgets with the order left blank, a system as the same work with a
+ * decision at the front and a return path at the back. Inline SVG, so every
+ * label is real text and the argument is extractable rather than baked into
+ * an image (SEO Guidelines 7). No image request, no generator.
  */
 export function MSystem() {
   return (
     <section aria-labelledby="m-system-heading" className="border-b border-border bg-background">
       <Shell className="py-14 md:py-16">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)] lg:gap-14 xl:gap-16">
-          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[18px] lg:aspect-[4/5]">
-            <Image
-              src="/images/method/production-run.webp"
-              alt="A production studio: an ordered grid of cards on the wall, a run of identical printed sheets laid out in sequence on the table, and a stack of finished editions."
-              fill
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="object-cover"
-            />
+          <div className="w-full">
+            <MPlanSystem />
           </div>
 
           <div>

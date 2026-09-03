@@ -42,8 +42,9 @@ import { siteConfig } from "@/lib/site-config";
  * adjacent sections share a mode. Brand green measures roughly 2.9:1 on the
  * light ground, so there it is used only for rules and marks, never text.
  *
- * IMAGES. 2 generated photographs and 1 real portrait. No home imagery: this
- * page is about TopServ, not about what its clients own.
+ * IMAGES. 1 generated photograph and 1 real portrait, plus the drawn
+ * diagram in section 03. No home imagery: this page is about TopServ, not
+ * about what its clients own.
  *
  * SEO. Indexed, canonical /about, in the sitemap. Organization schema is
  * omitted here on purpose: ProfessionalServiceJsonLd claims @id
@@ -91,8 +92,8 @@ export default function AboutPage() {
       {/* 02 WHY WE EXIST. Typography only. */}
       <WhyWeExist />
 
-      {/* 03 THE 6 RULES. A pinned 2 column composition: the heading and one
-          studio photograph hold on the left while the 6 rules arrive in
+      {/* 03 THE 6 RULES. A pinned 2 column composition: the heading and a
+          drawn diagram hold on the left, filling in as the 6 rules arrive in
           sequence on the right and a brand green light grows behind them.
           The page's signature moment. */}
       <Principles />

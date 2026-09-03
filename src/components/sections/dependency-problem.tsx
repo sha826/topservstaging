@@ -30,13 +30,20 @@ export function DependencyProblem() {
   return (
     <section aria-labelledby="problem-heading" className="border-b border-border">
       <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-        <div>
+        {/* Heading left, argument right. A single centred column left roughly
+            a third of the row empty at desktop widths. Widening the column
+            instead would have pushed the measure past the 800 pixel text
+            maximum in Build Spec v2 section 9, so the row is filled with a
+            second column rather than with longer lines. */}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,36fr)_minmax(0,64fr)] lg:items-start lg:gap-14 xl:gap-20">
           <Reveal>
             <p className="label-mono text-brand">The problem</p>
-            <h2 id="problem-heading" className="display mt-3 text-4xl md:text-5xl">
+            <h2 id="problem-heading" className="display mt-3 max-w-[14ch] text-4xl md:text-5xl">
               Being found is not enough anymore.
             </h2>
-            <div className="mt-5 grid max-w-2xl gap-4 text-lg leading-relaxed text-muted-foreground">
+          </Reveal>
+          <Reveal delay={0.06}>
+            <div className="grid max-w-[800px] gap-4 text-lg leading-relaxed text-muted-foreground lg:mt-1">
               <p>
                 You can rank first, run ads, hold strong reviews and still lose
                 the job. The homeowner opens 5 tabs, sees 5 companies that all
