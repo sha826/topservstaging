@@ -1,167 +1,104 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Check, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/motion/reveal";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
-import { BfEquation } from "@/components/sections/bf-equation";
-import { FaqSection } from "@/components/sections/faq-section";
-import { VideoSlot } from "@/components/sections/video-slot";
-import { builtFor, notFor, videoSlots } from "@/lib/bf-content";
-import { generalFaqs } from "@/lib/faqs";
+import { BreadcrumbJsonLd, FAQJsonLd, JsonLd } from "@/components/seo/json-ld";
+import { PFaq } from "@/components/programs/p-faq";
+import { OVERVIEW_FAQS } from "@/components/programs/p-faq-data";
+import {
+  PCta,
+  PEngine,
+  PEquation,
+  PFit,
+  POverviewHero,
+  PVendors,
+} from "@/components/programs/p-overview";
+import { siteConfig } from "@/lib/site-config";
 
+/**
+ * Programs and Pricing 1: Overview, at /programs-pricing/overview.
+ *
+ * SCOPE. Build Spec v2 section 4, Programs page 1. Every element the spec
+ * names is present: the 2 to 3 paragraph hero positioning against lead
+ * generation agencies, SEO only vendors and performance only media buyers;
+ * the BrandFormance visual with no tactics listed; the Content Engine; the
+ * who this is and is not for columns from section 2; an embedded FAQ; and a
+ * CTA to see how BrandFormance works in practice.
+ *
+ * KEYWORDS. This is the site's most important commercial target
+ * (KEYWORD-RESEARCH 4.4a). Primary "home services marketing agency", 1,900
+ * a month at KD 25, in the title, the H1, the first 100 words and carried
+ * through the body with its secondaries: home service marketing agency,
+ * home services marketing company, marketing agency for contractors,
+ * contractor marketing agency. The doc's instruction is followed exactly:
+ * the title leads with the keyword, then the page reframes.
+ *
+ * THE DISQUALIFICATION. The Argument Spine calls the "not for" list the
+ * highest converting thing on this page and KEYWORD-RESEARCH calls it an SEO
+ * asset no competitor publishes. It gets equal weight, never a footnote.
+ *
+ * THE VIDEO. The spec puts the JB Overview video on this page. It is not
+ * shot, so there is no slot and no VideoObject: an empty frame promising a
+ * video is worse than no video. Add the embed, VideoObject, a transcript in
+ * the DOM and a custom thumbnail when the file lands.
+ *
+ * NO PRICES. Programs page 4 owns the floor and the activation. This page
+ * points at it and states no figure.
+ *
+ * SEO. Indexed, canonical /programs-pricing/overview, in the sitemap. It
+ * owns the primary keyword "home services marketing agency" (SEO Guidelines
+ * 3.2) and its schema URLs point at this route.
+ */
 export const metadata: Metadata = {
-  title: "What Is TopServ Digital",
+  title: { absolute: "Home Services Marketing Agency That Builds Brands | TopServ" },
   description:
-    "What is TopServ Digital, and how does BrandFormance actually work for a home service company? The overview, in plain language.",
+    "A home services marketing agency that runs brand building and performance marketing as 1 system, not 2 budgets. See what we are, and who we are not for.",
   alternates: { canonical: "/programs-pricing/overview" },
 };
 
-export default function OverviewPage() {
+const URL = `${siteConfig.url}/programs-pricing/overview`;
+
+export default function ProgramsOverviewPage() {
   return (
     <>
-      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Programs and Pricing", href: "/programs-pricing/overview" }, { name: "Overview", href: "/programs-pricing/overview" }]} />
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-3xl px-5 py-14 md:py-20">
-          <Reveal>
-            <h1 className="display text-3xl md:text-5xl">What is TopServ Digital?</h1>
-            <div className="mt-6 grid gap-4 text-lg leading-relaxed text-muted-foreground">
-              <p>
-                Most agencies force you to choose brand or leads, and that is the
-                wrong decision. Lead generation agencies sell you a phone that
-                rings until the budget stops. SEO vendors sell you rankings that
-                a competitor or an algorithm can take back. Performance media
-                buyers sell you efficiency inside a system where every year the
-                clicks cost more and mean less.
-              </p>
-              <p>
-                Performance only marketing breaks down because it captures
-                demand without ever creating any. You compete for the same
-                searches as everyone else, and the platform auctions you to the
-                highest bidder. Brand without demand capture does not scale
-                either. Familiarity that never meets a booking flow is a
-                billboard, not a growth system.
-              </p>
-              <p>
-                Home service growth requires both, run as 1 system. That is
-                BrandFormance, and TopServ Digital is where it lives.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Programs and Pricing", href: "/programs-pricing/overview" },
+          { name: "Overview", href: "/programs-pricing/overview" },
+        ]}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "What Is TopServ Digital",
+          url: URL,
+          description:
+            "TopServ Digital is a home services marketing agency that runs brand building and performance marketing as 1 system rather than 2 budgets.",
+          about: { "@id": `${siteConfig.url}/#organization` },
+        }}
+      />
+      <FAQJsonLd
+        items={OVERVIEW_FAQS.map((f) => ({ question: f.question, answer: f.answer }))}
+      />
 
-      <section aria-label="Overview video" className="border-b border-border bg-card/40">
-        <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
-          <VideoSlot title={videoSlots.jbOverview.title} length={videoSlots.jbOverview.length} />
-        </div>
-      </section>
+      {/* The problem, and what we are instead. Carries the H1. */}
+      <POverviewHero />
 
-      <section aria-labelledby="equation-heading" className="border-b border-border">
-        <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
-          <Reveal>
-            <h2 id="equation-heading" className="display text-center text-3xl md:text-4xl">
-              The whole idea, in 3 lines
-            </h2>
-          </Reveal>
-          <div className="mt-10">
-            <BfEquation />
-          </div>
-        </div>
-      </section>
+      {/* 3 vendors, each good at half the job. */}
+      <PVendors />
 
-      <section aria-labelledby="engine-heading" className="border-b border-border">
-        <div className="mx-auto max-w-3xl px-5 py-14 md:py-20">
-          <Reveal>
-            <h2 id="engine-heading" className="display text-3xl md:text-4xl">
-              The content engine
-            </h2>
-            <div className="mt-6 grid gap-4 text-lg leading-relaxed text-muted-foreground">
-              <p>
-                We research the exact questions your customers ask before they
-                buy. What does it cost. What goes wrong. Which option fits my
-                house. Who should I not hire. Then we answer them on camera and
-                in writing with full transparency, including the answers most
-                companies in your market refuse to give.
-              </p>
-              <p>
-                Answering the questions competitors avoid does 3 things. It
-                raises trust before the first call. It raises conversion,
-                because a customer who arrives educated buys with less friction.
-                And it raises the efficiency of every ad dollar, because your
-                spend lands on people who already believe you are the honest one
-                in the market.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* The equation. No tactics listed, per the spec. */}
+      <PEquation />
 
-      <section aria-labelledby="fit-heading" className="border-b border-border bg-card/40">
-        <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
-          <Reveal>
-            <h2 id="fit-heading" className="display text-3xl md:text-4xl">
-              Who this is for. And who it is not.
-            </h2>
-            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-              We would rather disqualify you honestly than onboard you wrongly.
-              If the right column describes you, we are not your agency, and
-              that is fine.
-            </p>
-          </Reveal>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <div className="rounded-lg border border-brand/40 bg-background p-7">
-              <p className="label-mono text-brand">Built for</p>
-              <ul className="mt-4 grid gap-3">
-                {builtFor.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-base leading-relaxed">
-                    <Check className="mt-1 size-4 shrink-0 text-brand" aria-hidden />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-lg border border-border bg-background p-7">
-              <p className="label-mono text-ink-faint">Not for</p>
-              <ul className="mt-4 grid gap-3">
-                {notFor.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 text-base leading-relaxed text-muted-foreground"
-                  >
-                    <X className="mt-1 size-4 shrink-0 text-ink-faint" aria-hidden />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <p className="mt-6 max-w-2xl text-sm text-muted-foreground">
-            Sweet spot: roughly $1M to $10M in annual revenue, as guidance
-            rather than a gate. We have worked successfully above and below it.
-            The Brand Assessment does the actual qualifying.
-          </p>
-          <div className="mt-10">
-            <VideoSlot
-              title={videoSlots.whoThisIsNotFor.title}
-              length={videoSlots.whoThisIsNotFor.length}
-            />
-          </div>
-        </div>
-      </section>
+      {/* The Proof beat: the Content Engine we run on ourselves. */}
+      <PEngine />
 
-      <FaqSection faqs={generalFaqs} title="The questions we get asked" />
+      {/* Build Spec v2 section 2, both columns, equal weight. */}
+      <PFit />
 
-      <section aria-label="Next step" className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-5 px-5 py-12">
-          <p className="max-w-xl text-xl font-semibold">
-            See how BrandFormance works in practice.
-          </p>
-          <Button asChild size="lg" className="text-base">
-            <Link href="/programs-pricing/how-it-works">How it works</Link>
-          </Button>
-        </div>
-      </section>
+      {/* The embedded FAQ the spec requires. */}
+      <PFaq />
+
+      <PCta />
     </>
   );
 }

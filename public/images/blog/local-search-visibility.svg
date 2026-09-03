@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="An illustration of search result rows with one row rising to the top position beside a climbing traffic curve">
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c0e12"/>
+      <stop offset="1" stop-color="#12151b"/>
+    </linearGradient>
+    <linearGradient id="climb" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#0e7dc1"/>
+      <stop offset="1" stop-color="#9ed844"/>
+    </linearGradient>
+    <linearGradient id="climbFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9ed844" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#9ed844" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#9ed844" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#9ed844" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#ground)"/>
+  <ellipse cx="330" cy="196" rx="300" ry="180" fill="url(#glow)"/>
+
+  <!-- Search result rows. The top row is the position being won. -->
+  <g>
+    <rect x="96" y="120" width="470" height="92" rx="12" fill="#171c23" stroke="#9ed844" stroke-width="2"/>
+    <rect x="120" y="146" width="26" height="26" rx="6" fill="#9ed844"/>
+    <rect x="160" y="148" width="250" height="10" rx="5" fill="#f4f5f2" fill-opacity="0.88"/>
+    <rect x="160" y="170" width="330" height="8" rx="4" fill="#8a919c" fill-opacity="0.55"/>
+    <rect x="160" y="186" width="190" height="8" rx="4" fill="#8a919c" fill-opacity="0.35"/>
+  </g>
+  <g fill-opacity="0.9">
+    <rect x="96" y="232" width="470" height="76" rx="12" fill="#12151b" stroke="#242a33" stroke-width="1.5"/>
+    <rect x="120" y="252" width="22" height="22" rx="5" fill="#8a919c" fill-opacity="0.4"/>
+    <rect x="156" y="254" width="200" height="9" rx="4.5" fill="#8a919c" fill-opacity="0.6"/>
+    <rect x="156" y="274" width="300" height="7" rx="3.5" fill="#8a919c" fill-opacity="0.3"/>
+
+    <rect x="96" y="326" width="470" height="76" rx="12" fill="#12151b" stroke="#242a33" stroke-width="1.5"/>
+    <rect x="120" y="346" width="22" height="22" rx="5" fill="#8a919c" fill-opacity="0.32"/>
+    <rect x="156" y="348" width="170" height="9" rx="4.5" fill="#8a919c" fill-opacity="0.46"/>
+    <rect x="156" y="368" width="270" height="7" rx="3.5" fill="#8a919c" fill-opacity="0.24"/>
+
+    <rect x="96" y="420" width="470" height="76" rx="12" fill="#12151b" stroke="#242a33" stroke-width="1.5"/>
+    <rect x="120" y="440" width="22" height="22" rx="5" fill="#8a919c" fill-opacity="0.24"/>
+    <rect x="156" y="442" width="210" height="9" rx="4.5" fill="#8a919c" fill-opacity="0.34"/>
+    <rect x="156" y="462" width="240" height="7" rx="3.5" fill="#8a919c" fill-opacity="0.18"/>
+  </g>
+
+  <!-- The rise. Illustrative shape only, no plotted values. -->
+  <g transform="translate(650 0)">
+    <g stroke="#242a33" stroke-width="1">
+      <line x1="40" y1="140" x2="470" y2="140"/>
+      <line x1="40" y1="230" x2="470" y2="230"/>
+      <line x1="40" y1="320" x2="470" y2="320"/>
+      <line x1="40" y1="410" x2="470" y2="410"/>
+      <line x1="40" y1="480" x2="470" y2="480"/>
+    </g>
+    <path d="M40 470 C 150 466, 214 452, 262 414 C 316 372, 348 286, 396 214 C 428 166, 452 146, 470 138 L470 480 L40 480 Z" fill="url(#climbFill)"/>
+    <path d="M40 470 C 150 466, 214 452, 262 414 C 316 372, 348 286, 396 214 C 428 166, 452 146, 470 138" fill="none" stroke="url(#climb)" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="40" cy="470" r="7" fill="#0e7dc1"/>
+    <circle cx="262" cy="414" r="6" fill="#3d9bd9"/>
+    <circle cx="470" cy="138" r="10" fill="#9ed844"/>
+    <circle cx="470" cy="138" r="20" fill="none" stroke="#9ed844" stroke-opacity="0.35" stroke-width="2"/>
+  </g>
+</svg>

@@ -194,7 +194,7 @@ export function CinemaStage() {
           <h2 id="stage-heading" className="display mt-3 text-4xl md:text-5xl">
             Engaging video marketing that drives results
           </h2>
-          <p className="mt-4 max-w-2xl text-muted-foreground">
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             From cinematic brand stories that captivate to authentic
             testimonials that build trust, we craft high-impact visuals that
             engage and convert. Video is the future. Let&apos;s make yours

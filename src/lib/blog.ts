@@ -15,8 +15,14 @@ export interface BlogPost {
   category: string;
   readingMinutes: number;
   content: string;
-  /** Public URL of a cover image (database posts only). */
+  /** Public URL of a cover image: `coverImage` frontmatter, or the database column. */
   coverImage?: string;
+  /**
+   * Alt text for the cover. Repo MDX only, since the database has no column
+   * for it. Absent means the cover is treated as decorative and rendered with
+   * an empty alt, per SEO Guidelines 10.4.
+   */
+  coverAlt?: string;
   /** Meta/tab title when it differs from the on-page H1 (database posts). */
   seoTitle?: string;
   /** Structured FAQ rendered as a visible section + FAQPage JSON-LD. */
@@ -38,6 +44,8 @@ function parseFile(filePath: string, slug: string): BlogPost {
     author: String(data.author ?? "TopServ Digital"),
     category: String(data.category ?? "Insights"),
     readingMinutes: Math.max(1, Math.round(words / 220)),
+    coverImage: data.coverImage ? String(data.coverImage) : undefined,
+    coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     content,
   };
 }

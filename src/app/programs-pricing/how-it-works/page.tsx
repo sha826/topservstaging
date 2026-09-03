@@ -1,127 +1,65 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/motion/reveal";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
-import { VideoSlot } from "@/components/sections/video-slot";
-import { threePhases, videoSlots } from "@/lib/bf-content";
+import { BreadcrumbJsonLd, JsonLd } from "@/components/seo/json-ld";
+import { PHowCta, PHowHero, PLoop, POwes, PPhases } from "@/components/programs/p-how";
+import { siteConfig } from "@/lib/site-config";
 
+/**
+ * Programs and Pricing 2: How It Works, at /programs-pricing/how-it-works.
+ *
+ * SCOPE. Build Spec v2 section 4, Programs page 2. The 3 phases with their
+ * timings and stages, and for each one what TopServ does, what the client
+ * provides and what progress looks like, plus the workflow showing brand
+ * feeding performance and performance data informing brand.
+ *
+ * KEYWORDS. Primary "how brandformance works" (KEYWORD-RESEARCH 4.4b) in the
+ * title, the H1, the first 100 words and the slug. Secondary "what does a
+ * marketing agency do for contractors" is carried in the body.
+ *
+ * THE CLIENT'S OBLIGATIONS have their own section because the Argument Spine
+ * says softening them is how the physical layer starves later.
+ *
+ * THE VIDEO. The spec places the Process Walkthrough video here. It is not
+ * shot, so there is no slot and no VideoObject. Add the embed, VideoObject,
+ * a transcript in the DOM and a custom thumbnail when the file lands.
+ *
+ * SEO. Indexed, canonical /programs-pricing/how-it-works, in the sitemap.
+ * It owns the primary keyword "how brandformance works" (SEO Guidelines 3.2)
+ * and its schema URLs point at this route.
+ */
 export const metadata: Metadata = {
-  title: "The BrandFormance Execution Model",
+  title: { absolute: "How BrandFormance Works: 3 Phases, 12 Months | TopServ" },
   description:
-    "How does TopServ actually execute BrandFormance in a home service business? The 3 phases, what we do, what you provide, and what progress looks like.",
+    "How BrandFormance works month by month: 3 phases, what we do in each, what you provide, and what should be true by the end of it.",
   alternates: { canonical: "/programs-pricing/how-it-works" },
 };
 
 export default function HowItWorksPage() {
   return (
     <>
-      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Programs and Pricing", href: "/programs-pricing/overview" }, { name: "How It Works", href: "/programs-pricing/how-it-works" }]} />
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-3xl px-5 py-14 md:py-20">
-          <Reveal>
-            <h1 className="display text-3xl md:text-5xl">
-              The BrandFormance execution model
-            </h1>
-            <div className="mt-6 grid gap-4 text-lg leading-relaxed text-muted-foreground">
-              <p>
-                Most agencies keep their process vague on purpose, because
-                vagueness hides thin work. We do the opposite. Here is exactly
-                what happens, in what order, and why the order matters. The 6
-                stages of the Method nest inside 3 phases, and every phase
-                states what we do, what you provide, and what progress looks
-                like.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Programs and Pricing", href: "/programs-pricing/overview" },
+          { name: "How It Works", href: "/programs-pricing/how-it-works" },
+        ]}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "How BrandFormance Works",
+          url: `${siteConfig.url}/programs-pricing/how-it-works`,
+          description:
+            "The 3 phases of a BrandFormance program: Strategy and Alignment, Execution and Activation, Optimization and Scale.",
+          about: { "@id": `${siteConfig.url}/#organization` },
+        }}
+      />
 
-      <section aria-labelledby="phases-heading" className="border-b border-border">
-        <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
-          <h2 id="phases-heading" className="sr-only">
-            The 3 phases
-          </h2>
-          <div className="grid gap-6">
-            {threePhases.map((phase, i) => (
-              <Reveal key={phase.n} delay={Math.min(i * 0.06, 0.2)}>
-                <article className="rounded-lg border border-border bg-card p-7 md:p-9">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-                    <h3 className="display text-2xl md:text-3xl">
-                      <span className="mr-3 text-brand">{phase.n}.</span>
-                      {phase.name}
-                    </h3>
-                    <p className="label-mono text-ink-faint">
-                      {phase.timing} · stages: {phase.stages}
-                    </p>
-                  </div>
-                  <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
-                    {phase.covers}
-                  </p>
-                  <dl className="mt-6 grid gap-5 md:grid-cols-3">
-                    <div>
-                      <dt className="label-mono text-brand">What TopServ does</dt>
-                      <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        {phase.topserv}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="label-mono text-brand">What you provide</dt>
-                      <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        {phase.client}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="label-mono text-brand">What progress looks like</dt>
-                      <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        {phase.progress}
-                      </dd>
-                    </div>
-                  </dl>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section aria-label="Process video" className="border-b border-border bg-card/40">
-        <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
-          <VideoSlot
-            title={videoSlots.processWalkthrough.title}
-            length={videoSlots.processWalkthrough.length}
-          />
-        </div>
-      </section>
-
-      <section aria-labelledby="loop-heading" className="border-b border-border">
-        <div className="mx-auto max-w-3xl px-5 py-14 text-center md:py-20">
-          <Reveal>
-            <RefreshCw className="mx-auto size-8 text-brand" aria-hidden />
-            <h2 id="loop-heading" className="display mt-4 text-3xl md:text-4xl">
-              The loop is continuous
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Brand feeds performance. Performance data informs brand. What
-              people search after seeing your content tells us what to make
-              next, and what converts tells us where the brand is working.
-              Neither side runs alone again.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <section aria-label="Next step">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-5 px-5 py-12">
-          <p className="max-w-xl text-xl font-semibold">
-            See what actually improves when BrandFormance is working.
-          </p>
-          <Button asChild size="lg" className="text-base">
-            <Link href="/programs-pricing/what-this-delivers">What this delivers</Link>
-          </Button>
-        </div>
-      </section>
+      <PHowHero />
+      <PPhases />
+      <PLoop />
+      <POwes />
+      <PHowCta />
     </>
   );
 }

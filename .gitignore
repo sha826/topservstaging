@@ -42,3 +42,8 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# agent tooling (Higgsfield CLI skills), not project source
+.agents/
+.claude/skills/
+skills-lock.json

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Button } from "@/components/ui/button";
+import { PostCover } from "@/components/blog/post-cover";
 import { ArticleJsonLd, BreadcrumbJsonLd, FAQJsonLd } from "@/components/seo/json-ld";
 import { getAllPosts, getPost } from "@/lib/blog";
 import { siteConfig } from "@/lib/site-config";
@@ -118,15 +119,19 @@ export default async function BlogPostPage({
           </div>
         </header>
 
+        {/* The feature image sits between the header and the body, wider than
+            the reading measure, and is the page's LCP element. */}
+        <div className="mx-auto max-w-5xl px-5 pt-10">
+          <PostCover
+            src={post.coverImage}
+            alt={post.coverAlt}
+            category={post.category}
+            priority
+            className="rounded-lg"
+          />
+        </div>
+
         <div className="mx-auto max-w-3xl px-5 py-12">
-          {post.coverImage && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={post.coverImage}
-              alt=""
-              className="mb-10 aspect-[2/1] w-full rounded-lg border border-border object-cover"
-            />
-          )}
           <div className="prose prose-invert max-w-none prose-headings:tracking-tight prose-a:text-brand-hot prose-a:underline-offset-2 prose-blockquote:border-brand prose-strong:text-foreground prose-th:text-foreground">
             <MDXRemote
               source={post.content}
@@ -177,16 +182,12 @@ export default async function BlogPostPage({
                     href={`/blog/${r.slug}`}
                     className="group flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-brand"
                   >
-                    {r.coverImage && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={r.coverImage}
-                        alt=""
-                        loading="lazy"
-                        className="mb-4 aspect-[2/1] w-full rounded-md border border-border object-cover"
-                      />
-                    )}
-                    <p className="label-mono text-brand">{r.category}</p>
+                    <PostCover
+                      src={r.coverImage}
+                      alt={r.coverAlt}
+                      category={r.category}
+                    />
+                    <p className="label-mono mt-4 text-brand">{r.category}</p>
                     <h3 className="mt-2 text-lg font-bold leading-snug group-hover:text-brand">
                       {r.title}
                     </h3>

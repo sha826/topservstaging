@@ -108,10 +108,10 @@ export function PartnerLove() {
       ))}
       <div ref={ref} className="mx-auto max-w-6xl px-5 py-16 md:py-24">
         <p className="label-mono text-brand">Real stories, real results</p>
-        <h2 id="partner-love-heading" className="display mt-3 text-5xl md:text-6xl">
+        <h2 id="partner-love-heading" className="display mt-3 text-4xl md:text-5xl">
           Partner <span className="text-brand">love</span>
         </h2>
-        <p className="mt-4 max-w-md text-muted-foreground">
+        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
           See how we&apos;ve helped businesses like yours achieve their goals
           and thrive in a competitive digital world.
         </p>
