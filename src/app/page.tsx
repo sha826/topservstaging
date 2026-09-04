@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -207,7 +208,7 @@ export default function HomePage() {
           turning the page into a profile. */}
       <section aria-labelledby="founder-heading" className="border-b border-border bg-card">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-          <div className="md:flex md:items-end md:justify-between md:gap-12">
+          <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] md:items-center md:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-16">
             <Reveal>
               <p className="label-mono text-brand">The founder</p>
               <h2 id="founder-heading" className="display mt-3 max-w-2xl text-4xl md:text-5xl">
@@ -226,15 +227,29 @@ export default function HomePage() {
                   is TopServ.
                 </p>
               </div>
-            </Reveal>
-            <Reveal delay={0.08} className="mt-8 shrink-0 md:mt-0">
               <Link
                 href="/jonathan"
-                className="inline-flex items-center gap-2 text-base font-semibold text-foreground transition-colors hover:text-brand"
+                className="mt-8 inline-flex items-center gap-2 text-base font-semibold text-foreground transition-colors hover:text-brand"
               >
                 About Jonathan
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
+            </Reveal>
+
+            {/* The portrait is the same authentic photograph /jonathan uses,
+                not a second shoot and not a generated stand-in (Image
+                Guidelines 4.1). It is below the fold, so no priority. */}
+            <Reveal delay={0.08}>
+              <figure className="overflow-hidden rounded-lg border border-border">
+                <Image
+                  src="/images/jonathan/jonathan-bannister.webp"
+                  alt="Jonathan Bannister, founder of TopServ Digital and creator of BrandFormance"
+                  width={1800}
+                  height={1202}
+                  sizes="(min-width: 1024px) 26rem, (min-width: 768px) 20rem, 100vw"
+                  className="h-full w-full object-cover"
+                />
+              </figure>
             </Reveal>
           </div>
         </div>
