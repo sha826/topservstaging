@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "motion/react";
-import { sixClients } from "@/lib/bf-content";
+import { namesCleared, namesWithheldNote, sixClients } from "@/lib/bf-content";
 
 /**
  * The 6 outcomes, drawn so they can be compared.
@@ -22,16 +22,14 @@ import { sixClients } from "@/lib/bf-content";
  * NAMES. Build Spec v2 section 15, Decision 1: which of the 6 clients can be
  * named publicly is unresolved, owners Ryan and JB. Until it resolves the
  * Argument Spine's documented fallback applies, "at minimum assume market and
- * outcome without company names", so NAMES_CLEARED stays false and the rows
- * carry market plus outcome. Flip the 1 flag when the decision lands.
+ * outcome without company names", so the rows carry market plus outcome. The
+ * flag is namesCleared in bf-content.ts, shared with the home page proof
+ * band so 1 switch covers every surface.
  *
  * No Review or AggregateRating schema anywhere near this, per
  * KEYWORD-RESEARCH 4.4e: self published case studies do not get review
  * markup.
  */
-
-/** Build Spec v2 section 15, Decision 1. Owners: Ryan, JB. */
-const NAMES_CLEARED = false;
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
@@ -111,8 +109,8 @@ export function GrowthBarsDiagram() {
                 className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1"
               >
                 <p className="text-[0.9375rem] font-semibold">
-                  {NAMES_CLEARED ? row.client : row.market}
-                  {NAMES_CLEARED && (
+                  {namesCleared ? row.client : row.market}
+                  {namesCleared && (
                     <span className="ml-2 font-normal text-ink-faint">{row.market}</span>
                   )}
                 </p>
@@ -151,10 +149,9 @@ export function GrowthBarsDiagram() {
         Each bar starts where the company actually started. That is the part
         most case studies leave out, and it is the only part that makes the
         second number mean anything.
-        {!NAMES_CLEARED && (
+        {!namesCleared && (
           <span className="mt-2 block text-ink-faint">
-            Markets and outcomes are published here. Company names are
-            withheld until each client clears theirs for publication.
+            Markets and outcomes are published here. {namesWithheldNote}
           </span>
         )}
       </figcaption>

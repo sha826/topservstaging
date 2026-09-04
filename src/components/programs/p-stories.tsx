@@ -24,7 +24,7 @@ import { GrowthBarsDiagram } from "@/components/programs/diagrams/d-growth-bars"
  * spine's instruction is explicit: "write this page structurally with
  * placeholders and do not let it hold up the other seven. At minimum assume
  * market and outcome without company names." That is what ships. The single
- * NAMES_CLEARED flag lives in the growth diagram.
+ * namesCleared flag lives in src/lib/bf-content.ts.
  *
  * WHAT IS DELIBERATELY NOT HERE. The 7 part narratives are named and their
  * structure is published, but no narrative is written, because writing 6 of

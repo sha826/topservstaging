@@ -124,6 +124,26 @@ export const pricingModel = {
     "Brand frequency is fixed: 3 times weekly, at every level. What a larger program buys is more geography held at that same frequency, never more impressions. Competitors sell more impressions. We sell more territory, owned properly.",
 } as const;
 
+/**
+ * Build Spec v2 section 15, Decision 1: which of the 6 clients can be named
+ * publicly is unresolved, owners Ryan and JB. Nothing on this site may
+ * attribute an outcome to a named company until that lands. The Argument
+ * Spine's documented fallback governs meanwhile, "at minimum assume market
+ * and outcome without company names", so every public surface reads
+ * anonymousClient and the names below stay internal to this file.
+ *
+ * Flip this 1 flag when the decision clears, and check every consumer of
+ * sixClients before you do.
+ */
+export const namesCleared = false;
+
+/** What a client is called publicly while its own name is not cleared. */
+export const anonymousClient = "Home services company";
+
+/** The line that explains the missing names, wherever they are withheld. */
+export const namesWithheldNote =
+  "Company names are withheld until each client clears theirs for publication.";
+
 export const sixClients = [
   { client: "All Heart Heating", market: "Lancaster, CA", result: "$3.9M to $9M", detail: "131 percent growth, 23 percent CAGR" },
   { client: "Spencer Air", market: "Irving, TX", result: "$1.8M to $7M", detail: "289 percent over 9 years" },

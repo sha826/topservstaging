@@ -28,7 +28,7 @@ import { siteConfig } from "@/lib/site-config";
  * page structurally with placeholders and do not let it hold up the other
  * seven. At minimum assume market and outcome without company names."
  * Markets and outcomes are published; names sit behind the single
- * NAMES_CLEARED flag in d-growth-bars.tsx.
+ * namesCleared flag in src/lib/bf-content.ts.
  *
  * SCHEMA. KEYWORD-RESEARCH 4.4e is explicit: mark each story as an Article,
  * and never fake Review or AggregateRating on self published case studies.
