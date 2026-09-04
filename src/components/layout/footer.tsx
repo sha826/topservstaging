@@ -13,10 +13,10 @@ import { siteConfig } from "@/lib/site-config";
  * Site footer.
  *
  * Curated, not a sitemap dump (SEO Guidelines 6.7): the main pages, the
- * assessment, the podcast, contact and legal. The 6 industry pages were
- * removed here on request. They keep their inbound links from the service
- * pages, so nothing is orphaned, and the footer stops carrying a second
- * navigation the size of the first.
+ * assessment, the founder page, the podcast, contact and legal. The 6
+ * industry pages were removed here on request. They keep their inbound links
+ * from the service pages, so nothing is orphaned, and the footer stops
+ * carrying a second navigation the size of the first.
  *
  * 3 bands: the conversion band, which repeats the site's single primary CTA
  * rather than inventing a competing one (Guidelines 6.2), the link grid, and
@@ -59,6 +59,10 @@ const COLUMNS = [
     label: "Company",
     links: [
       { href: "/about", label: "About" },
+      // Varied anchor: the home page says "About Jonathan" and /about says
+      // "More on Jonathan", so the footer carries the entity name itself
+      // (Guidelines 6.3, and 3.7 on entity consistency).
+      { href: "/jonathan", label: "Jonathan Bannister" },
       { href: "/blog", label: "Blog" },
       { href: "/news", label: "News" },
       { href: "/contact", label: "Contact" },
