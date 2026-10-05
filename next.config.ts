@@ -52,44 +52,52 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Every permanent redirect answers a literal 301 rather than Next's default
+  // 308. Both are permanent and search engines treat them the same, but 301 is
+  // what the team asked for, so statusCode is set explicitly instead of using
+  // `permanent: true`. The 2 properties are mutually exclusive in the type.
   async redirects() {
     return [
       ...Object.entries(OLD_SERVICE_SLUGS).map(([oldSlug, newSlug]) => ({
         source: `/services/${oldSlug}`,
         destination: `/services/${newSlug}`,
-        permanent: true,
+        statusCode: 301,
       })),
       ...Object.entries(OLD_BUNDLE_PAGES).map(([oldSlug, newSlug]) => ({
         source: `/${oldSlug}`,
         destination: `/services/${newSlug}`,
-        permanent: true,
+        statusCode: 301,
       })),
       ...TRADES.map((trade) => ({
         source: `/digital-marketing-services/digital-marketing-for-${trade}-companies`,
         destination: `/industries/${trade}`,
-        permanent: true,
+        statusCode: 301,
       })),
       // Case studies existed at both nested and top-level URLs.
       ...Object.entries(CASE_STUDY_SLUGS).flatMap(([oldSlug, newSlug]) => [
         {
           source: `/about/case-studies/${oldSlug}`,
           destination: `/case-studies/${newSlug}`,
-          permanent: true,
+          statusCode: 301,
         },
         {
           source: `/${oldSlug}`,
           destination: `/case-studies/${newSlug}`,
-          permanent: true,
+          statusCode: 301,
         },
       ]),
-      { source: "/about/case-studies", destination: "/case-studies", permanent: true },
-      { source: "/about/team", destination: "/about", permanent: true },
-      { source: "/topserv-digital-testimonials", destination: "/about", permanent: true },
-      { source: "/spotlight", destination: "/about", permanent: true },
+      { source: "/about/case-studies", destination: "/case-studies", statusCode: 301 },
+      { source: "/about/team", destination: "/about", statusCode: 301 },
+      { source: "/topserv-digital-testimonials", destination: "/about", statusCode: 301 },
+      { source: "/spotlight", destination: "/about", statusCode: 301 },
       // BrandFormance restructure: pricing lives inside the Programs hub now.
-      { source: "/pricing", destination: "/programs-pricing/pricing", permanent: true },
+      { source: "/pricing", destination: "/programs-pricing/pricing", statusCode: 301 },
+      // The Programs hub is navigation, not a page: it lands on Overview. Done
+      // here rather than with permanentRedirect() in a page component, because
+      // that helper is hardcoded to 308 and the team asked for 301.
+      { source: "/programs-pricing", destination: "/programs-pricing/overview", statusCode: 301 },
       // Spec v2: the public diagnostic is the Brand Assessment (grade only).
-      { source: "/brand-score", destination: "/brand-assessment", permanent: true },
+      { source: "/brand-score", destination: "/brand-assessment", statusCode: 301 },
     ];
   },
   async headers() {
