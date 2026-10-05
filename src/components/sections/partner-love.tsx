@@ -106,8 +106,10 @@ export function PartnerLove({ tinted = false }: { tinted?: boolean }) {
       {videoTestimonials.map((t) => (
         <VideoJsonLd
           key={t.youtubeId}
-          name={t.title}
-          description={`On-camera testimonial from ${t.name} of ${t.company} about working with TopServ Digital.`}
+          // No third party name in schema: t.title carries the company and
+          // the description would carry the speaker's name too.
+          name="Client testimonial for TopServ Digital"
+          description="On-camera testimonial from a home services company about working with TopServ Digital." 
           thumbnailUrl={`https://i.ytimg.com/vi/${t.youtubeId}/hq720.jpg`}
           uploadDate={t.uploadDate}
           embedUrl={`https://www.youtube.com/embed/${t.youtubeId}`}

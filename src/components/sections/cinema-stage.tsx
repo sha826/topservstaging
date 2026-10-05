@@ -176,8 +176,13 @@ export function CinemaStage() {
       {PORTFOLIO_FILMS.filter((f) => f.youtubeId).map((f) => (
         <VideoJsonLd
           key={f.youtubeId}
-          name={`${f.name} · ${f.client}`}
-          description={`Video produced by TopServ Digital for ${f.client}.`}
+          // No client or third party name in schema. The film's own title
+          // carries no company name, and the description says who produced
+          // it without naming who it was produced for. The visible card
+          // still credits the client; schema being less specific than the
+          // page is fine, claiming more than it would not be.
+          name={f.name}
+          description="Brand film produced by TopServ Digital for a home services company." 
           thumbnailUrl={
             f.poster
               ? f.poster

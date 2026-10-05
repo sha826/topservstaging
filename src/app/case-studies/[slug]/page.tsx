@@ -67,14 +67,17 @@ export default async function CaseStudyPage({
         items={[
           { name: "Home", href: "/" },
           { name: "Case Studies", href: "/case-studies" },
-          { name: study.client, href: `/case-studies/${study.slug}` },
+          // The trade, not the client. This breadcrumb has no visible trail
+          // to match, and schema carries no third party company names.
+          { name: `${study.trade} case study`, href: `/case-studies/${study.slug}` },
         ]}
       />
       {videos.map((v) => (
         <VideoJsonLd
           key={v.id}
-          name={v.title}
-          description={`${v.kind} produced by TopServ Digital for ${v.client}.`}
+          // No third party name in schema: v.title embeds the client.
+          name={v.kind}
+          description={`${v.kind} produced by TopServ Digital for a home services company.`}
           thumbnailUrl={v.thumbnail}
           uploadDate={v.uploadDate}
           embedUrl={v.embedUrl}
