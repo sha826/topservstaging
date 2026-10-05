@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /**
  * The plays panel: what the work actually is in this trade, visible before
  * the reader scrolls.
@@ -21,15 +23,47 @@
  * The plays move here from the section that used to follow the hero, so
  * nothing is said twice.
  */
-export function IPlaysPanel({ trade, plays }: { trade: string; plays: string[] }) {
+export function IPlaysPanel({
+  trade,
+  plays,
+  image,
+}: {
+  trade: string;
+  plays: string[];
+  image: string;
+}) {
   return (
     <div className="relative">
       <span
         aria-hidden
         className="pointer-events-none absolute -inset-6 -z-10 bg-[radial-gradient(closest-side,rgba(158,216,68,0.14),transparent)] blur-2xl"
       />
-      <div className="relative overflow-hidden rounded-[20px] border border-[#2b323c] bg-[linear-gradient(160deg,#12161d_0%,#0b0e13_58%,#0d1015_100%)] p-6 md:p-7">
-        <p className="label-mono text-ink-faint">How we win in {trade.toLowerCase()}</p>
+      <div className="relative overflow-hidden rounded-[20px] border border-[#2b323c] bg-[#0b0e13] p-6 md:p-7">
+        {/* The artwork sits behind the plays rather than beside them, so the
+            panel reads as a banner and still carries its words. Decorative:
+            the list is the content, so it takes an empty alt and is hidden
+            from assistive tech (IMAGE-GUIDELINES 10). */}
+        <Image
+          src={image}
+          alt=""
+          aria-hidden
+          fill
+          priority
+          sizes="(min-width: 1024px) 486px, 100vw"
+          className="pointer-events-none select-none object-cover"
+        />
+        {/* Scrim. The artwork is already near black, but the rows have to
+            stay legible over its bright edges, so the panel darkens towards
+            the text and keeps the glow at the top right where the copy is
+            not. */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(200deg,rgba(11,14,19,0.42)_0%,rgba(11,14,19,0.86)_46%,rgba(11,14,19,0.95)_100%)]"
+        />
+
+        <p className="label-mono relative text-ink-faint">
+          How we win in {trade.toLowerCase()}
+        </p>
 
         {/* The rail the plays sit on, same hairline the Method panel uses.
             Outside the ol: only li is valid there. */}

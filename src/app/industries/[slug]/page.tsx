@@ -112,7 +112,11 @@ export default async function IndustryPage({
 
             {copy && (
               <Reveal delay={0.08}>
-                <IPlaysPanel trade={industry.trade} plays={copy.plays} />
+                <IPlaysPanel
+                  trade={industry.trade}
+                  plays={copy.plays}
+                  image={`/images/industries/${industry.slug}.webp`}
+                />
               </Reveal>
             )}
           </div>
