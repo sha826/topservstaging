@@ -154,8 +154,8 @@ export default function BrandAssessmentPage() {
               </h2>
               <Measure>
                 <p className="mt-6 text-[0.9375rem] leading-relaxed text-muted-foreground md:text-base">
-                  We read your brand the way your market reads it and send your
-                  grade within 2 business days.
+                  We read your brand the way your market reads it and send
+                  your grade with what it means for your business.
                 </p>
                 <p className="mt-5 text-[0.9375rem] leading-relaxed text-muted-foreground md:text-base">
                   The optional details sharpen the grade and give the strategy

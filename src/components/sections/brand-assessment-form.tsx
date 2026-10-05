@@ -1,7 +1,9 @@
 "use client";
 
 import { useActionState } from "react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/lib/site-config";
 import { requestAssessment, type AssessmentState } from "@/app/brand-assessment/actions";
 
 const inputClass =
@@ -18,10 +20,18 @@ export function BrandAssessmentForm() {
       <div className="rounded-lg border border-brand/50 bg-brand/10 p-8 text-center">
         <p className="display text-3xl">Your assessment is queued.</p>
         <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-muted-foreground">
-          We run the assessment against your market and send your Brand Grade
-          within 2 business days, with what it means for your business and
-          the right next step.
+          We run the assessment against your market and send your Brand Grade,
+          with what it means for your business and the right next step.
         </p>
+        {/* The grade arrives from the team, so the only immediate next step
+            this page can offer is the call. No delivery window is promised
+            anywhere; nothing here can honor one. */}
+        <Button asChild size="lg" className="mt-6 text-base">
+          <a href={siteConfig.booking.discoveryCall}>
+            Book your strategy call
+            <ArrowRight className="size-4" aria-hidden />
+          </a>
+        </Button>
       </div>
     );
   }
