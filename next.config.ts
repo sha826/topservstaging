@@ -17,20 +17,26 @@ const OLD_SERVICE_SLUGS: Record<string, string> = {
 
 // The old site also sold 3 bundle pages that grouped several capabilities
 // under a marketing name. Nothing in the new IA groups capabilities that way,
-// so each goes to the service page its content was mostly about. Mapped from
-// the live pages' own headings, not their titles or meta descriptions, which
-// did not match what was on them: "Digital Growth Solutions" was described as
-// creative and visual identity and is actually SEO and paid search.
+// so each goes to the page that covers the same ground AND is reachable from
+// the menu or footer. The /services pages are a closer topic match, but they
+// are linked from neither, so landing there strands the visitor on a page
+// with no way back into the site.
+//
+// Mapped from the live pages' own headings, not their titles or meta
+// descriptions, which did not match what was on them: "Digital Growth
+// Solutions" is described as creative and visual identity and is actually
+// SEO and paid search.
 const OLD_BUNDLE_PAGES: Record<string, string> = {
-  // Social Media Strategy, Paid Social Media Campaigns, Content Creation.
-  "brand-visibility-engagement": "social-media-marketing",
-  // Local SEO, National and Enterprise SEO, Paid Search and SEM.
-  "digital-growth-solutions": "seo",
-  // Digital Marketing Consulting, Marketing Automation and CRM Integration,
-  // Platform and Tool Audits.
-  "strategic-business-consulting": "automation",
+  // Social Media Strategy, Paid Social Campaigns, Content Creation: being
+  // known and engaged with, which is the brand half of the methodology.
+  "brand-visibility-engagement": "/brandformance",
+  // Local SEO, National and Enterprise SEO, Paid Search and SEM: demand
+  // capture, which the Method covers as a stage inside the system.
+  "digital-growth-solutions": "/method",
+  // Consulting, Campaign Audits, Strategic Planning, Automation and CRM:
+  // how the work is planned and run, month by month.
+  "strategic-business-consulting": "/programs-pricing/how-it-works",
 };
-
 const TRADES = ["hvac", "plumbing", "roofing", "electrical", "garage-door", "pest-control"];
 
 const CASE_STUDY_SLUGS: Record<string, string> = {
@@ -63,9 +69,9 @@ const nextConfig: NextConfig = {
         destination: `/services/${newSlug}`,
         statusCode: 301,
       })),
-      ...Object.entries(OLD_BUNDLE_PAGES).map(([oldSlug, newSlug]) => ({
+      ...Object.entries(OLD_BUNDLE_PAGES).map(([oldSlug, destination]) => ({
         source: `/${oldSlug}`,
-        destination: `/services/${newSlug}`,
+        destination,
         statusCode: 301,
       })),
       ...TRADES.map((trade) => ({
