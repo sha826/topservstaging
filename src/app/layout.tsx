@@ -8,6 +8,7 @@ import { ChatWidgetLazy } from "@/components/chat/chat-widget-lazy";
 import { TrackPageview } from "@/components/analytics/track-pageview";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { ContentSlot } from "@/components/content/content-slot";
+import { SiteGraphJsonLd } from "@/components/seo/json-ld";
 
 const barlow = Barlow({
   weight: ["400", "500", "600", "700"],
@@ -65,6 +66,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${barlow.variable} ${bebas.variable} ${dmMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
+        {/* The company and the site, on every page. Every Service, Article
+            and VideoObject node elsewhere references these @ids, and a
+            reference only resolves if the node is in the same page's graph.
+            SEO-GUIDELINES 7.1. */}
+        <SiteGraphJsonLd />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground"

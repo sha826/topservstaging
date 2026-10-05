@@ -31,11 +31,24 @@ const postalAddress = {
  * ProfessionalService (a LocalBusiness subtype) fits an agency with a
  * physical address better than a bare Organization.
  */
-export function ProfessionalServiceJsonLd() {
-  return (
-    <JsonLd
-      data={{
-        "@context": "https://schema.org",
+/**
+ * The company node. Every other node on the site points at this @id as its
+ * provider, publisher or author's employer, so it has to exist on the same
+ * page as the node that references it: a reference to an @id that is not in
+ * the page's graph resolves to nothing. It used to be rendered on the home
+ * page alone, which left the Service nodes on /services and /industries, the
+ * Article nodes on the blog, and every VideoObject pointing at a node that
+ * was not there.
+ *
+ * Rendered site wide from the root layout now, with the WebSite node beside
+ * it, per SEO-GUIDELINES 7.1.
+ *
+ * The @id stays /#organization. The guidelines write it /#org, but the
+ * string only has to be stable and internally consistent, and every
+ * reference in this file already uses /#organization. Raised, not silently
+ * switched.
+ */
+const organizationNode = {
         "@type": "ProfessionalService",
         "@id": `${siteConfig.url}/#organization`,
         name: siteConfig.name,
@@ -69,6 +82,35 @@ export function ProfessionalServiceJsonLd() {
         ],
         sameAs: Object.values(social),
         priceRange: "$$$",
+} as const;
+
+/**
+ * The site itself, as distinct from the company that publishes it.
+ *
+ * No potentialAction/SearchAction: there is no site search, and 7.1's iron
+ * rule is that schema states only what is visibly true.
+ */
+const webSiteNode = {
+  "@type": "WebSite",
+  "@id": `${siteConfig.url}/#website`,
+  url: siteConfig.url,
+  name: siteConfig.name,
+  description: siteConfig.metaDescription,
+  inLanguage: "en-US",
+  publisher: { "@id": `${siteConfig.url}/#organization` },
+} as const;
+
+/**
+ * The site wide graph: 1 script, both nodes, on every page. Mounted in the
+ * root layout, so page level components only ever have to reference the @ids
+ * rather than restate the company.
+ */
+export function SiteGraphJsonLd() {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@graph": [organizationNode, webSiteNode],
       }}
     />
   );

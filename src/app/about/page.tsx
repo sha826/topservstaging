@@ -47,8 +47,8 @@ import { siteConfig } from "@/lib/site-config";
  * about what its clients own.
  *
  * SEO. Indexed, canonical /about, in the sitemap. Organization schema is
- * omitted here on purpose: ProfessionalServiceJsonLd claims @id
- * "#organization" on the home page, and a second claim would split the
+ * omitted here on purpose: the site wide graph in the root layout claims
+ * @id "#organization" on every page, and a second claim would split the
  * entity. This page references it instead, via about @id.
  */
 export const metadata: Metadata = {

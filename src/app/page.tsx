@@ -9,7 +9,6 @@ import { Hero } from "@/components/sections/hero";
 import { PartnerLove } from "@/components/sections/partner-love";
 import { PartnerMarquee } from "@/components/sections/partner-marquee";
 import { ProofClients } from "@/components/sections/proof-clients";
-import { ProfessionalServiceJsonLd } from "@/components/seo/json-ld";
 import { SixStages } from "@/components/sections/six-stages";
 import { BeforeAfterTable } from "@/components/sections/before-after-table";
 import { DependencyProblem } from "@/components/sections/dependency-problem";
@@ -29,9 +28,10 @@ import { homeProofSections } from "@/lib/bf-content";
  * Promoted from the /test preview route: noindex is gone, the canonical is
  * "/", and it owns the primary keyword "topserv digital" (SEO Guidelines 3.2).
  *
- * Organization schema lives here and only here. ProfessionalServiceJsonLd
- * declares @id "/#organization" and is emitted once, on this page, so no
- * other route may emit a second block against that id.
+ * Organization schema is site wide now, emitted once from the root layout
+ * so every page carries the node its other schema references. It used to be
+ * rendered here and only here; no route should emit a second block against
+ * the "/#organization" id.
  */
 export const metadata: Metadata = {
   // Absolute: the root layout appends "| TopServ Digital" via its template,
@@ -54,7 +54,6 @@ export default function HomePage() {
 
   return (
     <>
-      <ProfessionalServiceJsonLd />
 
       {/* 1. HERO. Carries the single H1, the one line, the supporting line,
           and the 2 CTAs the conversion path allows. */}
