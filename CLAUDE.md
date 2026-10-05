@@ -46,10 +46,12 @@ copy alike:
 - One primary keyword per page, never assigned to a second page.
 - Capabilities such as SEO and PPC are never a page's opening frame.
 
-## Open conflict, do not silently fix
+## Resolved conflict, kept for the record
 
-The current Build Spec v2 names the 4 grades No Brand Equity, Name
-Recognition, Household Name, Negative Brand Equity, and says to use those
-labels verbatim. `src/lib/bf-content.ts` still carries "Unknown" and
-"Negative Equity" from the older revision. See `docs/CONVERSION-NOTES.md`.
-Raise it with Ryan and Alejandro before changing code.
+Build Spec v2 names the 4 grades No Brand Equity, Name Recognition,
+Household Name, Negative Brand Equity and says to use those labels verbatim.
+`src/lib/bf-content.ts` carried "Unknown" and "Negative Equity" from the
+older revision. Ryan signed this off in October 2026 and the labels were
+swapped across every surface that carries them: `bf-content.ts`, `faqs.ts`,
+the concierge prompt, and `llms.txt`. Each grade's meaning text was left as
+written. See `docs/CONVERSION-NOTES.md`.

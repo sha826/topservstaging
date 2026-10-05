@@ -179,7 +179,7 @@ export const sixClients = [
  */
 export const brandGrades = [
   {
-    grade: "Unknown",
+    grade: "No Brand Equity",
     meaning: "Outside their own circle, nobody can find them. The market does not know the name.",
   },
   {
@@ -191,7 +191,7 @@ export const brandGrades = [
     meaning: "Searched by name. Leads cost almost nothing.",
   },
   {
-    grade: "Negative Equity",
+    grade: "Negative Brand Equity",
     meaning: "Actively chosen against. Fix operations before spending on marketing.",
   },
 ] as const;

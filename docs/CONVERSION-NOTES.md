@@ -49,10 +49,9 @@ renames 2 of the 4 and adds the instruction to use JB's labels verbatim:
 | Household Name | Household Name |
 | Negative Equity | Negative Brand Equity |
 
-`src/lib/bf-content.ts` still carries the older labels. That is a real
-conflict between the current spec and the running code. It has not been
-changed. Raise it with Ryan and Alejandro rather than silently resolving it,
-per the rule in `SEO-GUIDELINES.md` section 0.
+Applied October 2026, Ryan signing off. `src/lib/bf-content.ts` now carries
+the spec labels, as do `faqs.ts`, the concierge prompt, and `llms.txt`. Only
+the labels moved; each grade's meaning text is still the copy as written.
 
 ## What the conversion cannot carry
 

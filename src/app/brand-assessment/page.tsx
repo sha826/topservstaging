@@ -33,15 +33,12 @@ import { siteConfig } from "@/lib/site-config";
  * after its own misalignment: several containers of different widths produce
  * several different left edges. There is 1 container on this page.
  *
- * OPEN CONFLICT, RAISED AND NOT RESOLVED. CLAUDE.md records it and this page
- * is where it becomes visible. KEYWORD-RESEARCH 4.5 requires the 4 grade
- * labels verbatim as "No Brand Equity, Name Recognition, Household Name,
- * Negative Brand Equity", and Build Spec v2 agrees. `src/lib/bf-content.ts`
- * still carries "Unknown" and "Negative Equity" from the older revision.
- * This page renders from bf-content, so it currently shows the older 2
- * labels. That is deliberate: the instruction is to raise the conflict with
- * Ryan and Alejandro, never to silently change the data. Fix bf-content once
- * and both this route and production correct together.
+ * Grade labels: resolved October 2026, Ryan signing off. The 4 labels now
+ * read as Build Spec v2 and KEYWORD-RESEARCH 4.5 require them, "No Brand
+ * Equity, Name Recognition, Household Name, Negative Brand Equity". The
+ * older "Unknown" and "Negative Equity" are gone. Each grade's meaning text
+ * was deliberately left as written. This page renders from bf-content, so
+ * the labels are correct here by construction.
  *
  * SEO. Indexed, canonical /brand-assessment, in the sitemap. It owns the
  * primary keyword "brand assessment for home service companies" (SEO

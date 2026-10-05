@@ -30,7 +30,7 @@ export const generalFaqs: Faq[] = [
   {
     question: "What is the Brand Assessment?",
     answer:
-      "The Brand Assessment reads how strong a company's brand actually is in its market and returns 1 of 4 grades: Unknown, Name Recognition, Household Name, or Negative Equity. Each grade comes with what it means for the business and the right next step. It is the honest starting point before any program or price conversation. Get yours at topservdigital.com/brand-assessment.",
+      "The Brand Assessment reads how strong a company's brand actually is in its market and returns 1 of 4 grades: No Brand Equity, Name Recognition, Household Name, or Negative Brand Equity. Each grade comes with what it means for the business and the right next step. It is the honest starting point before any program or price conversation. Get yours at topservdigital.com/brand-assessment.",
   },
   {
     question: "Which industries does TopServ Digital serve?",

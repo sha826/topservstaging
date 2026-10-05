@@ -55,7 +55,7 @@ Agency Titan integration status:
 
 ## 4. Brand Assessment
 
-The site's primary conversion. Spec v2 doctrine: the public artifact is the GRADE only — Unknown, Name Recognition, Household Name, or Negative Equity. The numeric score, its components, and their weights are internal to the sales console and never appear anywhere public (pages, llms.txt, the concierge).
+The site's primary conversion. Spec v2 doctrine: the public artifact is the GRADE only — No Brand Equity, Name Recognition, Household Name, or Negative Brand Equity. The numeric score, its components, and their weights are internal to the sales console and never appear anywhere public (pages, llms.txt, the concierge).
 
 - Page: `src/app/brand-assessment/page.tsx` renders the 4 grades from `brandGrades` in `bf-content.ts` (canonical definitions; the site must not invent its own).
 - Capture form: `src/app/brand-assessment/actions.ts`. Honeypot field (`fax`), best-effort per-IP throttle, name + company + market required, email or phone required, optional revenue band / membership / trade / website inputs. Delivers through the same `deliverLead` pipeline with attribution "Brand Grade request". On success it writes a completion event row (`path: /brand-assessment/completed`) into `page_views`, the primary conversion metric.
