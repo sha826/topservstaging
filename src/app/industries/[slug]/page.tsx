@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Target } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { BreadcrumbJsonLd, ServiceJsonLd } from "@/components/seo/json-ld";
@@ -10,6 +10,7 @@ import { ContentSlot } from "@/components/content/content-slot";
 import { industries, services } from "@/lib/content";
 import { industryCopy } from "@/lib/industry-copy";
 import { siteConfig } from "@/lib/site-config";
+import { IPlaysPanel } from "@/components/industries/i-plays-panel";
 
 interface Params {
   slug: string;
@@ -71,55 +72,52 @@ export default async function IndustryPage({
         ]}
       />
 
-      <section className="border-b border-border">
+      {/* 2 columns, the argument beside the work, which is the composition
+          every BrandFormance era page uses. These pages were single column
+          text with no visual companion, the only public pages still shaped
+          that way. The panel is built rather than photographed; the reason
+          is in the component. */}
+      <section className="relative isolate overflow-hidden border-b border-border">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_58%_at_88%_16%,rgba(158,216,68,0.14),transparent_64%)]"
+        />
         <div className="mx-auto max-w-6xl px-5 pb-16 pt-20 md:pt-28">
-          <Reveal>
-            <p className="label-mono text-brand">Industries</p>
-            <h1 className="display mt-4 max-w-3xl text-5xl md:text-6xl">
-              Marketing for {industry.trade} companies
-            </h1>
-            <p className="mt-6 max-w-2xl text-xl leading-relaxed text-foreground">
-              {industry.description}
-            </p>
-            {copy && (
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-                {copy.intro}
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,54fr)_minmax(0,46fr)] lg:gap-14">
+            <Reveal>
+              <p className="label-mono text-brand">Industries</p>
+              <h1 className="display mt-4 text-5xl md:text-6xl">
+                Marketing for {industry.trade} companies
+              </h1>
+              <p className="mt-6 max-w-[52ch] text-xl leading-relaxed text-foreground">
+                {industry.description}
               </p>
+              {copy && (
+                <p className="mt-5 max-w-[52ch] text-base leading-relaxed text-muted-foreground">
+                  {copy.intro}
+                </p>
+              )}
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button asChild size="lg" className="text-base">
+                  <a href={siteConfig.booking.discoveryCall}>
+                    Book a discovery call
+                    <ArrowRight className="size-4" aria-hidden />
+                  </a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="text-base">
+                  <Link href="/programs-pricing/pricing">See our pricing</Link>
+                </Button>
+              </div>
+            </Reveal>
+
+            {copy && (
+              <Reveal delay={0.08}>
+                <IPlaysPanel trade={industry.trade} plays={copy.plays} />
+              </Reveal>
             )}
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button asChild size="lg" className="text-base">
-                <a href={siteConfig.booking.discoveryCall}>
-                  Book a discovery call
-                  <ArrowRight className="size-4" aria-hidden />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="text-base">
-                <Link href="/programs-pricing/pricing">See our pricing</Link>
-              </Button>
-            </div>
-          </Reveal>
+          </div>
         </div>
       </section>
-
-      {copy && (
-        <section aria-labelledby="plays-heading" className="border-b border-border bg-card">
-          <div className="mx-auto max-w-6xl px-5 py-16">
-            <Reveal>
-              <h2 id="plays-heading" className="display text-3xl md:text-4xl">
-                How we win in {industry.trade.toLowerCase()}
-              </h2>
-              <ul className="mt-8 grid gap-4 md:grid-cols-2">
-                {copy.plays.map((play) => (
-                  <li key={play} className="flex items-start gap-3">
-                    <Target className="mt-1 size-4 shrink-0 text-brand" aria-hidden />
-                    <span className="text-base leading-relaxed text-muted-foreground">{play}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-        </section>
-      )}
 
       <section aria-labelledby="services-for-heading" className="border-b border-border">
         <div className="mx-auto max-w-6xl px-5 py-16">
