@@ -8,6 +8,7 @@ import {
   YouTubeIcon,
 } from "@/components/icons/social";
 import { siteConfig } from "@/lib/site-config";
+import { industries } from "@/lib/content";
 
 /**
  * Site footer.
@@ -53,6 +54,24 @@ const COLUMNS = [
       { href: "/brand-assessment", label: "Brand Assessment" },
       { href: "/case-studies", label: "Case Studies" },
     ],
+  },
+  {
+    // The 6 trade pages had no route in from the site chrome: only the
+    // /services pages linked them, so the home, about, contact and blog
+    // pages left them an island with no path a crawler could follow from
+    // the top of the site. Built from the industries data so the column
+    // cannot drift from the routes.
+    //
+    // Anchors read "HVAC Marketing", not "HVAC", because the /services
+    // pages already use the bare trade name. Guidelines 6.3 asks for
+    // descriptive and varied anchors rather than 1 exact-match repeated
+    // site wide.
+    title: "Industries",
+    label: "Industries we serve",
+    links: industries.map((industry) => ({
+      href: `/industries/${industry.slug}`,
+      label: industry.name,
+    })),
   },
   {
     title: "Company",
