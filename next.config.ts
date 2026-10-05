@@ -15,6 +15,22 @@ const OLD_SERVICE_SLUGS: Record<string, string> = {
   "geofencing-marketing-for-home-service-companies": "geofencing",
 };
 
+// The old site also sold 3 bundle pages that grouped several capabilities
+// under a marketing name. Nothing in the new IA groups capabilities that way,
+// so each goes to the service page its content was mostly about. Mapped from
+// the live pages' own headings, not their titles or meta descriptions, which
+// did not match what was on them: "Digital Growth Solutions" was described as
+// creative and visual identity and is actually SEO and paid search.
+const OLD_BUNDLE_PAGES: Record<string, string> = {
+  // Social Media Strategy, Paid Social Media Campaigns, Content Creation.
+  "brand-visibility-engagement": "social-media-marketing",
+  // Local SEO, National and Enterprise SEO, Paid Search and SEM.
+  "digital-growth-solutions": "seo",
+  // Digital Marketing Consulting, Marketing Automation and CRM Integration,
+  // Platform and Tool Audits.
+  "strategic-business-consulting": "automation",
+};
+
 const TRADES = ["hvac", "plumbing", "roofing", "electrical", "garage-door", "pest-control"];
 
 const CASE_STUDY_SLUGS: Record<string, string> = {
@@ -40,6 +56,11 @@ const nextConfig: NextConfig = {
     return [
       ...Object.entries(OLD_SERVICE_SLUGS).map(([oldSlug, newSlug]) => ({
         source: `/services/${oldSlug}`,
+        destination: `/services/${newSlug}`,
+        permanent: true,
+      })),
+      ...Object.entries(OLD_BUNDLE_PAGES).map(([oldSlug, newSlug]) => ({
+        source: `/${oldSlug}`,
         destination: `/services/${newSlug}`,
         permanent: true,
       })),
