@@ -39,9 +39,13 @@ const CSS = `
   25%, 100% { background-color: rgba(244,245,242,0.16); }
 }
 @keyframes dgs-tick { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+/* backwards fill is load bearing: all 4 labels share 1 grid cell and are
+   staggered by animation-delay, and an animation applies no styles at all
+   while it is still delayed. Without it labels 2 to 4 sit at their default
+   opacity 1 and pile up on top of each other for the first 7.8 seconds. */
 @media (prefers-reduced-motion: no-preference) {
-  .dgs-slot { animation: dgs-slot var(--dgs-cycle) ease-in-out infinite; }
-  .dgs-pip  { animation: dgs-pip var(--dgs-cycle) ease-in-out infinite; }
+  .dgs-slot { animation: dgs-slot var(--dgs-cycle) ease-in-out infinite backwards; }
+  .dgs-pip  { animation: dgs-pip var(--dgs-cycle) ease-in-out infinite backwards; }
   .dgs-tick { animation: dgs-tick 2.6s ease-in-out infinite; }
 }
 /* With motion off, the first grade stands as a worked example and the rest
