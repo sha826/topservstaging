@@ -140,6 +140,24 @@ export const namesCleared = false;
 /** What a client is called publicly while its own name is not cleared. */
 export const anonymousClient = "Home services company";
 
+/**
+ * Home page proof run: the 2 sections the team switches off when the material
+ * behind them is not ready to show. The logo marquee goes dark when a partner
+ * asks to be removed, the video testimonials when a film is being recut.
+ *
+ * Flip either to false and the page composes around it. The run alternates
+ * tinted and untinted section backgrounds so each band reads as its own, and
+ * src/app/page.tsx assigns those tones from whichever sections are actually
+ * on, rather than each section hardcoding its own. Turning 1 off therefore
+ * cannot leave 2 same-toned bands against each other.
+ */
+export const homeProofSections = {
+  /** "Meet our valued partners", the scrolling client logo band. */
+  partnerMarquee: true,
+  /** The on camera client video testimonials. */
+  videoTestimonials: true,
+};
+
 /** The line that explains the missing names, wherever they are withheld. */
 export const namesWithheldNote =
   "Company names are withheld until each client clears theirs for publication.";

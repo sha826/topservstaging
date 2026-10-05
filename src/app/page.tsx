@@ -16,6 +16,7 @@ import { DependencyProblem } from "@/components/sections/dependency-problem";
 import { FiveMileFamous } from "@/components/sections/five-mile-famous";
 import { BrandPerformanceVisual } from "@/components/visuals/brand-performance";
 import { CustomerJourney } from "@/components/visuals/customer-journey";
+import { homeProofSections } from "@/lib/bf-content";
 
 /**
  * The home page, served at /.
@@ -42,6 +43,15 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  // Which switchable proof sections are on, in page order. Drives both what
+  // renders and the alternating background tint below.
+  const proofRun = (
+    [
+      homeProofSections.videoTestimonials ? "testimonials" : null,
+      homeProofSections.partnerMarquee ? "marquee" : null,
+    ] as const
+  ).filter((s): s is "testimonials" | "marquee" => s !== null);
+
   return (
     <>
       <ProfessionalServiceJsonLd />
@@ -199,10 +209,22 @@ export default function HomePage() {
       </section>
 
       {/* Proof continued: the films we made, the clients on camera, and the
-          companies we work with. Each renders its own section and heading. */}
+          companies we work with. Each renders its own section and heading.
+
+          The last 2 are switchable (homeProofSections in bf-content.ts). The
+          run alternates tinted and untinted bands, so the tint is assigned
+          here from whichever sections are actually on instead of each one
+          hardcoding its own. CinemaStage above is untinted, so the first
+          surviving band takes the tint and they alternate from there. Switch
+          either off and the remaining bands still alternate. */}
       <CinemaStage />
-      <PartnerLove />
-      <PartnerMarquee />
+      {proofRun.map((section, i) =>
+        section === "testimonials" ? (
+          <PartnerLove key={section} tinted={i % 2 === 0} />
+        ) : (
+          <PartnerMarquee key={section} tinted={i % 2 === 0} />
+        ),
+      )}
 
       {/* 7. FOUNDER. Connects JB's thought leadership to TopServ without
           turning the page into a profile. */}

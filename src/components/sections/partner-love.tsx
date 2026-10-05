@@ -88,14 +88,21 @@ function TestimonialCard({
  * "Partner love" (design-lab P1): the original site's two on-camera client
  * testimonials as a double feature, with the Harrison quote as supporting
  * print. Cards rise and settle with a slight alternating tilt.
+ *
+ * Background tint is assigned by the caller, not hardcoded: the proof run
+ * alternates tinted and untinted bands and which sections are on is
+ * switchable (homeProofSections in bf-content.ts). See src/app/page.tsx.
  */
-export function PartnerLove() {
+export function PartnerLove({ tinted = false }: { tinted?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const on = useInView(ref, { once: true, margin: "-20% 0px" });
   const quote = testimonials[0];
 
   return (
-    <section aria-labelledby="partner-love-heading" className="border-b border-border bg-card/40">
+    <section
+      aria-labelledby="partner-love-heading"
+      className={`border-b border-border ${tinted ? "bg-card/40" : ""}`}
+    >
       {videoTestimonials.map((t) => (
         <VideoJsonLd
           key={t.youtubeId}

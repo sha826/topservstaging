@@ -7,10 +7,17 @@ import { partners } from "@/lib/testimonials";
  * dark lettering stays legible. The logo set is repeated 6 times so half
  * the track (what the -50% keyframe travels) outspans any viewport, and
  * the loop never shows a gap. Pauses on hover.
+ *
+ * Background tint is assigned by the caller, not hardcoded: the proof run
+ * alternates tinted and untinted bands and which sections are on is
+ * switchable (homeProofSections in bf-content.ts). See src/app/page.tsx.
  */
-export function PartnerMarquee() {
+export function PartnerMarquee({ tinted = false }: { tinted?: boolean }) {
   return (
-    <section aria-label="Meet Our Valued Partners" className="border-b border-border">
+    <section
+      aria-label="Meet Our Valued Partners"
+      className={`border-b border-border ${tinted ? "bg-card/40" : ""}`}
+    >
       <div className="mx-auto max-w-6xl px-5 pt-14 text-center md:pt-16">
         <h2 className="display text-3xl md:text-4xl">Meet our valued partners</h2>
       </div>
