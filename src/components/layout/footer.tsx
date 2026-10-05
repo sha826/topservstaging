@@ -126,10 +126,11 @@ export function Footer() {
         </div>
       </div>
 
-      {/* The link grid. 12 columns so the brand block and the 3 navs share 1
-          set of gutters and 1 baseline. */}
+      {/* The link grid. 12 columns, and the row divides evenly: the brand
+          block takes 4 and the 4 navs take 2 each at lg. At md the brand
+          takes a full row and the 4 navs fill the next at 3 each. */}
       <div className="mx-auto grid max-w-6xl gap-x-8 gap-y-12 px-5 py-14 md:grid-cols-12">
-        <div className="md:col-span-4 lg:col-span-3">
+        <div className="md:col-span-12 lg:col-span-4">
           <p className="flex items-baseline gap-1.5">
             <span className="display text-3xl leading-none text-brand-blue">TOPSERV</span>
             <span className="display text-3xl leading-none text-brand">DIGITAL</span>
@@ -151,13 +152,40 @@ export function Footer() {
               </li>
             ))}
           </ul>
+
+          {/* Address and numbers sit in this column rather than a cell of
+              their own. With a 4th nav column they no longer fit the 12 wide
+              row and wrapped onto a second row alone, the rest of it empty.
+              Here they also give the shortest column some weight against the
+              4 tall link lists. */}
+          <div className="mt-10 border-t border-border pt-8">
+            <h2 className="label-mono text-brand">Visit or call</h2>
+            <address className="mt-4 text-sm not-italic leading-relaxed text-muted-foreground">
+              {company.address.street}
+              <br />
+              {company.address.city}, {company.address.region} {company.address.postalCode}
+            </address>
+            <p className="mt-4">
+              <a
+                href={`tel:${company.phone}`}
+                className="text-lg font-semibold text-foreground transition-colors hover:text-brand"
+              >
+                {company.phoneDisplay}
+              </a>
+            </p>
+            <p className="mt-1">
+              <a href={`mailto:${company.email}`} className={LINK}>
+                {company.email}
+              </a>
+            </p>
+          </div>
         </div>
 
         {COLUMNS.map((column) => (
           <nav
             key={column.title}
             aria-label={column.label}
-            className="md:col-span-4 lg:col-span-2"
+            className="md:col-span-3 lg:col-span-2"
           >
             <h2 className="label-mono text-brand">{column.title}</h2>
             <ul className="mt-5 space-y-3">
@@ -178,27 +206,6 @@ export function Footer() {
           </nav>
         ))}
 
-        <div className="md:col-span-4 lg:col-span-3">
-          <h2 className="label-mono text-brand">Visit or call</h2>
-          <address className="mt-5 text-sm not-italic leading-relaxed text-muted-foreground">
-            {company.address.street}
-            <br />
-            {company.address.city}, {company.address.region} {company.address.postalCode}
-          </address>
-          <p className="mt-4">
-            <a
-              href={`tel:${company.phone}`}
-              className="text-lg font-semibold text-foreground transition-colors hover:text-brand"
-            >
-              {company.phoneDisplay}
-            </a>
-          </p>
-          <p className="mt-1">
-            <a href={`mailto:${company.email}`} className={LINK}>
-              {company.email}
-            </a>
-          </p>
-        </div>
       </div>
 
       <div className="border-t border-border">
