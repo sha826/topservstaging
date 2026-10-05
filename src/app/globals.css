@@ -225,7 +225,10 @@ body {
   50% { opacity: 0; }
 }
 
-/* Partner-logo marquee: track holds two copies, so -50% loops seamlessly */
+/* Partner-logo marquee: -50% lands on an identical copy boundary for any
+   even copy count, so the loop is seamless. COPIES in partner-marquee.tsx
+   decides how wide the remaining half is, and therefore which viewports it
+   covers without a gap. */
 @keyframes partner-mq {
   to { transform: translateX(-50%); }
 }
