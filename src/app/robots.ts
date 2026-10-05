@@ -19,6 +19,10 @@ const AI_CRAWLERS = [
   "CCBot",
 ];
 
+// NOTE: crawling stays ALLOWED here on purpose, including on the hosts that
+// src/proxy.ts marks noindex. A crawler must fetch a page to read a noindex,
+// so a blanket "Disallow: /" would hide the directive and strand any
+// already-indexed URL in the results. Block crawling only once pages are out.
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [

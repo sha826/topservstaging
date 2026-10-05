@@ -51,3 +51,20 @@ export const siteConfig = {
 };
 
 export type SiteConfig = typeof siteConfig;
+
+/**
+ * The only hostname allowed to be indexed: the real domain, derived from
+ * siteConfig.url so there is 1 source of truth.
+ *
+ * Everything else the app answers on, the topserv-website.vercel.app
+ * deployment URL above all, is work in progress and must stay out of search.
+ * src/proxy.ts enforces this per request, so the switch happens by itself the
+ * moment the domain is connected. There is no flag to remember at cutover.
+ *
+ * Caveat: setting NEXT_PUBLIC_SITE_URL to a vercel.app URL would make that URL
+ * the canonical host and therefore indexable. Keep it on the real domain.
+ */
+export const canonicalHost = new URL(siteConfig.url).host;
+
+/** What non-canonical hosts send instead of being indexable. */
+export const noindexHeader = "noindex, nofollow";
