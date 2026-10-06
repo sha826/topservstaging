@@ -152,6 +152,14 @@ export const anonymousClient = "Home services company";
  * cannot leave 2 same-toned bands against each other.
  */
 export const homeProofSections = {
+  /**
+   * The film reel: the big player and the strip of client films under it.
+   * Off since October 2026, asked for by Shaw. Hidden, not deleted: every
+   * film's title, client, poster and YouTube id stays in
+   * src/lib/video-portfolio.ts, so flipping this back restores the section
+   * exactly as it was.
+   */
+  filmReel: false,
   /** "Meet our valued partners", the static client logo row. */
   partnerMarquee: true,
   /** The on camera client video testimonials. */

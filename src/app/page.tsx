@@ -216,7 +216,11 @@ export default function HomePage() {
           hardcoding its own. CinemaStage above is untinted, so the first
           surviving band takes the tint and they alternate from there. Switch
           either off and the remaining bands still alternate. */}
-      <CinemaStage />
+      {/* The film reel. Hidden by the filmReel flag; CinemaStage renders an
+          untinted section, and the run below starts tinted whether or not
+          this one is present, so removing it cannot leave 2 untinted bands
+          against each other. */}
+      {homeProofSections.filmReel && <CinemaStage />}
       {proofRun.map((section, i) =>
         section === "testimonials" ? (
           <PartnerLove key={section} tinted={i % 2 === 0} />
