@@ -5,6 +5,8 @@ import { Eyebrow, Measure, Shell } from "@/components/assessment/a-grid";
 import { GradeSlotDiagram } from "@/components/assessment/d-grade-slot";
 import { brandGrades } from "@/lib/bf-content";
 import { siteConfig } from "@/lib/site-config";
+import { JbVideoSection } from "@/components/video/jb-video-section";
+import { jbVideos } from "@/lib/jb-videos";
 
 /**
  * The Brand Assessment, rebuilt at /brand-assessment.
@@ -141,6 +143,13 @@ export default function BrandAssessmentPage() {
       </section>
 
       {/* THE FORM. Same Shell, same left edge as everything above it. */}
+      <JbVideoSection
+        video={jbVideos.assessment}
+        eyebrow="What it is"
+        heading="The assessment, explained."
+        id="assessment-video-heading"
+      />
+
       <section aria-labelledby="form-heading" className="bg-background">
         <Shell className="py-16 md:py-20">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,42fr)_minmax(0,58fr)] lg:gap-14">

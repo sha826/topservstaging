@@ -16,6 +16,8 @@ import { FiveMileFamous } from "@/components/sections/five-mile-famous";
 import { BrandPerformanceVisual } from "@/components/visuals/brand-performance";
 import { CustomerJourney } from "@/components/visuals/customer-journey";
 import { homeProofSections } from "@/lib/bf-content";
+import { JbVideoFigure } from "@/components/video/jb-video-figure";
+import { jbVideos } from "@/lib/jb-videos";
 
 /**
  * The home page, served at /.
@@ -58,6 +60,22 @@ export default function HomePage() {
       {/* 1. HERO. Carries the single H1, the one line, the supporting line,
           and the 2 CTAs the conversion path allows. */}
       <Hero />
+
+      {/* 1b. THE MANIFESTO. Straight under the hero: the page has just made
+          its claim in text, and this is JB making it on camera. */}
+      <section aria-labelledby="manifesto-heading" className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+          <Reveal className="text-center">
+            <p className="label-mono text-brand">The manifesto</p>
+            <h2 id="manifesto-heading" className="display mt-3 text-3xl md:text-4xl">
+              Why we build brands, not lead lists.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08} className="mt-10">
+            <JbVideoFigure video={jbVideos.manifesto} />
+          </Reveal>
+        </div>
+      </section>
 
       {/* 2. PROBLEM */}
       <DependencyProblem />
@@ -132,6 +150,10 @@ export default function HomePage() {
           <div className="mt-10">
             <FiveMileFamous />
           </div>
+
+          <Reveal delay={0.08} className="mt-12">
+            <JbVideoFigure video={jbVideos.fiveMileFamous} eyebrow="On camera" />
+          </Reveal>
 
           <div className="mt-14">
             <Reveal>
@@ -281,6 +303,21 @@ export default function HomePage() {
       </section>
 
       {/* 8. CLOSING CTA. The single destination the whole page points at. */}
+      {/* 8b. THE CLOSE, before the ask. */}
+      <section aria-labelledby="home-close-heading" className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+          <Reveal className="text-center">
+            <p className="label-mono text-brand">The close</p>
+            <h2 id="home-close-heading" className="display mt-3 text-3xl md:text-4xl">
+              The argument, in 1 minute.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08} className="mt-10">
+            <JbVideoFigure video={jbVideos.homeClose} />
+          </Reveal>
+        </div>
+      </section>
+
       <section aria-labelledby="cta-heading">
         <div className="mx-auto max-w-6xl px-5 py-20 text-center md:py-28">
           <Reveal>

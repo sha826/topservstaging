@@ -5,6 +5,8 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
 import { requestAssessment, type AssessmentState } from "@/app/brand-assessment/actions";
+import { JbVideoFigure } from "@/components/video/jb-video-figure";
+import { jbVideos } from "@/lib/jb-videos";
 
 const inputClass =
   "w-full rounded-md border border-input bg-card px-4 py-3 text-base outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40";
@@ -23,6 +25,14 @@ export function BrandAssessmentForm() {
           We run the assessment against your market and send your Brand Grade,
           with what it means for your business and the right next step.
         </p>
+
+        {/* The pre-call video: what happens next, said on camera, while the
+            visitor is still here. Click to load like every other video on
+            the site, so the confirmation does not pull a player nobody
+            asked for. */}
+        <div className="mt-8 text-left">
+          <JbVideoFigure video={jbVideos.thankYouPreCall} eyebrow="What happens next" />
+        </div>
         {/* The grade arrives from the team, so the only immediate next step
             this page can offer is the call. No delivery window is promised
             anywhere; nothing here can honor one. */}

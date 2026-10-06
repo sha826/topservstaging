@@ -11,6 +11,8 @@ import { Institution } from "@/components/about/institution";
 import { Qualification } from "@/components/about/qualification";
 import { WhyWeExist } from "@/components/about/why-we-exist";
 import { siteConfig } from "@/lib/site-config";
+import { JbVideoSection } from "@/components/video/jb-video-section";
+import { jbVideos } from "@/lib/jb-videos";
 
 /**
  * About TopServ Digital, served at /about.
@@ -108,6 +110,12 @@ export default function AboutPage() {
           the moment the admin has any. */}
       <ContentSlot type="team_member" />
       <AboutFaq />
+      <JbVideoSection
+        video={jbVideos.whyTopservExists}
+        eyebrow="The reason"
+        heading="Why TopServ exists."
+        id="about-video-heading"
+      />
       <AboutCta />
     </>
   );

@@ -11,6 +11,8 @@ import {
 import { BfProof } from "@/components/brandformance/bf-proof";
 import { tenQuestions } from "@/lib/bf-content";
 import { siteConfig } from "@/lib/site-config";
+import { JbVideoSection } from "@/components/video/jb-video-section";
+import { jbVideos } from "@/lib/jb-videos";
 
 /**
  * BrandFormance, served at /brandformance.
@@ -128,6 +130,12 @@ export default function BrandFormancePage() {
       {/* What sets the number. No figures here, see the note in bf-detail. */}
       <BfCost />
 
+      <JbVideoSection
+        video={jbVideos.whatIsBrandformance}
+        eyebrow="The definition"
+        heading="BrandFormance, in JB's words."
+        id="bf-video-heading"
+      />
       <BfCta />
     </>
   );

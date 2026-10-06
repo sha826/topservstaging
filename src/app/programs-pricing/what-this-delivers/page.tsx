@@ -9,6 +9,8 @@ import {
   POwner,
 } from "@/components/programs/p-delivers";
 import { siteConfig } from "@/lib/site-config";
+import { JbVideoSection } from "@/components/video/jb-video-section";
+import { jbVideos } from "@/lib/jb-videos";
 
 /**
  * Programs and Pricing 3: What This Delivers.
@@ -67,6 +69,13 @@ export default function WhatThisDeliversPage() {
       <PNinety />
       <PNumber />
       <POwner />
+      <JbVideoSection
+        video={jbVideos.betterCustomers}
+        eyebrow="What changes"
+        heading="Better customers, not more leads."
+        id="delivers-video-heading"
+        tinted
+      />
       <PDeliversCta />
     </>
   );

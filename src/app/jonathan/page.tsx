@@ -5,6 +5,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbJsonLd, JsonLd } from "@/components/seo/json-ld";
 import { siteConfig } from "@/lib/site-config";
+import { JbVideoSection } from "@/components/video/jb-video-section";
+import { jbVideos } from "@/lib/jb-videos";
 
 /**
  * About Jonathan, served at /jonathan.
@@ -275,6 +277,13 @@ export default function JonathanPage() {
       {/* 04 THE BOOK. Copy Framework 18: the book explains the problem,
           BrandFormance answers it, TopServ implements it. Real cover art,
           TopServ's own asset. */}
+      <JbVideoSection
+        video={jbVideos.fckDigitalMarketing}
+        eyebrow="On camera"
+        heading="The argument, from Jonathan."
+        id="jonathan-video-heading"
+      />
+
       <section aria-labelledby="book-heading" className="border-b border-border">
         <div className="mx-auto max-w-6xl px-5 py-14 md:py-20">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,42fr)_minmax(0,58fr)] lg:gap-16">

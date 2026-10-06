@@ -11,6 +11,8 @@ import {
   PVendors,
 } from "@/components/programs/p-overview";
 import { siteConfig } from "@/lib/site-config";
+import { JbVideoSection } from "@/components/video/jb-video-section";
+import { jbVideos } from "@/lib/jb-videos";
 
 /**
  * Programs and Pricing 1: Overview, at /programs-pricing/overview.
@@ -98,6 +100,13 @@ export default function ProgramsOverviewPage() {
       {/* The embedded FAQ the spec requires. */}
       <PFaq />
 
+      <JbVideoSection
+        video={jbVideos.whoThisIsNotFor}
+        eyebrow="Fit"
+        heading="Who this is not for."
+        id="overview-video-heading"
+        tinted
+      />
       <PCta />
     </>
   );
