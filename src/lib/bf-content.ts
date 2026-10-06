@@ -162,8 +162,13 @@ export const homeProofSections = {
   filmReel: false,
   /** "Meet our valued partners", the static client logo row. */
   partnerMarquee: true,
-  /** The on camera client video testimonials. */
-  videoTestimonials: true,
+  /**
+   * The on camera client video testimonials. Off since October 2026, asked
+   * for by Shaw. Hidden, not deleted: the films, speakers and companies
+   * stay in src/lib/testimonials.ts, so flipping this back restores the
+   * section as it was.
+   */
+  videoTestimonials: false,
 };
 
 /** The line that explains the missing names, wherever they are withheld. */
