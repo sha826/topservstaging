@@ -3,10 +3,20 @@ import path from "node:path";
 import { homePartners } from "@/lib/testimonials";
 
 /**
- * "Meet Our Valued Partners" (design-lab Q6, "backlit dark"): the client
- * logos in full color straight on the dark section, backlit by a faint
- * radial light spill, with a hairline white keyline around each mark so
- * dark lettering stays legible.
+ * "Meet Our Valued Partners": the client logos in full color, each on its
+ * own light plate.
+ *
+ * WHY PLATES. design-lab Q6 "backlit dark" put the marks straight on the
+ * dark section with a hairline white keyline to carry dark lettering. That
+ * holds for logos drawn with bright fills and fails for logos drawn for
+ * white paper. Measured against the band, Spencer's ink sits at a median
+ * 1.9:1 contrast with 77 percent of it below 3:1, and King's Window has
+ * half its ink below 3:1. A 1px keyline cannot rescue that.
+ *
+ * The alternative would be recolouring the marks, which is not ours to do:
+ * a logo is someone else's brand identity. So the plate gives each one the
+ * background it was drawn for, unaltered, and every logo in the row is
+ * legible regardless of how it was designed.
  *
  * A STATIC ROW. It used to scroll: the set was repeated 4 times and the
  * track translated -50% forever, which is why the page carried 40 img tags
@@ -53,9 +63,18 @@ export function PartnerMarquee({ tinted = false }: { tinted?: boolean }) {
         />
         {/* Wraps rather than scrolls sideways, so a narrow screen stacks the
             row instead of hiding logos off the edge. */}
-        <ul className="relative mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-14 gap-y-10 px-5">
+        <ul className="relative mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-6 px-5">
           {shown.map((p) => (
-            <li key={p.file}>
+            // Every plate is the same box, so the row reads as a set rather
+            // than as marks of assorted sizes. The logos differ in aspect
+            // ratio, 107x128 for King's Window against 316x128 for Lilypad,
+            // so each one is scaled to fill the box it is given instead of
+            // being matched on height alone. Padding is just enough to keep
+            // the ink off the plate edge.
+            <li
+              key={p.file}
+              className="flex h-28 w-56 items-center justify-center rounded-[14px] bg-[#f4f5f2] p-3 shadow-[0_1px_0_rgba(255,255,255,0.08)_inset,0_10px_30px_-12px_rgba(0,0,0,0.6)]"
+            >
               {/* Plain img on purpose: these are small fixed-height marks
                   already sized as -sm webp, so next/image would add a
                   resize pipeline for no gain. */}
@@ -64,7 +83,7 @@ export function PartnerMarquee({ tinted = false }: { tinted?: boolean }) {
                 src={`/images/partners/${p.file}`}
                 alt={p.name}
                 loading="lazy"
-                className="h-16 w-auto [filter:drop-shadow(0_0_1px_rgba(255,255,255,0.55))_drop-shadow(0_0_10px_rgba(255,255,255,0.15))]"
+                className="max-h-full max-w-full object-contain"
               />
             </li>
           ))}
