@@ -48,6 +48,11 @@ export interface Partner {
 // The original homepage's "Meet Our Valued Partners" logo set (10 clients).
 // -sm.webp variants are 128px-tall (display is 64px @2x); originals kept
 // alongside for future large uses.
+/**
+ * The full logo roster. Nothing renders this today: the home page band
+ * shows homePartners below instead. Kept because the files are in the repo
+ * and a future surface may want the whole set.
+ */
 export const partners: Partner[] = [
   { file: "eagle-point-sm.webp", name: "EaglePoint" },
   { file: "hawkins-sm.webp", name: "Hawkins" },

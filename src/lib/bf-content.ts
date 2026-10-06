@@ -152,7 +152,7 @@ export const anonymousClient = "Home services company";
  * cannot leave 2 same-toned bands against each other.
  */
 export const homeProofSections = {
-  /** "Meet our valued partners", the scrolling client logo band. */
+  /** "Meet our valued partners", the static client logo row. */
   partnerMarquee: true,
   /** The on camera client video testimonials. */
   videoTestimonials: true,
