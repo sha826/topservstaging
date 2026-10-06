@@ -119,7 +119,9 @@ export const jbVideos = {
  *   Watt's Right case study     youtu.be/FkPt_Ar1XjQ   2026-09-10  PT59S
  *   Spencer Air Conditioning    youtu.be/pCZ8xnk0z18   2026-09-10  PT57S
  */
-export const caseStudyFilmsCleared = false;
+// On for review, so Ryan can watch both films in place. Set back to false
+// before the domain is connected unless he has confirmed by then.
+export const caseStudyFilmsCleared = true;
 
 export const heldForNameClearance = {
   wattsRightCaseStudy: {
