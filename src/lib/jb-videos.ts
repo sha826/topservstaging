@@ -108,26 +108,33 @@ export const jbVideos = {
 } as const satisfies Record<string, JbVideo>;
 
 /**
- * Held back, not published. Both name a client on camera, and whether any
- * client may be named publicly is still Ryan's call, the same decision
- * namesCleared in bf-content.ts is waiting on. Kept here so they are ready
- * to place the moment that clears, rather than rediscovered later.
+ * The 2 case study films. They belong on /case-studies, which is built and
+ * waiting for them, but they are NOT published: both name a client on
+ * camera, and whether any client may be named publicly is still Ryan's
+ * call, the same decision namesCleared in bf-content.ts is waiting on.
+ *
+ * Flip caseStudyFilmsCleared to true when Ryan confirms and the section
+ * appears. Nothing else needs changing.
  *
  *   Watt's Right case study     youtu.be/FkPt_Ar1XjQ   2026-09-10  PT59S
  *   Spencer Air Conditioning    youtu.be/pCZ8xnk0z18   2026-09-10  PT57S
  */
+export const caseStudyFilmsCleared = false;
+
 export const heldForNameClearance = {
   wattsRightCaseStudy: {
     id: "FkPt_Ar1XjQ",
     title: "Watt's Right Case Study",
-    description: "Client case study film.",
+    description:
+      "A case study film on the work TopServ Digital ran for an electrical contractor.",
     uploadDate: "2026-09-10",
     duration: "PT59S",
   },
   spencerCaseStudy: {
     id: "pCZ8xnk0z18",
     title: "Spencer Air Conditioning",
-    description: "Client case study film.",
+    description:
+      "A case study film on the work TopServ Digital ran for a heating and air contractor.",
     uploadDate: "2026-09-10",
     duration: "PT57S",
   },

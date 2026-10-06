@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { caseStudies } from "@/lib/case-studies";
+import { JbVideoFigure } from "@/components/video/jb-video-figure";
+import { caseStudyFilmsCleared, heldForNameClearance } from "@/lib/jb-videos";
 
 export const metadata: Metadata = {
   title: "Case Studies — Real Numbers From Real Clients",
@@ -76,6 +78,37 @@ export default function CaseStudiesPage() {
           </ul>
         </div>
       </section>
+      {/* The case study films.
+          GATED, NOT LIVE. Both name a client on camera and wait on the same
+          decision namesCleared is waiting on, so caseStudyFilmsCleared in
+          lib/jb-videos.ts holds them until Ryan confirms clients may be
+          named. The section is built and will simply appear.
+
+          These 2 have films but no written study, so they sit in their own
+          band rather than in the list above, which links to pages that do
+          not exist for them. */}
+      {caseStudyFilmsCleared && (
+        <section aria-labelledby="films-heading" className="border-t border-border bg-card/40">
+          <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+            <Reveal>
+              <p className="label-mono text-brand">On camera</p>
+              <h2 id="films-heading" className="display mt-3 text-3xl md:text-4xl">
+                Case study films
+              </h2>
+            </Reveal>
+            <div className="mt-10 grid gap-10 lg:grid-cols-2">
+              {[heldForNameClearance.wattsRightCaseStudy, heldForNameClearance.spencerCaseStudy].map(
+                (video, i) => (
+                  <Reveal key={video.id} delay={i * 0.08}>
+                    <JbVideoFigure video={video} />
+                  </Reveal>
+                ),
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
     </>
   );
 }
