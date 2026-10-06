@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow, Bebas_Neue, DM_Mono } from "next/font/google";
 import "./globals.css";
-import { siteConfig } from "@/lib/site-config";
+import { assetOrigin, siteConfig } from "@/lib/site-config";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ChatWidgetLazy } from "@/components/chat/chat-widget-lazy";
@@ -53,7 +53,9 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name}: The Home of BrandFormance`,
     description: siteConfig.metaDescription,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
+    // Absolute against assetOrigin, not metadataBase: the canonical domain
+    // does not serve this app yet, so a relative URL previews as a 404.
+    images: [{ url: `${assetOrigin}${siteConfig.ogImage}`, width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },

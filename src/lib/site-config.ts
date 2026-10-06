@@ -64,6 +64,31 @@ export type SiteConfig = typeof siteConfig;
  * Caveat: setting NEXT_PUBLIC_SITE_URL to a vercel.app URL would make that URL
  * the canonical host and therefore indexable. Keep it on the real domain.
  */
+/**
+ * Where a scraper or a crawler should fetch this site's images from.
+ *
+ * og:image and the logo in the schema both have to be absolute, and they
+ * resolve against the canonical domain. That domain still serves the old
+ * site, so every one of those URLs 404s today, which is why a shared link
+ * previews with a broken thumbnail.
+ *
+ * So: if NEXT_PUBLIC_SITE_URL is set, somebody has decided the canonical
+ * domain serves this app and images come from it. Otherwise, on Vercel,
+ * they come from the deployment, which definitely has them. Setting that
+ * variable at cutover moves them back with no code change.
+ *
+ * This deliberately does NOT touch siteConfig.url. Canonicals, the sitemap
+ * and canonicalHost all stay on the real domain, so nothing here makes the
+ * deployment host indexable.
+ */
+export const assetOrigin = process.env.NEXT_PUBLIC_SITE_URL
+  ? siteConfig.url
+  : process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : siteConfig.url;
+
 export const canonicalHost = new URL(siteConfig.url).host;
 
 /** What non-canonical hosts send instead of being indexable. */

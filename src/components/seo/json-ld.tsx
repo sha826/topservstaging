@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/site-config";
+import { assetOrigin, siteConfig } from "@/lib/site-config";
 
 interface JsonLdProps {
   data: Record<string, unknown>;
@@ -55,8 +55,8 @@ const organizationNode = {
         alternateName: company.formerName,
         description: siteConfig.description,
         url: siteConfig.url,
-        logo: `${siteConfig.url}/images/topserv-logo.png`,
-        image: `${siteConfig.url}${siteConfig.ogImage}`,
+        logo: `${assetOrigin}/images/topserv-logo.png`,
+        image: `${assetOrigin}${siteConfig.ogImage}`,
         telephone: company.phone,
         email: company.email,
         foundingDate: String(company.foundedYear),
@@ -215,7 +215,7 @@ export function ArticleJsonLd({
         headline: title,
         description,
         url,
-        image: image || `${siteConfig.url}${siteConfig.ogImage}`,
+        image: image || `${assetOrigin}${siteConfig.ogImage}`,
         datePublished,
         dateModified: dateModified || datePublished,
         author: {
