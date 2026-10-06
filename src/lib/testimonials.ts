@@ -60,3 +60,22 @@ export const partners: Partner[] = [
   { file: "kings-window-sm.webp", name: "Kings Window Services" },
   { file: "sugar-land-premier-sm.webp", name: "Sugar Land Premier Roofing" },
 ];
+
+/**
+ * The logos the home page band shows, in order, each once.
+ *
+ * This is a chosen 5, not the whole partner list above, which stays as the
+ * full roster other surfaces can draw on.
+ *
+ * 4 of the 5 have no logo file in the repo yet. The band renders only the
+ * entries whose file is actually present, so it stays correct rather than
+ * showing broken images, and each one appears the moment its file lands in
+ * public/images/partners/ with no code change.
+ */
+export const homePartners: Partner[] = [
+  { file: "kings-window-sm.webp", name: "King's Window Services" },
+  { file: "all-seasons-sm.webp", name: "All Seasons" },
+  { file: "spencer-sm.webp", name: "Spencer" },
+  { file: "watts-right-sm.webp", name: "Watt's Right" },
+  { file: "lilypad-sm.webp", name: "Lilypad" },
+];
