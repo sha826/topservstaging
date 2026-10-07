@@ -19,6 +19,21 @@ import { canonicalHost, noindexHeader } from "@/lib/site-config";
  * crawling allowed on purpose. See the note in src/app/robots.ts.
  */
 export function proxy(request: NextRequest) {
+  // Trailing slashes are normalised here rather than by Next, which is what
+  // skipTrailingSlashRedirect in next.config.ts turns off. 2 reasons: Next
+  // answers 308 where every other permanent redirect on this site answers
+  // 301, and it lands on the stripped path, so a path that redirects again
+  // costs a 2nd hop. /programs-pricing/ was the case that showed it, taking
+  // 308 to /programs-pricing and then 301 to Overview. Resolving the hub
+  // here makes it 1 hop.
+  const { pathname, search } = request.nextUrl;
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    const stripped = pathname.slice(0, -1);
+    const target =
+      stripped === "/programs-pricing" ? "/programs-pricing/overview" : stripped;
+    return NextResponse.redirect(new URL(`${target}${search}`, request.url), 301);
+  }
+
   const response = NextResponse.next();
   const host = request.headers.get("host")?.toLowerCase() ?? "";
 

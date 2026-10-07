@@ -151,7 +151,11 @@ export default function JonathanPage() {
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,53fr)_minmax(0,47fr)] lg:gap-16">
             <div>
               <p className="label-mono text-brand">
-                Creator of BrandFormance&reg;
+                {/* No symbol. Ryan confirmed in October 2026 that
+                    BrandFormance is not a registered mark, and the registered
+                    symbol asserts that it is. SEO-GUIDELINES 8 still says to
+                    carry it; that line is now wrong and is flagged there. */}
+                Creator of BrandFormance
               </p>
               <h1 className="display mt-4 text-5xl leading-[0.95] md:text-7xl">
                 Jonathan Bannister built the argument this company runs on

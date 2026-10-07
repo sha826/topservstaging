@@ -46,6 +46,11 @@ const CASE_STUDY_SLUGS: Record<string, string> = {
 };
 
 const nextConfig: NextConfig = {
+  // Next's own trailing-slash redirect answers 308 and lands on the stripped
+  // path, which costs a second hop whenever that path redirects again, and
+  // contradicts the 301 every other permanent redirect here uses. src/proxy.ts
+  // does it instead, in 1 hop and as a 301.
+  skipTrailingSlashRedirect: true,
   images: {
     remotePatterns: [
       {
