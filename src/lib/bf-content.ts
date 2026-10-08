@@ -126,16 +126,17 @@ export const pricingModel = {
 
 /**
  * Build Spec v2 section 15, Decision 1: which of the 6 clients can be named
- * publicly is unresolved, owners Ryan and JB. Nothing on this site may
- * attribute an outcome to a named company until that lands. The Argument
- * Spine's documented fallback governs meanwhile, "at minimum assume market
- * and outcome without company names", so every public surface reads
- * anonymousClient and the names below stay internal to this file.
+ * publicly. Cleared in October 2026, Shaw instructing, so each outcome below
+ * now carries the company it belongs to.
  *
- * Flip this 1 flag when the decision clears, and check every consumer of
- * sixClients before you do.
+ * 2 surfaces move with this flag, both reading the same sixClients rows: the
+ * home page proof band and the growth diagram on the programs pages. The
+ * "names withheld" line each of them carried disappears on its own.
+ *
+ * Set it back to false to withhold every name again; anonymousClient is what
+ * they read as instead.
  */
-export const namesCleared = false;
+export const namesCleared = true;
 
 /** What a client is called publicly while its own name is not cleared. */
 export const anonymousClient = "Home services company";

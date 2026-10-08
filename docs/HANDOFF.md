@@ -27,7 +27,7 @@ The clean line from the spec: Alejandro and Shaw own the marketing site; Alex ow
 
 ## The open decisions (spec v2)
 
-1. Which of the 6 clients can be named publicly. Owners: Ryan, JB. Blocks `/programs-pricing/success-stories`, which currently names all 6 (All Heart Heating, Spencer Air, Your New Door, Nick AC, Zen Air, C and S Air) with their revenue numbers.
+1. ~~Which of the 6 clients can be named publicly.~~ **Resolved October 2026, Shaw instructing.** `namesCleared` in `src/lib/bf-content.ts` is now true, so the home page proof band and the growth diagram on the programs pages both name each client beside its own revenue: All Heart Heating, Spencer Air, Your New Door, Nick AC, Zen Air, C and S Air. The "names withheld" line disappeared with it. Set the flag back to false to withhold them all again. Still open separately: `caseStudyFilmsCleared` in `src/lib/jb-videos.ts`, the 2 case study films on `/case-studies`, which is on for Ryan's review rather than cleared.
 2. Whether the Brand Assessment's optional inputs (revenue band, membership, trade, website) sit behind the email gate or stay on the public form. Owners: Ryan, Alex. The form ships either way; moving them is a small form change.
 3. brandscore.biz custody and where the internal scoring engine lives. Owner: Alex (with Ryan). Does not block the site; the public artifact is grade-only regardless.
 4. Launch date. Owner: all. Blocks everything downstream of the runbook.
