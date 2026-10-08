@@ -77,32 +77,6 @@ export const partners: Partner[] = [
  * showing broken images, and each one appears the moment its file lands in
  * public/images/partners/ with no code change.
  */
-/**
- * The 5 partner companies the home page names, with the trade each one
- * states on its own logo. Nothing here is inferred: "window services",
- * "the comfort control people", "air conditioning & heating since 1960",
- * "electric" and "septic" are printed on the marks themselves.
- *
- * NO REVENUE FIGURES. The 6 rows in sixClients carry real before and after
- * numbers, and they belong to 6 different clients: All Heart Heating, Your
- * New Door, Nick AC, Zen Air, C and S Air, and Spencer Air. Only Spencer is
- * in both lists. Putting those figures on these names would credit each
- * company with another company's revenue, so this list carries none, and
- * sixClients is untouched and ready for the day the real figures arrive.
- */
-export interface PartnerCompany {
-  name: string;
-  trade: string;
-}
-
-export const homePartnerCompanies: PartnerCompany[] = [
-  { name: "King's Window Services", trade: "Window services" },
-  { name: "All Seasons", trade: "Heating and air" },
-  { name: "Spencer", trade: "Air conditioning and heating" },
-  { name: "Watt's Right Electric", trade: "Electrical" },
-  { name: "LilyPad Septic", trade: "Septic" },
-];
-
 export const homePartners: Partner[] = [
   { file: "kings-window-sm.webp", name: "King's Window Services" },
   { file: "all-seasons-sm.webp", name: "All Seasons" },

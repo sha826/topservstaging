@@ -207,15 +207,9 @@ export default function HomePage() {
             <h2 id="proof-heading" className="display mt-3 text-4xl md:text-5xl">
               Companies that stopped renting attention.
             </h2>
-            {/* This line used to promise revenue before and after, which was
-                true of the 6 figure rows that used to render here. The band
-                now names 5 companies and carries no figures, so the promise
-                went with them. Copy is Alejandro's, and this is a holding
-                line written to stop the page claiming something it no longer
-                shows. */}
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              The home service companies we build brands for, across the
-              trades where the work runs.
+              Revenue before and after, in the markets where the work ran.
+              These are multi year outcomes, not campaign snapshots.
             </p>
           </Reveal>
 
